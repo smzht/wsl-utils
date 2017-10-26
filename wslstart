@@ -1,0 +1,126 @@
+#!/bin/bash
+# -*- mode: sh; coding: utf-8-unix -*-
+
+# 本コマンドで VolFs ファイルシステム配下のファイルを起動した際には、Windows の
+# %TEMP% 環境変数に設定されているディレクトリ配下に作業ディレクトリを作成し、
+# その作業ディレクトリにファイルを複写した後、起動するようにしています。
+# この作業ディレクトリは自動消去されるように仕組みを組み込んではいますが、消去
+# 処理が完了する前に bash.exe のコンソールを終了してしまうと、消去漏れが発生して
+# しまいます。このため、定期的に作業ディレクトリを消去することをお勧めします。
+# 作業ディレクトリを消去するためのコマンドは、本コマンドに -c オプションを指定
+# して実行すると表示されます。表示されるコマンドに問題がなければ、パイプで sh に
+# 通すことで実行することができます。本コマンド内で直接削除処理を実行したい場合
+# は、clean_all 関数内を修正することで対応可能です。
+
+source wslcommon
+command_name=$(basename "$0")
+
+function usage_exit() {
+    cat << EOF >&2
+Usage: $command_name file
+       $command_name -c
+       $command_name -h
+EOF
+    exit 1
+}
+
+temp_win_path=$(cmd echo %TEMP%)"\\$command_name"
+temp_wsl_path=$(wslpath "$temp_win_path")
+
+function clean_all() {
+    # rm -rf "$temp_wsl_path"
+    echo "rm -rf \"$temp_wsl_path\""
+    exit 0
+}
+
+while getopts :ch opt; do
+    case $opt in
+        c)
+            clean_all
+            ;;
+        h)
+            usage_exit
+            ;;
+        \?)
+            usage_exit
+            ;;
+    esac
+done
+
+shift $(($OPTIND - 1))
+
+if [ $# -ne 1 ]; then
+    usage_exit
+fi
+
+function clean() {
+    {
+        # rm -rf $working_dir とする方法もあるが、安全のため以下のとおりの処理としている
+        rm -f "$working_file"
+        rmdir "$working_dir"
+    } 2> /dev/null
+}
+
+function message() {
+    echo "$command_name: $1" >&2
+    exit 1
+}
+
+# ターゲットファイルが存在するか？
+if [ -e "$1" ]; then
+    wsl_path=$(readlink -m "$1")
+
+    # https://opcdiary.net/?p=32284
+
+    # ターゲットファイルが DrvFs ファイルシステム上にあるか？
+    if check_drvfs "$wsl_path"; then
+
+        # そのまま開く。
+        win_path=$(winpath "$wsl_path")
+        start "$win_path"
+    else
+        # ターゲットファイルが VolFs 等 DrvFs 以外のファイルシステム上にある場合の処理
+
+        # 通常ファイルか？
+        if [ -f "$wsl_path" ]; then
+
+            # Windows の %TEMP% フォルダ内に作業ディレクトリを作成し、その下に読み込み専用でファイル
+            # をコピーし、そのファイルを開く。作業ディレクトリ配下は、消せるまで一分ごとに消去処理を
+            # 繰り返す。
+
+            mkdir -p "$temp_wsl_path" 2> /dev/null
+
+            if [ $? -eq 0 ]; then
+                working_dir=$(mktemp -d -p "$temp_wsl_path" 2> /dev/null)
+
+                if [ $? -eq 0 ]; then
+                    trap '(sleep 60; until clean; do sleep 60; done) &' 0
+
+                    cp "$wsl_path" "$working_dir"
+                    working_file=$(echo "$working_dir"/*)
+                    chmod a-wx "$working_file"
+                    win_path=$(winpath "$working_file")
+
+                    # 当初 start に /wait オプションを入れていたが、起動したアプリケーションにフォーカス
+                    # が移らない原因となっていたため、オプションを外すこととした。
+                    start "$win_path"
+                else
+                    message '作業ディレクトリの作成に失敗しました'
+                fi
+            else
+                message '作業ディレクトリの作成に失敗しました'
+            fi
+
+        # ディレクトリか？
+        elif [ -d "$wsl_path" ]; then
+            message 'DrvFs ファイルシステム上のフォルダ以外は開くことができません'
+
+        # スペシャルファイル等のその他のファイルか？
+        else
+            message '指定したファイルは開くことができません'
+        fi
+    fi
+else
+    # ターゲットファイルが存在しない場合（コマンドや URL が指定された場合）は、そのまま開く。
+    start "$1"
+fi

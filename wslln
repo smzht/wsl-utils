@@ -1,0 +1,113 @@
+#!/bin/bash
+# -*- mode: sh; coding: utf-8-unix -*-
+
+source wslcommon
+command_name=$(basename "$0")
+
+function usage_exit() {
+    cat << EOF >&2
+Usage: $command_name [-s] [-f] [-a] target link
+       $command_name -h
+EOF
+    exit 1
+}
+
+symlink_flg=0
+force_flg=0
+absolute_flg=0
+while getopts :sfah opt; do
+    case $opt in
+        s)
+            symlink_flg=1
+            ;;
+        f)
+            force_flg=1
+            ;;
+        a)
+            absolute_flg=1
+            ;;
+        h)
+            usage_exit
+            ;;
+        \?)
+            usage_exit
+            ;;
+    esac
+done
+
+shift $(($OPTIND - 1))
+
+if [ $# -ne 1 -a $# -ne 2 ]; then
+    usage_exit
+fi
+
+function message() {
+    echo "$command_name: $1" >&2
+    exit 1
+}
+
+if [ $# -eq 1 ]; then
+    set -- "$1" .
+fi
+
+link_dirname=$(dirname "$2")
+link_basename=$(basename "$2")
+link_wsl_path=$(readlink -m -n "$link_dirname"; echo "/$link_basename")
+
+target_dirname=$(dirname "$1")
+target_basename=$(basename "$1")
+target_wsl_path=$(readlink -m -n "$target_dirname"; echo "/$target_basename")
+
+# DrvFs ファイルシステム上にシンボリックリンクを作成しようとしているか？
+if [ $symlink_flg -eq 1 ] && check_drvfs "$link_wsl_path"; then
+
+    # ターゲットファイルが DrvFs ファイルシステム上にあるか？
+    if check_drvfs "$target_wsl_path"; then
+
+        # -a オプションが指定されたかターゲットファイルの指定が絶対パスの場合は、パスの途中に
+        # あるシンボリックリンクを取り除く。相対パスの場合は、そのパスをそのまま利用する。
+        if [ $absolute_flg -eq 1 ] || [[ $1 =~ ^/ ]]; then
+            target_win_path=$(winpath "$target_wsl_path")
+        else
+            target_win_path=$(winpath "$1")
+        fi
+        link_win_path=$(winpath "$link_wsl_path")
+
+        option=''
+
+        if [ -d "$target_wsl_path" ]; then
+            option='/d'
+        fi
+
+        if [ -d "$link_wsl_path" ]; then
+            link_wsl_path="$link_wsl_path/$target_basename"
+            link_win_path="$link_win_path\\$target_basename"
+        fi
+
+        if [ $force_flg -eq 1 ]; then
+            rm -f "$link_wsl_path" 2> /dev/null
+        fi
+
+        cmd mklink $option "$link_win_path" "$target_win_path" 2>&1 > /dev/null | sed "s/^/$command_name: /" >&2
+        exit ${PIPESTATUS[0]}
+    else
+        message 'このファイルを DrvFS 配下にリンクすることはできません'
+    fi
+else
+    option=''
+
+    if [ $symlink_flg -eq 1 ]; then
+        option="-s"
+    fi
+
+    if [ $force_flg -eq 1 ]; then
+        option="$option -f"
+    fi
+
+    if [ $absolute_flg -eq 0 ]; then
+        target_wsl_path="$1"
+    fi
+
+    ln $option "$target_wsl_path" "$2" 2>&1 | sed "s/^ln:/$command_name:/" >&2
+    exit ${PIPESTATUS[0]}
+fi
