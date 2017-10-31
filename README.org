@@ -13,7 +13,7 @@ cygstart 的コマンドです。
 
 詳しくは以下を参照してください。
 
-- [[https://www49.atwiki.jp/ntemacs/pages/62.html][BUW で cygstart 的コマンドを使うための設定]]
+- [[https://www49.atwiki.jp/ntemacs/pages/62.html][WSL で cygstart 的コマンドを使うための設定]]
 
 また、スクリプトの初めにあるコメントも参照ください。
 
@@ -23,7 +23,7 @@ singleton な動きをする cygstart 的コマンドです。
 
 詳しくは以下を参照してください。
 
-- [[https://www49.atwiki.jp/ntemacs/pages/63.html][singleton な動きをする cygstart 的コマンドを使うための設定 （BUW版）]]
+- [[https://www49.atwiki.jp/ntemacs/pages/63.html][singleton な動きをする cygstart 的コマンドを使うための設定 （WSL版）]]
 
 また、スクリプトの初めにあるコメントも参照ください。
 
