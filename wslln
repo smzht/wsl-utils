@@ -64,34 +64,42 @@ if [ $symlink_flg -eq 1 ] && check_drvfs "$link_wsl_path"; then
     # ターゲットファイルが DrvFs ファイルシステム上にあるか？
     if check_drvfs "$target_wsl_path"; then
 
-        # -a オプションが指定されたかターゲットファイルの指定が絶対パスの場合は、パスの途中に
-        # あるシンボリックリンクを取り除く。相対パスの場合は、そのパスをそのまま利用する。
-        if [ $absolute_flg -eq 1 ] || [[ $1 =~ ^/ ]]; then
-            target_win_path=$(winpath "$target_wsl_path")
+        # -a オプションが指定されたか、ターゲットファイルが絶対パスでないか、
+        # 絶対パスの場合は DrvFs ファイルシステムを示すパスとなっているか？
+        if [ $absolute_flg -eq 1 ] || [[ ! $1 =~ ^/ ]] || check_drvfs "$1"; then
+
+            # -a オプションが指定された場合は、ターゲットファイルをパスの途中にシンボ
+            # リックリンクが存在しない絶対パスに変換する。相対パスの場合は、そのパスを
+            # そのまま利用する。
+            if [ $absolute_flg -eq 1 ]; then
+                target_win_path=$(winpath "$target_wsl_path")
+            else
+                target_win_path=$(winpath "$1")
+            fi
+            link_win_path=$(winpath "$link_wsl_path")
+
+            option=''
+
+            if [ -d "$target_wsl_path" ]; then
+                option='/d'
+            fi
+
+            if [ -d "$link_wsl_path" ]; then
+                link_wsl_path="$link_wsl_path/$target_basename"
+                link_win_path="$link_win_path\\$target_basename"
+            fi
+
+            if [ $force_flg -eq 1 ]; then
+                rm -f "$link_wsl_path" 2> /dev/null
+            fi
+
+            cmd mklink $option "$link_win_path" "$target_win_path" 2>&1 > /dev/null | sed "s/^/$command_name: /" >&2
+            exit ${PIPESTATUS[0]}
         else
-            target_win_path=$(winpath "$1")
+            message '-a オプションを付けることにより、DrvFs 配下にリンクすることができます'
         fi
-        link_win_path=$(winpath "$link_wsl_path")
-
-        option=''
-
-        if [ -d "$target_wsl_path" ]; then
-            option='/d'
-        fi
-
-        if [ -d "$link_wsl_path" ]; then
-            link_wsl_path="$link_wsl_path/$target_basename"
-            link_win_path="$link_win_path\\$target_basename"
-        fi
-
-        if [ $force_flg -eq 1 ]; then
-            rm -f "$link_wsl_path" 2> /dev/null
-        fi
-
-        cmd mklink $option "$link_win_path" "$target_win_path" 2>&1 > /dev/null | sed "s/^/$command_name: /" >&2
-        exit ${PIPESTATUS[0]}
     else
-        message 'このファイルを DrvFS 配下にリンクすることはできません'
+        message 'このファイルを DrvFs 配下にリンクすることはできません'
     fi
 else
     option=''
