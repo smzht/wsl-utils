@@ -112,10 +112,10 @@ else
         option="$option -f"
     fi
 
-    if [ $absolute_flg -eq 0 ]; then
-        target_wsl_path="$1"
+    if [ $absolute_flg -eq 1 ]; then
+        set -- "$target_wsl_path" "$2"
     fi
 
-    ln $option "$target_wsl_path" "$2" 2>&1 | sed "s/^ln:/$command_name:/" >&2
+    ln $option "$@" 2>&1 | sed "s/^ln:/$command_name:/" >&2
     exit ${PIPESTATUS[0]}
 fi
