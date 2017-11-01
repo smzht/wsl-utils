@@ -68,9 +68,6 @@ if [ $symlink_flg -eq 1 ] && check_drvfs "$link_wsl_path"; then
         # 絶対パスの場合は DrvFs ファイルシステムを示すパスとなっているか？
         if [ $absolute_flg -eq 1 ] || [[ ! $1 =~ ^/ ]] || check_drvfs "$1"; then
 
-            # -a オプションが指定された場合は、ターゲットファイルをパスの途中にシンボ
-            # リックリンクが存在しない絶対パスに変換する。相対パスの場合は、そのパスを
-            # そのまま利用する。
             if [ $absolute_flg -eq 1 ]; then
                 target_win_path=$(winpath "$target_wsl_path")
             else
