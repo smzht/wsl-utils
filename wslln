@@ -86,7 +86,7 @@ if [ $symlink_flg -eq 1 ] && check_drvfs "$link_wsl_path"; then
                 link_win_path="$link_win_path\\$target_basename"
             fi
 
-            if [ $force_flg -eq 1 ]; then
+            if [ $force_flg -eq 1 ] && [ -f "$link_wsl_path" ]; then
                 rm -f "$link_wsl_path" 2> /dev/null
             fi
 
