@@ -93,10 +93,10 @@ if [ $symlink_flg -eq 1 ] && check_drvfs "$link_wsl_path"; then
             cmd mklink $option "$link_win_path" "$target_win_path" 2>&1 > /dev/null | sed "s/^/$command_name: /" >&2
             exit ${PIPESTATUS[0]}
         else
-            message '-a オプションを付けることにより、DrvFs 配下にリンクすることができます'
+            message '-a オプションを付けることにより、リンクを作成することができます'
         fi
     else
-        message 'このファイルを DrvFs 配下にリンクすることはできません'
+        message 'このファイルのリンクを DrvFs 配下に作成することはできません'
     fi
 else
     option=''
