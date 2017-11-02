@@ -86,7 +86,8 @@ if [ $symlink_flg -eq 1 ] && check_drvfs "$link_wsl_path"; then
                 link_win_path+="\\$target_basename"
             fi
 
-            if [ $force_flg -eq 1 ] && [ -f "$link_wsl_path" ]; then
+            if [ $force_flg -eq 1 ]; then
+                # rm で削除できるものは削除する（一般ファイルとか、シンボリックリンクファイルとか）
                 rm -f "$link_wsl_path" 2> /dev/null
             fi
 
