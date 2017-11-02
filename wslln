@@ -82,8 +82,8 @@ if [ $symlink_flg -eq 1 ] && check_drvfs "$link_wsl_path"; then
             fi
 
             if [ -d "$link_wsl_path" ]; then
-                link_wsl_path="$link_wsl_path/$target_basename"
-                link_win_path="$link_win_path\\$target_basename"
+                link_wsl_path+="/$target_basename"
+                link_win_path+="\\$target_basename"
             fi
 
             if [ $force_flg -eq 1 ] && [ -f "$link_wsl_path" ]; then
@@ -106,7 +106,7 @@ else
     fi
 
     if [ $force_flg -eq 1 ]; then
-        option="$option -f"
+        option+=" -f"
     fi
 
     if [ $absolute_flg -eq 1 ]; then
