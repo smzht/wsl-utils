@@ -1,6 +1,6 @@
 #+STARTUP: showall indent
 
-* Windows Subsystem for Linux Utilities
+* WSL Utilities
 
 Windows Subsystem for Linux で動作するユティリティコマンド群です。
 
