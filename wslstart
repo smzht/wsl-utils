@@ -68,7 +68,7 @@ function message() {
 
 # ターゲットファイルが存在するか？
 if [ -e "$1" ]; then
-    wsl_path=$(readlink -m "$1")
+    wsl_path=$(readlink -m -- "$1")
 
     # https://opcdiary.net/?p=32284
 

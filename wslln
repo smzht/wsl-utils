@@ -50,13 +50,13 @@ if [ $# -eq 1 ]; then
     set -- "$1" .
 fi
 
-link_dirname=$(dirname "$2")
-link_basename=$(basename "$2")
-link_wsl_path=$(readlink -m -n "$link_dirname"; echo "/$link_basename")
+target_dirname=$(dirname -- "$1")
+target_basename=$(basename -- "$1")
+target_wsl_path=$(readlink -m -n -- "$target_dirname"; echo "/$target_basename")
 
-target_dirname=$(dirname "$1")
-target_basename=$(basename "$1")
-target_wsl_path=$(readlink -m -n "$target_dirname"; echo "/$target_basename")
+link_dirname=$(dirname -- "$2")
+link_basename=$(basename -- "$2")
+link_wsl_path=$(readlink -m -n -- "$link_dirname"; echo "/$link_basename")
 
 # DrvFs ファイルシステム上にシンボリックリンクを作成しようとしているか？
 if [ $symlink_flg -eq 1 ] && check_drvfs "$link_wsl_path"; then
@@ -114,6 +114,6 @@ else
         set -- "$target_wsl_path" "$2"
     fi
 
-    ln $option "$@" 2>&1 | sed "s/^ln:/$command_name:/" >&2
+    ln $option -- "$@" 2>&1 | sed "s/^ln:/$command_name:/" >&2
     exit ${PIPESTATUS[0]}
 fi
