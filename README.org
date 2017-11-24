@@ -7,7 +7,7 @@ Windows Subsystem for Linux で動作するユティリティコマンド群で�
 各コマンドでは wslcommon をインポートしていますので、コマンドと同じ場所（コマンドパスが通ったディレクトリ）に
 格納してご利用ください。
 
-** wslstart
+** ■ wslstart
 
 cygstart 的コマンドです。
 
@@ -17,7 +17,7 @@ cygstart 的コマンドです。
 
 また、スクリプトの初めにあるコメントも参照ください。
 
-** sglstart
+** ■ sglstart
 
 singleton な動きをする cygstart 的コマンドです。
 
@@ -27,7 +27,7 @@ singleton な動きをする cygstart 的コマンドです。
 
 また、スクリプトの初めにあるコメントも参照ください。
 
-** wslln
+** ■ wslln
 
 ln 的コマンドです。
 
