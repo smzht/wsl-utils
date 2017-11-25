@@ -29,7 +29,7 @@ singleton な動きをする cygstart 的コマンドです。
 
 ** ■ wslln
 
-ln 的コマンドです。
+NTFS シンボリックリンクの作成に対応した ln 的コマンドです。
 
 Windows 10 Fall Creators Update の Windows Subsystem for Linux では、DrvFS ファイルシステム上
 にある NTFS シンボリックリンクを表示できるようになりました。ただし、ln コマンドで
