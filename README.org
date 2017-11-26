@@ -25,8 +25,6 @@ singleton な動きをする cygstart 的コマンドです。
 
 - [[https://www49.atwiki.jp/ntemacs/pages/63.html][singleton な動きをする cygstart 的コマンドを使うための設定 （WSL版）]]
 
-また、スクリプトの初めにあるコメントも参照ください。
-
 ** ■ wslln
 
 NTFS シンボリックリンクの作成に対応した ln 的コマンドです。
