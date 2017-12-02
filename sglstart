@@ -13,7 +13,7 @@ EOF
 
 function clean_all() {
     wslstart -c
-    exit 0
+    exit $?
 }
 
 while getopts :ch opt; do
