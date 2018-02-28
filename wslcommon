@@ -2,7 +2,7 @@
 
 function set_drvfs() {
     local IFS="|"
-    while read key value; do
+    while read -r key value; do
         drvfs["$key"]="$value"
     done < <(mount | grep 'type drvfs' | sed -r 's/(.*) on (.*) type drvfs .*/\2\|\1/')
 }
@@ -23,7 +23,8 @@ function winpath() {
     local winpath="$1"
     for key in "${!drvfs[@]}"; do
         if [[ $winpath =~ ^$key($|/) ]]; then
-            winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!${drvfs[$key]}/!")
+            value=$(echo "${drvfs[$key]}" | sed 's/\\/&&/g')
+            winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value/!")
             break
         fi
     done
@@ -35,7 +36,8 @@ function wslpath() {
     local wslpath="$1"
     for key in "${!drvfs[@]}"; do
         if [[ $wslpath =~ ^${drvfs[$key]}($|\\) ]]; then
-            wslpath=$(echo "$wslpath" | sed -r "s!^${drvfs[$key]}($|\\\\)!$key\1!")
+            value=$(echo "${drvfs[$key]}" | sed 's/\\/&&/g')
+            wslpath=$(echo "$wslpath" | sed -r "s!^$value($|\\\\)!$key\1!")
             break
         fi
     done
