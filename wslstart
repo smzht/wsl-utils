@@ -21,7 +21,7 @@ Usage: $command_name file
        $command_name -c
        $command_name -h
 EOF
-    exit 1
+    exit $1
 }
 
 temp_win_path=$(cmd echo %TEMP%)"\\$command_name"
@@ -39,10 +39,10 @@ while getopts :ch opt; do
             clean_all
             ;;
         h)
-            usage_exit
+            usage_exit 0
             ;;
         \?)
-            usage_exit
+            usage_exit 2
             ;;
     esac
 done
@@ -50,7 +50,7 @@ done
 shift $(($OPTIND - 1))
 
 if [ $# -ne 1 ]; then
-    usage_exit
+    usage_exit 2
 fi
 
 function clean() {
