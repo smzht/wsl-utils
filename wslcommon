@@ -10,9 +10,18 @@ function set_drvfs() {
 declare -A drvfs
 set_drvfs
 
-function check_drvfs() {
+function check_drvfs_key() {
     for key in "${!drvfs[@]}"; do
-        if [[ $1 =~ ^$key($|/) ]]; then
+        if [[ "$1" =~ ^"$key"($|/) ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+function check_drvfs_value() {
+    for key in "${!drvfs[@]}"; do
+        if [[ "$1" =~ ^"${drvfs[$key]}"($|\\) ]]; then
             return 0
         fi
     done
@@ -22,9 +31,12 @@ function check_drvfs() {
 function winpath() {
     local winpath="$1"
     for key in "${!drvfs[@]}"; do
-        if [[ $winpath =~ ^$key($|/) ]]; then
+        if [[ "$winpath" =~ ^"$key"($|/) ]]; then
             value=$(echo "${drvfs[$key]}" | sed 's/\\/&&/g')
-            winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value/!")
+            winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value\1!")
+            if [[ "$winpath" =~ :$ ]]; then
+                winpath+=/
+            fi
             break
         fi
     done
@@ -35,7 +47,7 @@ function winpath() {
 function wslpath() {
     local wslpath="$1"
     for key in "${!drvfs[@]}"; do
-        if [[ $wslpath =~ ^${drvfs[$key]}($|\\) ]]; then
+        if [[ "$wslpath" =~ ^"${drvfs[$key]}"($|\\) ]]; then
             value=$(echo "${drvfs[$key]}" | sed 's/\\/&&/g')
             wslpath=$(echo "$wslpath" | sed -r "s!^$value($|\\\\)!$key\1!")
             break
