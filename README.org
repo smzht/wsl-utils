@@ -25,6 +25,18 @@ singleton な動きをする cygstart 的コマンドです。
 
 - [[https://www49.atwiki.jp/ntemacs/pages/63.html][singleton な動きをする cygstart 的コマンドを使うための設定 （WSL版）]]
 
+** ■ wslpath
+
+cygpath 的コマンドです。
+
+常に絶対パスに対して機能する以外は、概ね cygpath コマンドと同様に動作します。
+
+Windows 10 Fall Creators Update リリース以降の Build で wslpath コマンドがサポートされたようですので、
+いずれ不要なコマンドになると思いますが、それまでの繋ぎとして利用いただければと思います。
+
+- https://msdn.microsoft.com/en-us/commandline/wsl/release-notes#build-17046
+- https://kledgeb.blogspot.jp/2017/11/wsl-120-build-17046wsl.html
+
 ** ■ wslln
 
 NTFS シンボリックリンクの作成に対応した ln 的コマンドです。

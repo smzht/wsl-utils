@@ -1,0 +1,75 @@
+#!/bin/bash
+# -*- mode: sh; coding: utf-8-unix -*-
+
+source wslcommon
+command_name=$(basename "$0")
+
+function usage_exit() {
+    cat << EOF >&2
+Usage: $command_name [-u|-w|-m] path
+       $command_name -h
+EOF
+    exit $1
+}
+
+win_path_flg=0
+wsl_path_flg=0
+mix_path_flg=0
+
+while getopts :awumh opt; do
+    case $opt in
+        w)
+            win_path_flg=1
+            ;;
+        u)
+            wsl_path_flg=1
+            ;;
+        m)
+            mix_path_flg=1
+            ;;
+        h)
+            usage_exit 0
+            ;;
+        \?)
+            usage_exit 2
+            ;;
+    esac
+done
+
+if [ $((win_path_flg + wsl_path_flg + mix_path_flg)) -ne 1 ]; then
+    usage_exit 2
+fi
+
+shift $(($OPTIND - 1))
+
+if [ $# -ne 1 ]; then
+    usage_exit 2
+fi
+
+function message() {
+    echo "$command_name: $1" >&2
+    exit 1
+}
+
+if [ $win_path_flg -eq 1 ]; then
+    if check_drvfs_key "$1"; then
+        winpath "$1"
+    else
+        message "変換できませんでした"
+    fi
+
+elif [ $mix_path_flg -eq 1 ]; then
+    if check_drvfs_key "$1"; then
+        winpath "$1" | sed 's!\\!/!g'
+    else
+        message "変換できませんでした"
+    fi
+
+elif [ $wsl_path_flg -eq 1 ]; then
+    winpath=$(echo "$1" | sed 's!/!\\!g')
+    if check_drvfs_value "$winpath"; then
+        wslpath "$winpath"
+    else
+        message "変換できませんでした"
+    fi
+fi
