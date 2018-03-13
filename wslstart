@@ -56,7 +56,7 @@ fi
 function clean() {
     {
         # rm -rf $working_dir とする方法もあるが、安全のため以下のとおりの処理としている
-        rm -f "$working_file"
+        rm -f "$working_wsl_path"
         rmdir "$working_dir"
     } 2> /dev/null
 }
@@ -94,16 +94,17 @@ if [ -e "$1" ]; then
                 working_dir=$(mktemp -d -p "$temp_wsl_path" 2> /dev/null)
 
                 if [ $? -eq 0 ]; then
+                    working_wsl_path="$working_dir"/$(basename "$wsl_path")
+                    working_win_path=$(winpath "$working_wsl_path")
+
                     trap '(sleep 60; until clean; do sleep 60; done) &' 0
 
                     cp "$wsl_path" "$working_dir"
-                    working_file=$(echo "$working_dir"/*)
-                    chmod a-wx "$working_file"
-                    win_path=$(winpath "$working_file")
+                    chmod a-wx "$working_wsl_path"
 
                     # 当初 start に /wait オプションを入れていたが、起動したアプリケーションにフォーカス
                     # が移らない原因となっていたため、オプションを外すこととした。
-                    start "$win_path"
+                    start "$working_win_path"
                 else
                     message '作業ディレクトリの作成に失敗しました'
                 fi

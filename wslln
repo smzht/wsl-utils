@@ -7,6 +7,7 @@ command_name=$(basename "$0")
 function usage_exit() {
     cat << EOF >&2
 Usage: $command_name [-s] [-f] [-a] target link
+       $command_name [-s] [-f] [-a] target
        $command_name -h
 EOF
     exit $1
@@ -74,17 +75,16 @@ if [ $symlink_flg -eq 1 ] && check_drvfs_key "$link_wsl_path"; then
             else
                 target_win_path=$(winpath "$1")
             fi
+
+            if [ -d "$link_wsl_path" ]; then
+                link_wsl_path+="/$target_basename"
+            fi
             link_win_path=$(winpath "$link_wsl_path")
 
             option=''
 
             if [ -d "$target_wsl_path" ]; then
                 option='/d'
-            fi
-
-            if [ -d "$link_wsl_path" ]; then
-                link_wsl_path+="/$target_basename"
-                link_win_path+="\\$target_basename"
             fi
 
             if [ $force_flg -eq 1 ]; then
