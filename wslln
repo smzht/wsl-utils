@@ -67,7 +67,7 @@ if [ $symlink_flg -eq 1 ] && check_drvfs_key "$link_wsl_path"; then
 
         # -a オプションが指定されたか、ターゲットファイルが絶対パスでないか、
         # 絶対パスの場合は DrvFs ファイルシステムを示すパスとなっているか？
-        if [ $absolute_flg -eq 1 ] || [[ ! $1 =~ ^/ ]] || check_drvfs_key "$1"; then
+        if [ $absolute_flg -eq 1 ] || [[ ! "$1" =~ ^/ ]] || check_drvfs_key "$1"; then
 
             if [ $absolute_flg -eq 1 ]; then
                 target_win_path=$(winpath "$target_wsl_path")
