@@ -133,7 +133,7 @@ EOF
 
     # DrvFs ファイルシステム上にショートカットを作成しようとしているか？
     if check_drvfs_key "$shortcut_wsl_path"; then
-        cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$shortcut_win_path"
+        cmd cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$shortcut_win_path"
     else
         working_dir=$(mktemp -d -p "$temp_wsl_path" 2> /dev/null)
 
@@ -143,7 +143,7 @@ EOF
 
             trap 'clean' 0
 
-            cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$working_win_path"
+            cmd cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$working_win_path"
             mv "$working_wsl_path" "$shortcut_wsl_path"
         else
             message '作業ディレクトリの作成に失敗しました'
