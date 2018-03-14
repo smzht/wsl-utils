@@ -78,7 +78,7 @@ ln コマンドには無いオプションとなります。以下で紹介し�
 
 以下の説明を参照してください。
 
-- [[https://www49.atwiki.jp/ntemacs/pages/73.html][WSL で NTFS シンボリックリンクを作成するための設定]]
+- [[https://www49.atwiki.jp/ntemacs/pages/73.html][WSL で NTFS シンボリックリンクや Windows ショートカットを作成するための設定]]
 
 ** ■ wslshortcut
 
@@ -108,3 +108,9 @@ Windows ショートカットを作成するためのコマンドです。
 しています。この作業ディレクトリを消すためのコマンドを表示するオプションです。
 コマンドを表示するだけのオプションですので、実行するためには sh にパイプで出力
 してください。
+
+*** emacs との連携
+
+以下の説明を参照してください。
+
+- [[https://www49.atwiki.jp/ntemacs/pages/73.html][WSL で NTFS シンボリックリンクや Windows ショートカットを作成するための設定]]
