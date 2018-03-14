@@ -99,7 +99,7 @@ if [ -e "$1" ]; then
 
                     trap '(sleep 60; until clean; do sleep 60; done) &' 0
 
-                    cp "$wsl_path" "$working_dir"
+                    cp "$wsl_path" "$working_wsl_path"
                     chmod a-wx "$working_wsl_path"
 
                     # 当初 start に /wait オプションを入れていたが、起動したアプリケーションにフォーカス

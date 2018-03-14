@@ -128,7 +128,6 @@ EOF
             message 'ショートカットファイルが既に存在します'
         fi
     else
-        # rm で削除できるものは削除する（一般ファイルとか、シンボリックリンクファイルとか）
         rm -f "$shortcut_wsl_path" 2> /dev/null
     fi
 
@@ -151,5 +150,5 @@ EOF
         fi
     fi
 else
-    message 'ターゲットファイルが DrvFs ファイルシステム上のファイルを指定してください'
+    message 'ターゲットファイルは DrvFs ファイルシステム上のファイルを指定してください'
 fi
