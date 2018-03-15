@@ -31,8 +31,9 @@ cygpath 的コマンドです。
 
 常に絶対パスに対して機能する以外は、概ね cygpath コマンドと同様に動作します。
 
-Windows 10 Fall Creators Update リリース以降の Build で wslpath コマンドがサポートされたようですので、
-いずれ不要なコマンドになると思いますが、それまでの繋ぎとして利用いただければと思います。
+Windows 10 Fall Creators Update リリース以降の Build 17046 で wslpath コマンドがサポート
+された様ですので、いずれ不要なコマンドになると思いますが、それまでの繋ぎとして利用いただければ
+と思います。
 
 - https://msdn.microsoft.com/en-us/commandline/wsl/release-notes#build-17046
 - https://kledgeb.blogspot.jp/2017/11/wsl-120-build-17046wsl.html
@@ -47,6 +48,13 @@ NTFS シンボリックリンクを作成することはできません。
 本コマンドは、DrvFs ファイルシステム上にシンボリックリンクを作成する場合は NTFS シンボリックリンク
 を、DrvFs ファイルシステム以外にシンボリックリンクを作成する場合は WSL 本来のシンボリックリンク
 を作成するように動作する ln と mklink の機能をラッパーしたコマンドです。
+
+Windows 10 Fall Creators Update リリース以降の Build 17046 では、DrvFs 上での NTFS 
+シンボリックリンクの作成がサポートされた様ですが、リンクターゲットが相対パスである必要がある
+など、幾つかの制約が有るようです。
+
+- https://msdn.microsoft.com/en-us/commandline/wsl/release-notes#build-17046
+- https://kledgeb.blogspot.jp/2017/11/wsl-120-build-17046wsl.html
 
 *** コマンドオプション
 
