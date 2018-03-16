@@ -88,11 +88,11 @@ ln コマンドには無いオプションとなります。以下で紹介し�
 
 - [[https://www49.atwiki.jp/ntemacs/pages/73.html][WSL で NTFS シンボリックリンクや Windows ショートカットを作成するための設定]]
 
-** ■ wslshortcut
+** ■ wslsc
 
 Windows ショートカットを作成するためのコマンドです。
 
-wslshortcut target shortcut 実行時のショートカット作成ルールは、以下のとおりとなります。
+wslsc target shortcut 実行時のショートカット作成ルールは、以下のとおりとなります。
 
 |---------------------------+-------------------------+----------------------------|
 | target が示すのパスの位置 | shortcut を作成する場所 | 動作                       |
