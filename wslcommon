@@ -3,8 +3,8 @@
 function set_drvfs() {
     local IFS="|"
     while read -r key value; do
-        ascii=$(echo -n "$value" | sed -r 's!^\\(.)\..*!\1!')
-        if [ ${#ascii} -eq 1 ]; then
+        ascii=$(echo -n "$value" | sed -n -r 's!^\\(.)\..*!\1!p')
+        if [ -n $ascii ]; then
             value=$(echo -n "$value" | sed -r 's!(^\\).(\.)!\\\1'"$(printf '%o' \'$ascii)"'\2!')
         fi
         drvfs["$key"]="$value"
