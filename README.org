@@ -4,8 +4,15 @@
 
 Windows Subsystem for Linux で動作するユティリティコマンド群です。
 
-wsl で始まる各コマンドは wslcommon をインポートしていますので、コマンドと同じ場所（コマンドパスが通った
-ディレクトリ）に格納してご利用ください。
+wsl で始まる各コマンドは wslcommon と wslinit をインポートしていますので、コマンドと同じ場所
+（コマンドパスが通ったディレクトリ）に格納してご利用ください。
+
+また、.bash_profile や .bashrc に以下の行を追加する（オプション）ことで、wsl コマンドの高速化
+が図られます。
+
+#+BEGIN_EXAMPLE
+source wslinit
+#+END_EXAMPLE
 
 ** ■ wslstart
 
