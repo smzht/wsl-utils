@@ -8,9 +8,16 @@ wsl で始まる各コマンドは wslcommon と wslinit をインポートし�
 （コマンドパスが通ったディレクトリ）に格納してご利用ください。
 
 また、DrvFs を多くマウントしている場合は、.bash_profile を以下の様に設定してください。
-wsl コマンドの高速化 が図られます。
+wsl コマンドの高速化 が図られます。（DrvFs のマウントを追加する場合には、以下の mount 行
+を追加した後、コンソールを再起動してください。）
 
 #+BEGIN_EXAMPLE
+sudo sh << 'EOF'
+mount -t drvfs '\\<コンピュータ名\<共有名>' /mnt/share1
+mount -t drvfs '\\<コンピュータ名\<共有名>' /mnt/share2
+mount -t drvfs '\\<コンピュータ名\<共有名>' /mnt/share3
+EOF
+
 [ -r ~/.bashrc ] && source ~/.bashrc
 source wslinit
 #+END_EXAMPLE
