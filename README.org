@@ -7,9 +7,15 @@ Windows Subsystem for Linux で動作するユティリティコマンド群で�
 wsl で始まる各コマンドは wslcommon と wslinit をインポートしていますので、コマンドと同じ場所
 （コマンドパスが通ったディレクトリ）に格納してご利用ください。
 
-また、DrvFs を多くマウントしている場合は、.bash_profile を以下の様に設定してください。
-wsl コマンドの高速化 が図られます。（DrvFs のマウントを追加する場合には、以下の mount 行
-を追加した後、コンソールを再起動してください。）
+また、DrvFs を多くマウントしている場合は、.bash_profile の .bashrc を実行している行の後に、
+以下の設定を追加してください。 wsl コマンドの高速化 が図られます。 
+
+#+BEGIN_EXAMPLE
+source wslinit
+#+END_EXAMPLE
+
+実際には、以下のような .bash_profile を作成するのが良いと思います。mount 行を追加した場合は、
+WSL のコンソールを再起動してください。
 
 #+BEGIN_EXAMPLE
 sudo sh << 'EOF'
@@ -21,6 +27,14 @@ EOF
 [ -r ~/.bashrc ] && source ~/.bashrc
 source wslinit
 #+END_EXAMPLE
+
+認証を必要とするネットワークボリュームを利用する場合は、予め以下の設定により認証情報を
+記憶させる必要があります。
+
+- https://www.ipentec.com/document/windows-delete-stored-authentication-information
+
+ネットワークボリュームにアクセスした際に開く認証画面で、「資格情報を記憶する」にチェック
+を入れることでも登録できます。
 
 ** ■ wslstart
 
