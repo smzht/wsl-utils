@@ -19,9 +19,9 @@ WSL のコンソールを再起動してください。
 
 #+BEGIN_EXAMPLE
 sudo sh << 'EOF'
-mount -t drvfs '\\<コンピュータ名\<共有名>' /mnt/share1
-mount -t drvfs '\\<コンピュータ名\<共有名>' /mnt/share2
-mount -t drvfs '\\<コンピュータ名\<共有名>' /mnt/share3
+mount -t drvfs '\\<コンピュータ名1>\<共有名>' /mnt/share1
+mount -t drvfs '\\<コンピュータ名2>\<共有名>' /mnt/share2
+mount -t drvfs '\\<コンピュータ名3>\<共有名>' /mnt/share3
 EOF
 
 [ -r ~/.bashrc ] && source ~/.bashrc
