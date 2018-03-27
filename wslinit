@@ -1,14 +1,13 @@
 # -*- mode: sh; coding: utf-8-unix -*-
 
 export DRVFS=$(
-    declare -A drvfs
-    IFS="|"
-    while read -r key value; do
-        ascii=$(echo -n "$value" | sed -n -r 's/^\\(.)\..*/\1/p')
-        if [ -n $ascii ]; then
-            value=$(echo -n "$value" | sed -r 's/(^\\).(\.)/\\\1'"$(printf '%o' \'$ascii)"'\2/')
+    declare -a drvfs
+    while read -r line; do
+        ascii=$(echo "$line" | sed -n -r 's/.*\|\\(.)\..*/\1/p')
+        if [ -n "$ascii" ]; then
+            line=$(echo "$line" | sed -r 's/(\|\\).(\.)/\1\\'"$(printf '%o' \'$ascii)"'\2/')
         fi
-        drvfs["$key"]="$value"
+        drvfs=("${drvfs[@]}" "$line")
     done < <(mount | grep 'type drvfs' | sed -r 's/(.*) on (.*) type drvfs .*/\2\|\1/')
     declare -p drvfs
 )
