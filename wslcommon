@@ -6,6 +6,9 @@ fi
 eval "$DRVFS"
 
 function check_drvfs_key() {
+    local i
+    local key
+    local value
     for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
         IFS='|' read -r key value <<< "${drvfs[$i]}"
         if [[ "$1" =~ ^"$key"($|/) ]]; then
@@ -16,6 +19,9 @@ function check_drvfs_key() {
 }
 
 function check_drvfs_value() {
+    local i
+    local key
+    local value
     for ((i = 0; i < ${#drvfs[@]}; i++)); do
         IFS='|' read -r key value <<< "${drvfs[$i]}"
         if [[ "$1" =~ ^"$value"($|\\) ]]; then
@@ -27,6 +33,9 @@ function check_drvfs_value() {
 
 function winpath() {
     local winpath="$1"
+    local i
+    local key
+    local value
     for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
         IFS='|' read -r key value <<< "${drvfs[$i]}"
         if [[ "$winpath" =~ ^"$key"($|/) ]]; then
@@ -44,6 +53,9 @@ function winpath() {
 
 function wslpath() {
     local wslpath="$1"
+    local i
+    local key
+    local value
     for ((i = 0; i < ${#drvfs[@]}; i++)); do
         IFS='|' read -r key value <<< "${drvfs[$i]}"
         if [[ "$wslpath" =~ ^"$value"($|\\) ]]; then
