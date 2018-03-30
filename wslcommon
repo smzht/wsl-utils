@@ -73,12 +73,12 @@ function cmd0() {
     return ${PIPESTATUS[0]}
 }
 
-userprofile_win_path=$(cmd0 echo %USERPROFILE% 2> /dev/null)
-userprofile_wsl_path=$(wslpath "$userprofile_win_path")
+documents_win_path=$(cmd0 echo %USERPROFILE% 2> /dev/null)'\Documents'
+documents_wsl_path=$(wslpath "$documents_win_path")
 
 function cmd() {
     (
-        cd "$userprofile_wsl_path"
+        cd "$documents_wsl_path"
         cmd0 "$@"
     )
 }
