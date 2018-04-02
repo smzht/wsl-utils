@@ -52,23 +52,25 @@ function message() {
 }
 
 if [ $win_path_flg -eq 1 ]; then
-    if check_drvfs_key "$1"; then
-        winpath "$1"
+    wsl_path=$(readlink -m -- "$1")
+    if check_drvfs_key "$wsl_path"; then
+        winpath "$wsl_path"
     else
         message "変換できませんでした"
     fi
 
 elif [ $mix_path_flg -eq 1 ]; then
-    if check_drvfs_key "$1"; then
-        winpath "$1" | sed 's!\\!/!g'
+    wsl_path=$(readlink -m -- "$1")
+    if check_drvfs_key "$wsl_path"; then
+        winpath "$wsl_path" | sed 's!\\!/!g'
     else
         message "変換できませんでした"
     fi
 
 elif [ $wsl_path_flg -eq 1 ]; then
-    winpath=$(echo "$1" | sed 's!/!\\!g')
-    if check_drvfs_value "$winpath"; then
-        wslpath "$winpath"
+    win_path=$(echo "$1" | sed 's!/!\\!g')
+    if check_drvfs_value "$win_path"; then
+        wslpath "$win_path"
     else
         message "変換できませんでした"
     fi
