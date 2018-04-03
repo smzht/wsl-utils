@@ -1,0 +1,65 @@
+#!/bin/bash
+# -*- mode: sh; coding: utf-8-unix -*-
+
+# Cygwin の bash.exe の場所を絶対パスで指定してください
+cygsh_path="/mnt/c/gnupack/app/cygwin/cygwin/bin/bash.exe"
+
+source wslcommon
+
+command_name=$(basename "$0")
+
+function usage_exit() {
+    cat << EOF >&2
+Usage: $command_name command args
+       $command_name -h
+EOF
+    exit $1
+}
+
+while getopts :h opt; do
+    case $opt in
+        h)
+            usage_exit 0
+            ;;
+        \?)
+            usage_exit 2
+            ;;
+    esac
+done
+
+shift $(($OPTIND - 1))
+
+if [ $# -lt 1 ]; then
+    usage_exit 2
+fi
+
+function message() {
+    echo "$command_name: $1" >&2
+    exit 1
+}
+
+current_wsl_path=$(readlink -m -- "$PWD")
+
+# カレントディレクトリが DrvFs ファイルシステム上か？
+if check_drvfs_key "$current_wsl_path"; then
+
+    shell_command_win_path=$("$cygsh_path" -l -c 'cygpath -w $(mktemp)')
+    shell_command_wsl_path=$(wslpath "$shell_command_win_path")
+
+    trap 'rm -f "$shell_command_wsl_path"' 0
+
+    current_win_path=$(winpath "$current_wsl_path")
+    quote_pwd=$(printf '%q' "$current_win_path")
+    quote_cmd=''
+
+    for arg in "$@"; do
+        quote_arg=$(printf '%q' "$arg")
+        quote_cmd="$quote_cmd $quote_arg"
+    done
+
+    echo "cd $quote_pwd; $quote_cmd" > "$shell_command_wsl_path"
+
+    "$cygsh_path" -l "$shell_command_win_path"
+else
+    message "カレントディレクトリが DrvFs ファイルシステム上ではありません"
+fi

@@ -151,3 +151,24 @@ wslsc target shortcut 実行時のショートカット作成ルールは、以�
 以下の説明を参照してください。
 
 - [[https://www49.atwiki.jp/ntemacs/pages/73.html][WSL で NTFS シンボリックリンクや Windows ショートカットを作成するための設定]]
+
+** ■ cygsh
+
+WSL から Cygwin のコマンドを実行するためのコマンドです。
+
+Cygwin 環境で作成したシェルスクリプト等を WSL のシェルから実行できるようにするために
+作成しました。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+cygsh command args
+#+END_EXAMPLE
+
+*** 使用例
+
+#+BEGIN_EXAMPLE
+cygsh ls -la
+cygsh cygstart notepad
+cygsh sh shell-script
+#+END_EXAMPLE
