@@ -170,5 +170,21 @@ cygsh command args
 #+BEGIN_EXAMPLE
 cygsh ls -la
 cygsh cygstart notepad
+cygsh cygstart .
 cygsh sh shell-script
+#+END_EXAMPLE
+
+*** 注意事項
+
+gnupack-13 系の .bashrc には、stty の設定が含まれています。この設定は、Cygwin の
+bash.exe を -l オプション付きで実行した際にエラーを出力します。
+
+エラーは stty 文を以下のとおりに if 文で囲むことで回避できますので、必要であれば
+設定をおこなってください。
+
+＜設定例＞
+#+BEGIN_EXAMPLE
+if [ -t 1 ]; then
+    stty -ixon
+fi
 #+END_EXAMPLE
