@@ -54,7 +54,7 @@ if check_drvfs_key "$current_wsl_path"; then
 
     for arg in "$@"; do
         quote_arg=$(printf '%q' "$arg")
-        quote_cmd="$quote_cmd $quote_arg"
+        quote_cmd+=" $quote_arg"
     done
 
     echo "cd $quote_pwd; $quote_cmd" > "$shell_command_wsl_path"

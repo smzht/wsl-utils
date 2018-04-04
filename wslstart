@@ -17,7 +17,7 @@ command_name=$(basename "$0")
 
 function usage_exit() {
     cat << EOF >&2
-Usage: $command_name file
+Usage: $command_name target
        $command_name -c
        $command_name -h
 EOF

@@ -4,7 +4,7 @@
 function usage_exit() {
     local command_name=$(basename "$0")
     cat << EOF >&2
-Usage: $command_name file
+Usage: $command_name target
        $command_name -c
        $command_name -h
 EOF
