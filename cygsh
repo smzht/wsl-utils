@@ -43,7 +43,7 @@ current_wsl_path=$(readlink -m -- "$PWD")
 # カレントディレクトリが DrvFs ファイルシステム上か？
 if check_drvfs_key "$current_wsl_path"; then
 
-    shell_command_win_path=$("$cygsh_path" -l -c 'cygpath -w $(mktemp)')
+    shell_command_win_path=$("$cygsh_path" -l -c 'cygpath -w $(mktemp)' 2> /dev/null)
     shell_command_wsl_path=$(wslpath "$shell_command_win_path")
 
     trap 'rm -f "$shell_command_wsl_path"' 0
