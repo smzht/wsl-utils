@@ -176,11 +176,14 @@ cygsh sh shell-script
 
 *** 注意事項
 
-gnupack-13 系の .bashrc には、stty の設定が含まれています。この設定は、Cygwin の
-bash.exe を -l オプション付きで実行した際にエラーを出力します。
+cygsh は tty を必要とするコマンドは動作しません。（cygsh tty の実行で確認できます。）
+
+cygsh では、Cygwin の bash.exe コマンドを -l オプション付きで実行しているのですが、
+gnupack-13 系の .bashrc には stty の設定が含まれており、これが cygsh 実行時にエラー
+を出力します。
 
 エラーは stty 文を以下のとおりに if 文で囲むことで回避できますので、必要であれば
-設定をおこなってください。
+対策をおこなってください。
 
 ＜設定例＞
 #+BEGIN_EXAMPLE
