@@ -36,9 +36,16 @@ while getopts :awumh opt; do
     esac
 done
 
-if [ $((win_path_flg + wsl_path_flg + mix_path_flg)) -ne 1 ]; then
-    wsl_path_flg=1
-fi
+case $((win_path_flg + wsl_path_flg + mix_path_flg)) in
+    0)
+        wsl_path_flg=1
+        ;;
+    1)
+        ;;
+    *)
+        usage_exit 2
+        ;;
+esac
 
 shift $(($OPTIND - 1))
 
