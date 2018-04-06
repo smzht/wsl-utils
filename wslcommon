@@ -6,66 +6,78 @@ fi
 eval "$DRVFS"
 
 function check_drvfs_key() {
-    local i
-    local key
-    local value
-    for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
-        IFS='|' read -r key value <<< "${drvfs[$i]}"
-        if [[ "$1" =~ ^"$key"($|/) ]]; then
-            return 0
-        fi
-    done
-    return 1
+    (
+        shopt -s nocasematch
+        local i
+        local key
+        local value
+        for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
+            IFS='|' read -r key value <<< "${drvfs[$i]}"
+            if [[ "$1" =~ ^"$key"($|/) ]]; then
+                return 0
+            fi
+        done
+        return 1
+    )
 }
 
 function check_drvfs_value() {
-    local i
-    local key
-    local value
-    for ((i = 0; i < ${#drvfs[@]}; i++)); do
-        IFS='|' read -r key value <<< "${drvfs[$i]}"
-        if [[ "$1" =~ ^"$value"($|\\) ]]; then
-            return 0
-        fi
-    done
-    return 1
+    (
+        shopt -s nocasematch
+        local i
+        local key
+        local value
+        for ((i = 0; i < ${#drvfs[@]}; i++)); do
+            IFS='|' read -r key value <<< "${drvfs[$i]}"
+            if [[ "$1" =~ ^"$value"($|\\) ]]; then
+                return 0
+            fi
+        done
+        return 1
+    )
 }
 
 function winpath() {
-    local winpath="$1"
-    local i
-    local key
-    local value
-    for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
-        IFS='|' read -r key value <<< "${drvfs[$i]}"
-        if [[ "$winpath" =~ ^"$key"($|/) ]]; then
-            value=$(echo "$value" | sed 's/\\/&&/g')
-            winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value\1!")
-            if [[ "$winpath" =~ :$ ]]; then
-                winpath+=/
+    (
+        shopt -s nocasematch
+        local winpath="$1"
+        local i
+        local key
+        local value
+        for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
+            IFS='|' read -r key value <<< "${drvfs[$i]}"
+            if [[ "$winpath" =~ ^"$key"($|/) ]]; then
+                value=$(echo "$value" | sed 's/\\/&&/g')
+                winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value\1!")
+                if [[ "$winpath" =~ :$ ]]; then
+                    winpath+=/
+                fi
+                break
             fi
-            break
-        fi
-    done
-    winpath=$(echo "$winpath" | sed 's!/!\\!g')
-    echo "$winpath"
+        done
+        winpath=$(echo "$winpath" | sed 's!/!\\!g')
+        echo "$winpath"
+    )
 }
 
 function wslpath() {
-    local wslpath="$1"
-    local i
-    local key
-    local value
-    for ((i = 0; i < ${#drvfs[@]}; i++)); do
-        IFS='|' read -r key value <<< "${drvfs[$i]}"
-        if [[ "$wslpath" =~ ^"$value"($|\\) ]]; then
-            value=$(echo "$value" | sed 's/\\/&&/g')
-            wslpath=$(echo "$wslpath" | sed -r "s!^$value($|\\\\)!$key\1!")
-            break
-        fi
-    done
-    wslpath=$(echo "$wslpath" | sed 's!\\!/!g')
-    echo "$wslpath"
+    (
+        shopt -s nocasematch
+        local wslpath="$1"
+        local i
+        local key
+        local value
+        for ((i = 0; i < ${#drvfs[@]}; i++)); do
+            IFS='|' read -r key value <<< "${drvfs[$i]}"
+            if [[ "$wslpath" =~ ^"$value"($|\\) ]]; then
+                value=$(echo "$value" | sed 's/\\/&&/g')
+                wslpath=$(echo "$wslpath" | sed -r "s!^$value($|\\\\)!$key\1!")
+                break
+            fi
+        done
+        wslpath=$(echo "$wslpath" | sed 's!\\!/!g')
+        echo "$wslpath"
+    )
 }
 
 function cmd0() {
