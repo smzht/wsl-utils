@@ -1,7 +1,7 @@
 #!/bin/bash
 # -*- mode: sh; coding: utf-8-unix -*-
 
-# Cygwin の bash.exe の場所を絶対パスで指定してください
+# Cygwin の bash.exe の在り処を絶対パスで指定してください
 cygsh_path="/mnt/c/gnupack/app/cygwin/cygwin/bin/bash.exe"
 
 source wslcommon
@@ -57,7 +57,7 @@ if check_drvfs_key "$current_wsl_path"; then
         quote_cmd+=" $quote_arg"
     done
 
-    echo "cd $quote_pwd; $quote_cmd" > "$shell_command_wsl_path"
+    echo "LANG=$LANG; cd $quote_pwd; $quote_cmd" > "$shell_command_wsl_path"
 
     "$cygsh_path" -l "$shell_command_win_path"
 else
