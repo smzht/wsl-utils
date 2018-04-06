@@ -7,7 +7,7 @@ eval "$DRVFS"
 
 function check_drvfs_key() {
     (
-        shopt -s nocasematch
+        shopt -u nocasematch
         local i
         local key
         local value
@@ -39,7 +39,7 @@ function check_drvfs_value() {
 
 function winpath() {
     (
-        shopt -s nocasematch
+        shopt -u nocasematch
         local winpath="$1"
         local i
         local key
@@ -48,7 +48,7 @@ function winpath() {
             IFS='|' read -r key value <<< "${drvfs[$i]}"
             if [[ "$winpath" =~ ^"$key"($|/) ]]; then
                 value=$(echo "$value" | sed 's/\\/&&/g')
-                winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value\1!i")
+                winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value\1!")
                 if [[ "$winpath" =~ :$ ]]; then
                     winpath+=/
                 fi
