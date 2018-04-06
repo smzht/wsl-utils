@@ -4,7 +4,7 @@
 
 Windows Subsystem for Linux で動作するユティリティコマンド群です。
 
-wsl で始まる各コマンドは wslcommon と wslinit をインポートしていますので、コマンドと同じ場所
+各コマンドは wslcommon と wslinit をインポートしていますので、コマンドと同じ場所
 （コマンドパスが通ったディレクトリ）に格納してご利用ください。
 
 また、DrvFs を多くマウントしている場合は、.bash_profile の .bashrc を実行している行の後に、
@@ -40,6 +40,14 @@ source wslinit
 
 cygstart 的コマンドです。
 
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+wslstart target
+wslstart -c
+wslstart -h
+#+END_EXAMPLE
+
 詳しくは以下を参照してください。
 
 - [[https://www49.atwiki.jp/ntemacs/pages/62.html][WSL で cygstart 的コマンドを使うための設定]]
@@ -49,6 +57,14 @@ cygstart 的コマンドです。
 ** ■ sglstart
 
 singleton な動きをする cygstart 的コマンドです。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+sglstart target
+sglstart -c
+sglstart -h
+#+END_EXAMPLE
 
 詳しくは以下を参照してください。
 
@@ -67,6 +83,27 @@ Windows 10 Fall Creators Update リリース以降の Build 17046 で wslpath �
 - https://msdn.microsoft.com/en-us/commandline/wsl/release-notes#build-17046
 - https://kledgeb.blogspot.jp/2017/11/wsl-120-build-17046wsl.html
 
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+wslpath [-u|-w|-m] path
+wslpath -h
+#+END_EXAMPLE
+
+*** コマンドオプション
+
+**** ● -u オプション
+
+パス名を UNIX 形式で表示します。（デフォルトの動作）
+
+**** ● -w オプション
+
+パス名を Windows 形式で表示します。
+
+**** ● -m オプション
+
+-w オプションに似ています、「¥」の代わりに「/」を使用します。
+
 ** ■ wslln
 
 NTFS シンボリックリンクの作成に対応した ln 的コマンドです。
@@ -84,6 +121,14 @@ Windows 10 Fall Creators Update リリース以降の Build 17046 では、DrvFs
 
 - https://msdn.microsoft.com/en-us/commandline/wsl/release-notes#build-17046
 - https://kledgeb.blogspot.jp/2017/11/wsl-120-build-17046wsl.html
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+wslln [-s] [-f] [-a] target link
+wslln [-s] [-f] [-a] target
+wslln -h
+#+END_EXAMPLE
 
 *** コマンドオプション
 
@@ -120,6 +165,15 @@ ln コマンドには無いオプションとなります。以下で紹介し�
 ** ■ wslsc
 
 Windows ショートカットを作成するためのコマンドです。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+wslsc [-f] target shortcut
+wslsc [-f] target
+wslsc -c
+wslsc -h
+#+END_EXAMPLE
 
 wslsc target shortcut 実行時のショートカット作成ルールは、以下のとおりとなります。
 
@@ -191,3 +245,6 @@ if [ -t 1 ]; then
     stty -ixon
 fi
 #+END_EXAMPLE
+
+また、Cygwin の LANG 環境変数の設定値は WSL の設定値と同じものである必要があります。
+cygsh コマンド内では、この対応を行っています。
