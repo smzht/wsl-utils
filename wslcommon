@@ -48,7 +48,7 @@ function winpath() {
             IFS='|' read -r key value <<< "${drvfs[$i]}"
             if [[ "$winpath" =~ ^"$key"($|/) ]]; then
                 value=$(echo "$value" | sed 's/\\/&&/g')
-                winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value\1!")
+                winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value\1!i")
                 if [[ "$winpath" =~ :$ ]]; then
                     winpath+=/
                 fi
@@ -71,7 +71,7 @@ function wslpath() {
             IFS='|' read -r key value <<< "${drvfs[$i]}"
             if [[ "$wslpath" =~ ^"$value"($|\\) ]]; then
                 value=$(echo "$value" | sed 's/\\/&&/g')
-                wslpath=$(echo "$wslpath" | sed -r "s!^$value($|\\\\)!$key\1!")
+                wslpath=$(echo "$wslpath" | sed -r "s!^$value($|\\\\)!$key\1!i")
                 break
             fi
         done
