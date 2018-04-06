@@ -37,7 +37,7 @@ while getopts :awumh opt; do
 done
 
 if [ $((win_path_flg + wsl_path_flg + mix_path_flg)) -ne 1 ]; then
-    usage_exit 2
+    wsl_path_flg=1
 fi
 
 shift $(($OPTIND - 1))
