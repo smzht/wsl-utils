@@ -213,6 +213,9 @@ WSL から Cygwin のコマンドを実行するためのコマンドです。
 Cygwin 環境で作成したシェルスクリプト等を WSL のシェルから実行できるようにするために
 作成しました。
 
+コマンドスクリプトの初めに Cygwin の bash.exe の在り処を指定する変数がありますので、
+利用者の環境に合わせて修正し、ご利用ください。
+
 *** 使用方法
 
 #+BEGIN_EXAMPLE
@@ -225,17 +228,20 @@ cygsh command args
 cygsh ls -la
 cygsh cygstart notepad
 cygsh cygstart .
-cygsh sh shell-script
+cygsh shell-script
+cygsh bash shell-script
+cygsh eval 'echo $PATH'
 #+END_EXAMPLE
 
 *** 注意事項
 
-cygsh は tty を必要とするコマンドは動作しません。（cygsh tty の実行で確認できます。）
+**** ● cygsh は tty を必要とするコマンドは動作しません
 
-cygsh では、Cygwin の bash.exe コマンドを -l オプション付きで実行しているのですが、
-gnupack-13 系の .bashrc には stty の設定が含まれており、これが cygsh 実行時にエラー
-を出力します。stty 文を以下のとおりに if 文で囲むことでエラーを回避できますので、
-必要であれば対策をしてください。
+cygsh では Cygwin の bash.exe コマンドを -l オプション付きで実行しています。
+Cygwin の環境に gnupack-13 系を利用していた場合、提供される .bashrc には stty の
+設定が含まれており、これが cygsh 実行時にエラーを出力します。
+stty 文を以下のとおりに if 文で囲むことでエラーを回避できますので、必要であれば
+対策をしてください。
 
 ＜設定例＞
 #+BEGIN_EXAMPLE
@@ -244,10 +250,14 @@ if [ -t 1 ]; then
 fi
 #+END_EXAMPLE
 
-また、gnupack では startup_config.ini で環境変数の設定が可能ですが、cygsh ではその
-設定が有効になりません。startup_config.ini で PATH の設定をしている場合など、留意
-してください。
+**** ● gnupack の startup_config.ini で行っている設定は有効になりません
 
-最後に、cygsh では Cygwin の LANG 環境変数を WSL の設定値と同じものにしてコマンドを
-実行しています。（コマンド出力の文字化け回避のため。）もし、Cygwin を cp932 で使って
-いた場合には、スクリプトの文字コードを変更するなど、調整が必要となる可能性があります。
+gnupack では startup_config.ini で環境変数の設定が可能となっています。しかし、cygsh
+ではその設定が有効になりません。startup_config.ini で PATH などの環境設定を設定して
+いる場合は、.bashrc に設定を移すなど、対応が必要となります。
+
+**** ● Cygwin のコマンドは WSL の LANG 環境変数の値で実行します
+
+cygsh では Cygwin のコマンドを WSL の LANG 環境変数の値で実行します。これは、コマンド
+出力の文字化けを回避のために行っている対策です。もし、Cygwin を cp932 で使っていた場合
+には、スクリプトの文字コードを変更するなど、調整が必要となる可能性があります。
