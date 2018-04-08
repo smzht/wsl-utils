@@ -220,6 +220,7 @@ Cygwin 環境で作成したシェルスクリプト等を WSL のシェルか�
 
 #+BEGIN_EXAMPLE
 cygsh command args
+cygsh -h
 #+END_EXAMPLE
 
 *** 使用例
