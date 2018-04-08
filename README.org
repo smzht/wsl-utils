@@ -258,7 +258,7 @@ if [ -t 1 ]; then
 fi
 #+END_EXAMPLE
 
-**** ● gnupack の startup_config.ini で行っている設定は有効になりません
+**** ● gnupack の startup_config.ini で行っている環境変数の設定は有効になりません
 
 gnupack では startup_config.ini で環境変数の設定が可能となっています。しかし、
 cygsh ではその設定が有効になりません。startup_config.ini で PATH などの環境設定
