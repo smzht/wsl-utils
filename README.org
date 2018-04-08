@@ -238,10 +238,18 @@ cygsh eval 'echo $PATH'
 **** ● cygsh は tty を必要とするコマンドは動作しません
 
 cygsh では Cygwin の bash.exe コマンドを -l オプション付きで実行しています。
-Cygwin の環境に gnupack-13 系を利用していた場合、提供される .bashrc には stty の
-設定が含まれており、これが cygsh 実行時にエラーを出力します。
-stty 文を以下のとおりに if 文で囲むことでエラーを回避できますので、必要であれば
-対策をしてください。
+Cygwin の環境に gnupack-13 系を利用している場合、.bash_profile が存在しない
+ために .bashrc が実行されていない可能性があります。この場合は、Cygwin の
+ホームディレクトリに以下の内容の .bash_profile ファイルを作成してください。
+
+＜~/.bash_profile＞
+#+BEGIN_EXAMPLE
+[ -r ~/.bashrc ] && source .bashrc
+#+END_EXAMPLE
+
+また、gnupack-13 系で提供される .bashrc には stty の設定が含まれており、
+これが cygsh 実行時にエラーを出力します。stty 文を以下のとおりに if 文で囲む
+ことでエラーを回避できますので、必要であれば対策をしてください。
 
 ＜設定例＞
 #+BEGIN_EXAMPLE
@@ -252,12 +260,13 @@ fi
 
 **** ● gnupack の startup_config.ini で行っている設定は有効になりません
 
-gnupack では startup_config.ini で環境変数の設定が可能となっています。しかし、cygsh
-ではその設定が有効になりません。startup_config.ini で PATH などの環境設定を設定して
-いる場合は、.bashrc に設定を移すなど、対応が必要となります。
+gnupack では startup_config.ini で環境変数の設定が可能となっています。しかし、
+cygsh ではその設定が有効になりません。startup_config.ini で PATH などの環境設定
+を設定している場合は、.bashrc に設定を移すなど、対応が必要となります。
 
 **** ● Cygwin のコマンドは WSL の LANG 環境変数の値で実行します
 
-cygsh では Cygwin のコマンドを WSL の LANG 環境変数の値で実行します。これは、コマンド
-出力の文字化けを回避のために行っている対策です。もし、Cygwin を cp932 で使っていた場合
-には、スクリプトの文字コードを変更するなど、調整が必要となる可能性があります。
+cygsh では Cygwin のコマンドを WSL の LANG 環境変数の値で実行します。これは、
+コマンド出力の文字化けを回避するために行っています。もし、Cygwin を cp932 で
+使っていた場合には、スクリプトの文字コードを変更するなど、調整が必要となる
+可能性があります。
