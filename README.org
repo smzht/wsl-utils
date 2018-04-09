@@ -226,7 +226,7 @@ cygsh -h
 *** 使用例
 
 #+BEGIN_EXAMPLE
-cygsh ls -la
+cygsh uname -a
 cygsh cygstart notepad
 cygsh cygstart .
 cygsh shell-script
@@ -234,13 +234,11 @@ cygsh bash shell-script
 cygsh eval 'echo $PATH'
 #+END_EXAMPLE
 
-wslstart コマンドを作成しているので不要と思いますが、以下のシェルスクリプトで
-cygstart が実現できます。
+wslstart コマンドを作成しているので不要と思いますが、以下のような alias を
+定義することで利用しやすくなると思います。
 
 #+BEGIN_EXAMPLE
-#!/bin/sh
-
-cygsh cygstart "$@"
+alias open="cygsh cygstart"
 #+END_EXAMPLE
 
 *** 注意事項
