@@ -234,6 +234,15 @@ cygsh bash shell-script
 cygsh eval 'echo $PATH'
 #+END_EXAMPLE
 
+wslstart コマンドを作成しているので不要と思いますが、以下のシェルスクリプトで
+cygstart が実現できます。
+
+#+BEGIN_EXAMPLE
+#!/bin/sh
+
+cygsh cygstart "$@"
+#+END_EXAMPLE
+
 *** 注意事項
 
 **** ● ホームディレクトリに .bash_profile の作成が必要な場合があります
