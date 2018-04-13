@@ -241,6 +241,15 @@ wslstart コマンドを作成しているので不要と思いますが、以�
 alias open="cygsh cygstart"
 #+END_EXAMPLE
 
+また、以下のようにシェルスクリプトのシバンに指定して、間接的に cygsh を実行する
+方法もあります。
+
+#+BEGIN_EXAMPLE
+#!/home/<username>bin/cygsh sh
+
+uname -a
+#+END_EXAMPLE
+
 *** 注意事項
 
 **** ● ホームディレクトリに .bash_profile の作成が必要な場合があります
