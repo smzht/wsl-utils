@@ -46,7 +46,10 @@ if check_drvfs_key "$current_wsl_path"; then
     shell_command_win_path=$("$cygsh_path" -l -c 'cygpath -w $(mktemp)' 2> /dev/null)
     shell_command_wsl_path=$(wslpath "$shell_command_win_path")
 
-    trap 'rm -f "$shell_command_wsl_path"' 0
+    process_gid_win_path=$("$cygsh_path" -l -c 'cygpath -w $(mktemp)' 2> /dev/null)
+    process_gid_wsl_path=$(wslpath "$process_gid_win_path")
+
+    trap 'rm -f "$procecc_gid_wsl_path" "$shell_command_wsl_path"' 0
 
     current_win_path=$(winpath "$current_wsl_path")
     quote_pwd=$(printf '%q' "$current_win_path")
@@ -57,7 +60,12 @@ if check_drvfs_key "$current_wsl_path"; then
         quote_cmd+=" $quote_arg"
     done
 
-    echo "LANG=$LANG; cd $quote_pwd; $quote_cmd" > "$shell_command_wsl_path"
+    echo "LANG=$LANG
+          cd $quote_pwd; $quote_cmd &
+          ps | sed 's/^.//' | awk '\$1 == '\$!' {print \$3}' > '$process_gid_win_path'
+          wait \$!" > "$shell_command_wsl_path"
+
+    trap 'trap "" 1 2 3 15; "$cygsh_path" -l -c "kill -- -\$(cat \"$process_gid_win_path\")"' 1 2 3 15
 
     "$cygsh_path" -l "$shell_command_win_path"
 else
