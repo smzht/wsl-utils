@@ -206,7 +206,7 @@ wslsc target shortcut 実行時のショートカット作成ルールは、以�
 
 - [[https://www49.atwiki.jp/ntemacs/pages/73.html][WSL で NTFS シンボリックリンクや Windows ショートカットを作成するための設定]]
 
-** ■ cygsh
+** ■ cyg
 
 WSL から Cygwin のコマンドを実行するためのコマンドです。
 
@@ -219,33 +219,33 @@ Cygwin 環境で作成したシェルスクリプト等を WSL のシェルか�
 *** 使用方法
 
 #+BEGIN_EXAMPLE
-cygsh command args
-cygsh -h
+cyg command args
+cyg -h
 #+END_EXAMPLE
 
 *** 使用例
 
 #+BEGIN_EXAMPLE
-cygsh uname -a
-cygsh cygstart notepad
-cygsh cygstart .
-cygsh shell-script
-cygsh bash shell-script
-cygsh eval 'echo $PATH'
+cyg uname -a
+cyg cygstart notepad
+cyg cygstart .
+cyg shell-script
+cyg bash shell-script
+cyg eval 'echo $PATH'
 #+END_EXAMPLE
 
 wslstart コマンドを作成しているので不要と思いますが、以下のような alias を
 定義することで利用しやすくなると思います。
 
 #+BEGIN_EXAMPLE
-alias open="cygsh cygstart"
+alias open="cyg cygstart"
 #+END_EXAMPLE
 
-また、以下のようにシェルスクリプトのシバンに指定して、間接的に cygsh を実行する
+また、以下のようにシェルスクリプトのシバンに指定して、間接的に cyg を実行する
 方法もあります。
 
 #+BEGIN_EXAMPLE
-#!/home/<username>bin/cygsh sh
+#!/home/<username>bin/cyg sh
 
 uname -a
 #+END_EXAMPLE
@@ -254,7 +254,7 @@ uname -a
 
 **** ● ホームディレクトリに .bash_profile の作成が必要な場合があります
 
-cygsh では Cygwin の bash.exe コマンドを -l オプション付きで実行しています。
+cyg では Cygwin の bash.exe コマンドを -l オプション付きで実行しています。
 このため、Cygwin のホームディレクトリに .bash_profile が存在しないと
 .bashrc が実行されずに環境変数（PATH 等）の設定が行われません。この場合は、
 Cygwin のホームディレクトリに以下の内容の .bash_profile ファイルを作成する
@@ -265,10 +265,10 @@ Cygwin のホームディレクトリに以下の内容の .bash_profile ファ�
 [ -r ~/.bashrc ] && source .bashrc
 #+END_EXAMPLE
 
-**** ● cygsh は tty を必要とするコマンドは動作しません
+**** ● cyg は tty を必要とするコマンドは動作しません
 
-cygsh では tty を必要とするコマンドは動作しません。gnupack-13 系で提供される
-.bashrc には stty の設定が含まれており、これが cygsh 実行時にエラーを出力します。
+cyg では tty を必要とするコマンドは動作しません。gnupack-13 系で提供される
+.bashrc には stty の設定が含まれており、これが cyg 実行時にエラーを出力します。
 stty 文を以下のとおりに if 文で囲むことでエラーを回避できますので、必要であれば
 対策をしてください。
 
@@ -282,12 +282,12 @@ fi
 **** ● gnupack の startup_config.ini で行っている環境変数の設定は有効になりません
 
 gnupack では startup_config.ini で環境変数の設定が可能となっています。しかし、
-cygsh ではその設定が有効になりません。startup_config.ini で PATH などの環境設定
+cyg ではその設定が有効になりません。startup_config.ini で PATH などの環境設定
 を設定している場合は、.bashrc に設定を移すなどの対策が必要となります。
 
 **** ● Cygwin のコマンドは WSL の LANG 環境変数の値で実行します
 
-cygsh では Cygwin のコマンドを WSL の LANG 環境変数の値で実行します。これは、
+cyg では Cygwin のコマンドを WSL の LANG 環境変数の値で実行します。これは、
 コマンド出力の文字化けを回避するために行っているものです。もし、Cygwin を
 cp932 で使っている場合には、スクリプトの文字コードを変更するなど、調整が必要
 となる可能性があります。
