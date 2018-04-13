@@ -219,7 +219,7 @@ Cygwin 環境で作成したシェルスクリプト等を WSL のシェルか�
 *** 使用方法
 
 #+BEGIN_EXAMPLE
-cyg command args
+cyg command [args]
 cyg -h
 #+END_EXAMPLE
 
@@ -230,7 +230,7 @@ cyg uname -a
 cyg cygstart notepad
 cyg cygstart .
 cyg shell-script
-cyg bash shell-script
+cyg sh shell-script
 cyg eval 'echo $PATH'
 #+END_EXAMPLE
 
@@ -241,11 +241,11 @@ wslstart コマンドを作成しているので不要と思いますが、以�
 alias open="cyg cygstart"
 #+END_EXAMPLE
 
-また、以下のようにシェルスクリプトのシバンに指定して、間接的に cyg を実行する
+また、以下のようにシェルスクリプトのシバンを指定して、間接的に cyg を実行する
 方法もあります。
 
 #+BEGIN_EXAMPLE
-#!/home/<username>bin/cyg sh
+#!/home/<username>/bin/cyg sh
 
 uname -a
 #+END_EXAMPLE
