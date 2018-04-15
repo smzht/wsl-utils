@@ -8,28 +8,15 @@ function usage_exit() {
     cat << EOF >&2
 Usage: $command_name [-f] target shortcut
        $command_name [-f] target
-       $command_name -c
        $command_name -h
 EOF
     exit $1
 }
 
-temp_win_path=$(cmd echo %TEMP%)"\\$command_name"
-temp_wsl_path=$(wslpath "$temp_win_path")
-
-function clean_all() {
-    # rm -rf "$temp_wsl_path"
-    echo "rm -rf \"$temp_wsl_path\""
-    exit 0
-}
-
 force_flg=0
 
-while getopts :cfh opt; do
+while getopts :fh opt; do
     case $opt in
-        c)
-            clean_all
-            ;;
         f)
             force_flg=1
             ;;
@@ -76,6 +63,9 @@ shortcut_wsl_path=$(readlink -m -n -- "$shortcut_dirname"; echo "/$shortcut_base
 # ターゲットファイルが DrvFs ファイルシステム上にあるか？
 if check_drvfs_key "$target_wsl_path"; then
 
+    temp_win_path=$(cmd echo %TEMP%)"\\$command_name"
+    temp_wsl_path=$(wslpath "$temp_win_path")
+
     mkdir -p "$temp_wsl_path" 2> /dev/null
 
     if [ $? -ne 0 ]; then
@@ -83,7 +73,7 @@ if check_drvfs_key "$target_wsl_path"; then
     fi
 
     if [ ! -e "$temp_wsl_path/w32-symlinks-ln-s.js" ]; then
-        cat << 'EOF' > "$temp_wsl_path/w32-symlinks-ln-s.js" 
+        cat << 'EOF' > "$temp_wsl_path/w32-symlinks-ln-s.js"
 // "ln -s" implemented in JScript for Microsoft Windows.
 // Usage: ln-s oldname newname
 //   oldname *MUST* be an ABSOLUTE pathname
@@ -138,16 +128,16 @@ EOF
         working_dir=$(mktemp -d -p "$temp_wsl_path" 2> /dev/null)
 
         if [ $? -eq 0 ]; then
-            working_wsl_path="$working_dir"/$(basename "$shortcut_wsl_path")
-            working_win_path=$(winpath "$working_wsl_path")
-
-            trap 'clean' 0
-
-            cmd cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$working_win_path"
-            mv "$working_wsl_path" "$shortcut_wsl_path"
-        else
             message '作業ディレクトリの作成に失敗しました'
         fi
+
+        working_wsl_path="$working_dir"/$(basename "$shortcut_wsl_path")
+        working_win_path=$(winpath "$working_wsl_path")
+
+        trap 'clean' 0
+
+        cmd cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$working_win_path"
+        mv "$working_wsl_path" "$shortcut_wsl_path"
     fi
 else
     message 'ターゲットファイルは DrvFs ファイルシステム上のファイルを指定してください'
