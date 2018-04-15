@@ -58,7 +58,7 @@ if check_drvfs_key "$current_wsl_path"; then
     process_gid_wsl_path=$(mktemp -p "$temp_wsl_path" 2> /dev/null)
     process_gid_win_path=$(winpath "$process_gid_wsl_path")
 
-    trap 'rm -f "$procecc_gid_wsl_path" "$shell_command_wsl_path"' 0
+    trap 'rm -f "$process_gid_wsl_path" "$shell_command_wsl_path"' 0
 
     current_win_path=$(winpath "$current_wsl_path")
     quote_pwd=$(printf '%q' "$current_win_path")
