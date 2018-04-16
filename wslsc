@@ -66,9 +66,7 @@ if check_drvfs_key "$target_wsl_path"; then
     temp_win_path=$(cmd echo %TEMP%)"\\$command_name"
     temp_wsl_path=$(wslpath "$temp_win_path")
 
-    mkdir -p "$temp_wsl_path" 2> /dev/null
-
-    if [ $? -ne 0 ]; then
+    if ! mkdir -p "$temp_wsl_path" 2> /dev/null; then
         message '作業ディレクトリの作成に失敗しました'
     fi
 
@@ -125,11 +123,7 @@ EOF
     if check_drvfs_key "$shortcut_wsl_path"; then
         cmd cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$shortcut_win_path"
     else
-        working_dir=$(mktemp -d -p "$temp_wsl_path" 2> /dev/null)
-
-        if [ $? -eq 0 ]; then
-            message '作業ディレクトリの作成に失敗しました'
-        fi
+        working_dir=$(mktemp -d -p "$temp_wsl_path")
 
         working_wsl_path="$working_dir"/$(basename "$shortcut_wsl_path")
         working_win_path=$(winpath "$working_wsl_path")

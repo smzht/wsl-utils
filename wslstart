@@ -88,17 +88,11 @@ if [ -e "$1" ]; then
             # をコピーし、そのファイルを開く。作業ディレクトリ配下は、消せるまで一分ごとに消去処理を
             # 繰り返す。
 
-            mkdir -p "$temp_wsl_path" 2> /dev/null
-
-            if [ $? -ne 0 ]; then
+            if ! mkdir -p "$temp_wsl_path" 2> /dev/null; then
                 message '作業ディレクトリの作成に失敗しました'
             fi
 
-            working_dir=$(mktemp -d -p "$temp_wsl_path" 2> /dev/null)
-
-            if [ $? -ne 0 ]; then
-                message '作業ディレクトリの作成に失敗しました'
-            fi
+            working_dir=$(mktemp -d -p "$temp_wsl_path")
 
             working_wsl_path="$working_dir"/$(basename "$wsl_path")
             working_win_path=$(winpath "$working_wsl_path")

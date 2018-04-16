@@ -43,19 +43,13 @@ current_wsl_path=$(readlink -m -- "$PWD")
 # カレントディレクトリが DrvFs ファイルシステム上か？
 if check_drvfs_key "$current_wsl_path"; then
 
-    temp_win_path=$(cmd echo %TEMP%)"\\$command_name"
+    temp_win_path=$(cmd echo %TEMP%)
     temp_wsl_path=$(wslpath "$temp_win_path")
 
-    mkdir -p "$temp_wsl_path" 2> /dev/null
-
-    if [ $? -ne 0 ]; then
-        message '作業ディレクトリの作成に失敗しました'
-    fi
-
-    shell_command_wsl_path=$(mktemp -p "$temp_wsl_path" 2> /dev/null)
+    shell_command_wsl_path=$(mktemp -p "$temp_wsl_path" -t "$command_name.XXXXXXXXXX")
     shell_command_win_path=$(winpath "$shell_command_wsl_path")
 
-    process_gid_wsl_path=$(mktemp -p "$temp_wsl_path" 2> /dev/null)
+    process_gid_wsl_path=$(mktemp -p "$temp_wsl_path" -t "$command_name.XXXXXXXXXX")
     process_gid_win_path=$(winpath "$process_gid_wsl_path")
 
     trap 'rm -f "$process_gid_wsl_path" "$shell_command_wsl_path"' 0
