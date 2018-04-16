@@ -39,6 +39,7 @@ function message() {
 }
 
 current_wsl_path=$(readlink -m -- "$PWD")
+current_win_path=$(winpath "$current_wsl_path")
 
 # カレントディレクトリが DrvFs ファイルシステム上か？
 if check_drvfs_key "$current_wsl_path"; then
@@ -46,15 +47,14 @@ if check_drvfs_key "$current_wsl_path"; then
     temp_win_path=$(cmd echo %TEMP%)
     temp_wsl_path=$(wslpath "$temp_win_path")
 
+    process_id_wsl_path=$(mktemp -p "$temp_wsl_path" -t "$command_name.XXXXXXXXXX")
+    process_id_win_path=$(winpath "$process_id_wsl_path")
+
     shell_command_wsl_path=$(mktemp -p "$temp_wsl_path" -t "$command_name.XXXXXXXXXX")
     shell_command_win_path=$(winpath "$shell_command_wsl_path")
 
-    process_gid_wsl_path=$(mktemp -p "$temp_wsl_path" -t "$command_name.XXXXXXXXXX")
-    process_gid_win_path=$(winpath "$process_gid_wsl_path")
+    trap 'rm -f "$process_id_wsl_path" "$shell_command_wsl_path"' 0
 
-    trap 'rm -f "$process_gid_wsl_path" "$shell_command_wsl_path"' 0
-
-    current_win_path=$(winpath "$current_wsl_path")
     quote_pwd=$(printf '%q' "$current_win_path")
     quote_cmd=''
 
@@ -64,13 +64,13 @@ if check_drvfs_key "$current_wsl_path"; then
     done
 
     cat << EOF > "$shell_command_wsl_path"
-echo \$$ > "$process_gid_win_path"
+echo \$$ > "$process_id_win_path"
 LANG=$LANG
 cd $quote_pwd
 $quote_cmd
 EOF
 
-    trap 'trap "" 1 2 3 15; "$cygsh_path" -l -c "kill -- -"$(cat "$process_gid_wsl_path")' 1 2 3 15
+    trap 'trap "" 1 2 3 15; "$cygsh_path" -l -c "kill -- -"$(cat "$process_id_wsl_path")' 1 2 3 15
 
     "$cygsh_path" -l "$shell_command_win_path"
 else
