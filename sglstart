@@ -38,7 +38,7 @@ fi
 
 if [ -f "$1" ]; then
 
-    file_name=$(basename "$1")
+    file_name=$(basename -- "$1")
 
     # ウィンドウのタイトルにファイル名の文字列を含むものがあればポップアップする
     if winactivate.exe "$file_name" 2> /dev/null; then
