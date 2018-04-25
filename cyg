@@ -2,7 +2,7 @@
 # -*- mode: sh; coding: utf-8-unix -*-
 
 # Cygwin の bash.exe の在り処を絶対パスで指定してください
-cygsh_path="/mnt/c/gnupack/app/cygwin/cygwin/bin/bash.exe"
+cygsh_path='/mnt/c/gnupack/app/cygwin/cygwin/bin/bash.exe'
 
 source wslcommon
 

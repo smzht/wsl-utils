@@ -103,11 +103,11 @@ else
     option=''
 
     if [ $symlink_flg -eq 1 ]; then
-        option="-s"
+        option='-s'
     fi
 
     if [ $force_flg -eq 1 ]; then
-        option+=" -f"
+        option+=' -f'
     fi
 
     if [ $absolute_flg -eq 1 ]; then

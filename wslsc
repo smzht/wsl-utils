@@ -105,7 +105,7 @@ EOF
     fi
 
     if [[ ! "$shortcut_wsl_path" =~ \.lnk$ ]]; then
-        shortcut_wsl_path+=".lnk"
+        shortcut_wsl_path+='.lnk'
     fi
 
     target_win_path=$(winpath "$target_wsl_path")
