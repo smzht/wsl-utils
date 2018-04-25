@@ -101,7 +101,7 @@ EOF
     fi
 
     if [ -d "$shortcut_wsl_path" ]; then
-        shortcut_wsl_path+="/$target_basename"
+        shortcut_wsl_path+=/$target_basename
     fi
 
     if [[ ! "$shortcut_wsl_path" =~ \.lnk$ ]]; then
@@ -125,7 +125,7 @@ EOF
     else
         working_dir=$(mktemp -d -p "$temp_wsl_path")
 
-        working_wsl_path="$working_dir"/$(basename "$shortcut_wsl_path")
+        working_wsl_path=$working_dir/$(basename "$shortcut_wsl_path")
         working_win_path=$(winpath "$working_wsl_path")
 
         trap 'clean' 0

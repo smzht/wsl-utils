@@ -94,7 +94,7 @@ if [ -e "$1" ]; then
 
             working_dir=$(mktemp -d -p "$temp_wsl_path")
 
-            working_wsl_path="$working_dir"/$(basename "$wsl_path")
+            working_wsl_path=$working_dir/$(basename "$wsl_path")
             working_win_path=$(winpath "$working_wsl_path")
 
             trap '(sleep 60; until clean; do sleep 60; done) &' 0

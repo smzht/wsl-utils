@@ -77,7 +77,7 @@ if [ $symlink_flg -eq 1 ] && check_drvfs_key "$link_wsl_path"; then
             fi
 
             if [ -d "$link_wsl_path" ]; then
-                link_wsl_path+="/$target_basename"
+                link_wsl_path+=/$target_basename
             fi
             link_win_path=$(winpath "$link_wsl_path")
 

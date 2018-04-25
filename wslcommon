@@ -34,7 +34,7 @@ function check_drvfs_value() {
 function winpath() {
     (
         shopt -u nocasematch
-        winpath="$1"
+        winpath=$1
         for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
             IFS='|' read -r key value <<< "${drvfs[$i]}"
             if [[ "$winpath" =~ ^"$key"($|/) ]]; then
@@ -54,7 +54,7 @@ function winpath() {
 function wslpath() {
     (
         shopt -s nocasematch
-        wslpath="$1"
+        wslpath=$1
         for ((i = 0; i < ${#drvfs[@]}; i++)); do
             IFS='|' read -r key value <<< "${drvfs[$i]}"
             if [[ "$wslpath" =~ ^"$value"($|\\) ]]; then
@@ -92,7 +92,7 @@ function start() {
     # パスに半角スペースを含まず、全角スペースを含んでいる場合、start コマンドが正常に
     # 動作しない。パスの後ろに半角スペースを入れることで正常に動作するのでその対策を
     # 追加した。
-    command="$1"
+    command=$1
     shift
     cmd start /b cmd /c start "" "$command " "$@"
 }
