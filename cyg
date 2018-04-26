@@ -64,7 +64,7 @@ if check_drvfs_key "$current_wsl_path"; then
     done
 
     cat << EOF > "$shell_command_wsl_path"
-echo \$$ > "$process_id_win_path"
+echo \$$ > '$process_id_win_path'
 LANG=$LANG
 cd $quote_pwd
 $quote_cmd
