@@ -93,6 +93,9 @@ function start() {
     # 動作しない。パスの後ろに半角スペースを入れることで正常に動作するのでその対策を
     # 追加した。
     command=$1
+    if [[ "$command" =~ '　' ]]; then
+        command+=' '
+    fi
     shift
-    cmd start /b cmd /c start "" "$command " "$@"
+    cmd start /b cmd /c start "" "$command" "$@"
 }
