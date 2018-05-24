@@ -76,12 +76,10 @@ cygpath 的コマンドです。
 
 常に絶対パスに対して機能する以外は、概ね cygpath コマンドと同様に動作します。
 
-Windows 10 Fall Creators Update リリース以降の Build 17046 で wslpath コマンドがサポート
-された様ですので、いずれ不要なコマンドになると思いますが、それまでの繋ぎとして利用いただければ
-と思います。
+Windows 10 April 2018 Updat で wslpath コマンドがサポートされましたので、いずれ不要な
+コマンドになると思いますが、それまでの繋ぎとして利用いただければと思います。
 
-- https://msdn.microsoft.com/en-us/commandline/wsl/release-notes#build-17046
-- https://kledgeb.blogspot.jp/2017/11/wsl-120-build-17046wsl.html
+- https://kledgeb.blogspot.jp/2018/03/wsl-142-windows-101803wsl.html
 
 *** 使用方法
 
