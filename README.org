@@ -76,7 +76,7 @@ cygpath 的コマンドです。
 
 常に絶対パスに対して機能する以外は、概ね cygpath コマンドと同様に動作します。
 
-Windows 10 April 2018 Updat で wslpath コマンドがサポートされましたので、いずれ不要な
+Windows 10 April 2018 Update で wslpath コマンドがサポートされましたので、いずれ不要な
 コマンドになると思いますが、それまでの繋ぎとして利用いただければと思います。
 
 - https://kledgeb.blogspot.jp/2018/03/wsl-142-windows-101803wsl.html
