@@ -81,7 +81,7 @@ Windows 10 April 2018 Update で wslpath コマンドがサポートされまし
 
 - https://kledgeb.blogspot.jp/2018/03/wsl-142-windows-101803wsl.html
 
-いずれ、本リポジトリで公開しているコマンドも Windows 10 April 2018 Update の wslpath を
+今後、本リポジトリで公開しているコマンドも Windows 10 April 2018 Update の wslpath を
 使うように見直す予定です。
 
 *** 使用方法
