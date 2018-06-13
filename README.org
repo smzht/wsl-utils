@@ -157,6 +157,24 @@ wslln -s target link 実行時のシンボリックリンク作成ルールは�
 ln コマンドには無いオプションとなります。以下で紹介している emacs との連携の設定の
 中で利用されています。
 
+*** 必要な環境設定
+
+NTFS シンボリックリンクを管理者権限なしで作成できるようにするために、以下のどちらかの
+対応を実施する必要があります。
+
+**** ● 開発モードにする
+
+- https://www.ipentec.com/document/document.aspx?page=windows-windows-10-set-developer-mode
+
+**** ● SeCreateSymbolicLinkPrivilege 権限を付加する（再ログインが必要）
+
+- https://qiita.com/ucho/items/c5ea0beb8acf2f1e4772#comment-250af72ab706bd611549
+
+※ administrators のメンバーは UAC により特権が削除されるという以下のような情報も
+あるのですが、私の環境では発生していません。
+
+- https://qiita.com/azechi/items/f9a97393cb41be4be437
+
 *** emacs との連携
 
 以下の説明を参照してください。
