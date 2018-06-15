@@ -31,10 +31,16 @@ source wslinit
 mount は /etc/fstab を設定して利用する方法もあります。Windows 10 Aprill 2018 Update では、
 wsl.conf を設定することにより自動マウントも可能となっています。
 （Fall Creators Update までは、sudo mount -a が必要。）
-ただし、コンピュータ名に IPアドレスを指定することは、/etc/fstab の設定ではできないようです。
-（mount コマンドでは可能。）
 
 - http://ascii.jp/elem/000/001/634/1634120/
+
+/etc/fstab の設定で、IPアドレスを含む UNC パスに対してのマウントポイントを指定する場合、
+「\\172」で始まる箇所などが８進数認識されてしまいます。この場合、２つ目の「\」を敢えて
+８進数の「\134」と記載することで対策可能です。
+
+#+BEGIN_EXAMPLE
+\\134172.16.0.1\<共有名>	/mnt/share1	drvfs	defaults	0 0
+#+END_EXAMPLE
 
 認証を必要とするネットワークボリュームを利用する場合は、予め以下の設定により認証情報を
 記憶させる必要があります。
