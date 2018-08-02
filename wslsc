@@ -54,7 +54,10 @@ fi
 
 target_dirname=$(dirname -- "$1")
 target_basename=$(basename -- "$1")
-target_wsl_path=$(readlink -m -n -- "$target_dirname"; echo "/$target_basename")
+target_wsl_path=$(readlink -m -- "$target_dirname")
+if [ "$target_basename" != "." ]; then
+    target_wsl_path+="/$target_basename"
+fi
 
 shortcut_dirname=$(dirname -- "$2")
 shortcut_basename=$(basename -- "$2")
