@@ -28,7 +28,7 @@ EOF
 source wslinit
 #+END_EXAMPLE
 
-mount は /etc/fstab を設定して利用する方法もあります。Windows 10 Aprill 2018 Update では、
+mount は /etc/fstab を設定して利用する方法もあります。Windows 10 April 2018 Update では、
 wsl.conf を設定することにより自動マウントも可能となっています。
 （Fall Creators Update までは、sudo mount -a が必要。）
 
