@@ -315,3 +315,70 @@ cyg では Cygwin のコマンドを WSL の LANG 環境変数の値で実行し
 コマンド出力の文字化けを回避するために行っているものです。もし、Cygwin を
 cp932 で使っている場合には、スクリプトの文字コードを変更するなど、調整が必要
 となる可能性があります。
+
+** ■ epeco
+
+emacs 上の shell で peco もどきを実現するコマンドです。データの絞り込みに helm を
+利用しています。
+
+WSL で peco を利用するには Windows 10 April 2018 Update 以降が必要なようですが、
+本コマンドにはこの制限はありません。また、絞り込みに migemo が使えます。
+
+emacs が emacsclient と通信できるようになっており、helm と migemo が使える設定に
+なっていれば利用可能と思います。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+epeco [-q query] [file]
+epeco -h
+#+END_EXAMPLE
+
+*** コマンドオプション
+
+**** ● -q query オプション
+
+絞り込み文字列の初期値を設定するオプションです。
+
+*** 使用例
+
+#+BEGIN_EXAMPLE
+ps -ef | epeco | awk '{print $2}'
+kill "$(ps -ef | epeco | awk '{print $2}')"
+
+find . -maxdepth 3 -type d -name .git -prune -o -type d -print | epeco
+cd "$(find . -maxdepth 3 -type d -name .git -prune -o -type d -print | epeco)"
+
+history | tac | epeco | cut -b8-
+eval "$(history | tac | epeco | cut -b8-)"
+#+END_EXAMPLE
+
+よく使うコマンドを alias 設定しておくのが良いと思います。
+
+*** 注意事項
+
+**** ● コマンドは同期モードで動作します
+
+コマンドは、内部で helm を同期モード利用しています。コマンドへの入力データを
+すべて取り込んでから helm が動作しますので、入力データを取り込みながら
+そのデータの絞り込みを行なうことができません。これが peco との一番大きな仕様の
+違いです。
+
+本コマンドで満足できない場合には、rubikitch 氏による peco を 外部端末で起動して
+させるラッパーコマンドがありますので、こちらのコマンドをお試しください。
+ただし、WSL 利用するには Windows 10 April 2018 Update 以降が必要となります。
+
+- http://emacs.rubikitch.com/peco-wrapper/
+
+**** ● emacs が起動しているマシンの shell 上でのみ動作します
+
+helm は tramp による接続先でも動作しますが、本コマンドは内部で emacsclient を
+利用しているため、emacs を起動しているマシンの shell 上でのみしか動作しません。
+tramp の接続先でも動作する同様の仕組みを構築するには、以下で紹介している設定の
+ような comint と連携させる仕組み（zsh での zli による起動方法のような仕組み）が
+必要と思われます。
+
+- [[https://www49.atwiki.jp/ntemacs/pages/35.html][helm から comint の入力履歴を検索するための設定]]
+
+この仕組みを採用するのであれば、epeco の機能を非同期で動作させることもできると
+思います。ただし、シェルスクリプトで機能を完結させることはできなくなります。

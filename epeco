@@ -1,0 +1,74 @@
+#!/bin/bash
+# -*- mode: sh; coding: utf-8-unix -*-
+
+command_name=$(basename "$0")
+
+function usage_exit() {
+    cat << EOF >&2
+Usage: $command_name [-q query] [file]
+       $command_name -h
+EOF
+    exit $1
+}
+
+query=""
+
+while getopts :hq: opt; do
+    case $opt in
+        h)
+            usage_exit 0
+            ;;
+        q)
+            query="$OPTARG"
+            ;;
+        \?)
+            usage_exit 2
+            ;;
+    esac
+done
+
+shift $(($OPTIND - 1))
+
+if [ $# -ne 0 -a $# -ne 1 ]; then
+    usage_exit 2
+fi
+
+function message() {
+    echo "$command_name: $1" >&2
+    exit 1
+}
+
+if [ $# -eq 1 -a ! -r "$1" ]; then
+    message '指定したファイルを読み込むことができません'
+fi
+
+temp1=$(mktemp -u -t "$command_name.XXXXXXXXXX")
+temp2=$(mktemp -t "$command_name.XXXXXXXXXX")
+
+mkfifo "$temp1"
+
+trap 'rm -f "$temp1" "$temp2"' 0
+
+epeco=$(cat << EOF
+(helm :sources (helm-build-in-file-source "Epeco" "$temp1"
+                 :candidate-number-limit 1000 ; helm-candidate-number-limit の値を置き換える
+                 :action (helm-make-actions "Output" (lambda (candidate)
+                                                       (with-temp-buffer
+                                                         (dolist (cand (helm-marked-candidates))
+                                                           (insert (format "%s\n" cand)))
+                                                         (write-file "$temp2"))))
+                 :migemo t)
+      :quit-if-no-candidate t
+      :prompt "[MIGEMO] pattern: "
+      :input "$query"
+      :buffer "*helm epeco*")
+EOF
+)
+
+if [ $# -eq 0 ]; then
+    cat
+else
+    cat "$1"
+fi > "$temp1" | emacsclient -e "$epeco" > /dev/null
+
+cat "$temp2"
