@@ -50,19 +50,21 @@ mkfifo "$temp1"
 trap 'rm -f "$temp1" "$temp2"' 0
 
 epeco=$(cat << EOF
-(helm :sources (helm-build-in-file-source
-                   "Epeco" "$temp1"
-                   :candidate-number-limit 1000 ; helm-candidate-number-limit の値を置き換える
-                   :action (helm-make-actions "Output" (lambda (candidate)
-                                                         (with-temp-buffer
-                                                           (dolist (cand (helm-marked-candidates))
-                                                             (insert (format "%s\n" cand)))
-                                                           (write-file "$temp2"))))
-                   :migemo t)
-      :quit-if-no-candidate t
-      :prompt "[MIGEMO] pattern: "
-      :input "$query"
-      :buffer "*helm epeco*")
+(progn
+  (helm :sources (helm-build-in-file-source
+                     "Epeco" "$temp1"
+                     :candidate-number-limit 1000 ; helm-candidate-number-limit の値を置き換える
+                     :action (helm-make-actions "Output" (lambda (candidate)
+                                                           (with-temp-buffer
+                                                             (dolist (cand (helm-marked-candidates))
+                                                               (insert (format "%s\n" cand)))
+                                                             (write-file "$temp2"))))
+                     :migemo t)
+        :quit-if-no-candidate t
+        :prompt "[MIGEMO] pattern: "
+        :input "$query"
+        :buffer "*helm epeco*")
+  )
 EOF
 )
 
