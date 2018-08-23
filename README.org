@@ -366,7 +366,7 @@ eval "$(history | tac | epeco | cut -b8-)"
 
 本コマンドで満足できない場合には、rubikitch 氏による peco を 外部端末で起動して
 させるラッパーコマンドがありますので、こちらのコマンドをお試しください。
-ただし、WSL 利用するには Windows 10 April 2018 Update 以降が必要となります。
+ただし、WSL で利用するには Windows 10 April 2018 Update 以降が必要となります。
 
 - http://emacs.rubikitch.com/peco-wrapper/
 
