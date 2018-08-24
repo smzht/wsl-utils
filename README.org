@@ -375,7 +375,7 @@ eval "$(history | tac | epeco | cut -b8-)"
 helm は tramp による接続先でも動作しますが、本コマンドは内部で emacsclient を
 利用しているため、emacs を起動しているマシンの shell 上でのみしか動作しません。
 tramp の接続先でも動作する同様の仕組みを構築するには、以下で紹介している設定の
-ような comint と連携させる仕組み（zsh での zli による起動方法のような仕組み）が
+ような comint と連携させる仕組み（zsh での zle による起動方法のような仕組み）が
 必要と思われます。
 
 - [[https://www49.atwiki.jp/ntemacs/pages/35.html][helm から comint の入力履歴を検索するための設定]]
