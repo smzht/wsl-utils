@@ -344,7 +344,7 @@ epeco -h
 
 #+BEGIN_EXAMPLE
 ps -ef | epeco | awk '{print $2}'
-kill "$(ps -ef | epeco | awk '{print $2}')"
+kill $(ps -ef | epeco | awk '{print $2}')
 
 find . -maxdepth 3 -type d -name .git -prune -o -type d -print | epeco
 cd "$(find . -maxdepth 3 -type d -name .git -prune -o -type d -print | epeco)"
