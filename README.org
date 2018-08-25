@@ -367,3 +367,9 @@ tramp の接続先でも動作する同様の仕組みを構築するには、�
 必要と思われます。
 
 - [[https://www49.atwiki.jp/ntemacs/pages/35.html][helm から comint の入力履歴を検索するための設定]]
+
+*** 参考情報
+
+helm の source の設定方法については、以下を参照してください。
+
+- https://github.com/emacs-helm/helm/wiki/Developing
