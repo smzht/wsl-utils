@@ -11,7 +11,7 @@ EOF
     exit $1
 }
 
-query=""
+query_str=""
 
 while getopts :hq: opt; do
     case $opt in
@@ -19,7 +19,7 @@ while getopts :hq: opt; do
             usage_exit 0
             ;;
         q)
-            query="$OPTARG"
+            query_str="$OPTARG"
             ;;
         \?)
             usage_exit 2
@@ -49,26 +49,28 @@ trap 'rm -f "$temp1" "$temp2"' 0
 
 epeco=$(cat << EOF
 (progn
-  (helm :sources (helm-build-async-source "Epeco"
-                   :candidates-process (lambda ()
-                                         (start-process-shell-command "epeco" nil "tail -n +1 -f $temp1"))
-                   :candidate-transformer (lambda (candidates)
-                                            (cl-loop for c in candidates
-                                                     when (and helm-migemo-mode
-                                                               (helm-mm-3-migemo-match c)) collect c
-                                                     when (and (not helm-migemo-mode)
-                                                               (helm-mm-match c)) collect c
-                                                     ))
-                   :candidate-number-limit 1000 ; helm-candidate-number-limit の値を置き換える
-                   :action (helm-make-actions "Output" (lambda (candidate)
-                                                         (with-temp-buffer
-                                                           (dolist (cand (helm-marked-candidates))
-                                                             (insert (format "%s\n" cand)))
-                                                           (write-file "$temp2"))
-                                                         (message "")))
-                   )
-        :input "$query"
-        :buffer "*helm epeco*")
+  (let ((match-func (if helm-migemo-mode
+                        'helm-mm-3-migemo-match
+                      'helm-mm-match))
+        (prompt-str (if helm-migemo-mode
+                        "[MIGEMO] pattern: "
+                      "pattern: ")))
+    (helm :sources (helm-build-async-source "Epeco"
+                     :candidates-process (lambda ()
+                                           (start-process-shell-command "epeco" nil "tail -n +1 -f $temp1"))
+                     :candidate-transformer (lambda (candidates)
+                                              (cl-loop for c in candidates
+                                                       when (funcall match-func c) collect c))
+                     :candidate-number-limit 1000 ; helm-candidate-number-limit の値を置き換える
+                     :action (helm-make-actions "Output" (lambda (candidate)
+                                                           (with-temp-buffer
+                                                             (dolist (cand (helm-marked-candidates))
+                                                               (insert (format "%s\n" cand)))
+                                                             (write-file "$temp2"))
+                                                           (message ""))))
+          :prompt prompt-str
+          :input "$query_str"
+          :buffer "*helm epeco*"))
   )
 EOF
 )
