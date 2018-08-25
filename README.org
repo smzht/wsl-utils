@@ -346,9 +346,9 @@ epeco -h
 ps -ef | epeco | awk '{print $2}'
 kill $(ps -ef | epeco | awk '{print $2}')
 
-find . -maxdepth 3 -type d -name .git -prune -o -type d -print | epeco
-cd "$(find . -maxdepth 3 -type d -name .git -prune -o -type d -print | epeco)"
-emacsclient -n "$(find . -maxdepth 3 -type d -name .git -prune -o -type d -print | epeco)"
+find * -type d -name '.*' -prune -o -type d -print | epeco
+cd "$(find * -type d -name '.*' -prune -o -type d -print | epeco)"
+emacsclient -n "$(find * -type d -name '.*' -prune -o -type d -print | epeco)"
 
 history | tac | epeco | cut -b8-
 eval "$(history | tac | epeco | cut -b8-)"
