@@ -54,8 +54,9 @@ epeco=$(cat << EOF
                                          (start-process-shell-command "epeco" nil "tail -n +1 -f $temp1"))
                    :candidate-transformer (lambda (candidates)
                                             (cl-loop for c in candidates
-                                                     when (helm-mm-match c)
-                                                     collect c))
+                                                     ;; when (helm-mm-match c) collect c
+                                                     when (helm-mm-3-migemo-match c) collect c ; for migemo
+                                                     ))
                    :candidate-number-limit 1000 ; helm-candidate-number-limit の値を置き換える
                    :action (helm-make-actions "Output" (lambda (candidate)
                                                          (with-temp-buffer
@@ -64,6 +65,7 @@ epeco=$(cat << EOF
                                                            (write-file "$temp2"))
                                                          (message "")))
                    )
+        :prompt "[MIGEMO] pattern: " ; for migemo
         :input "$query"
         :buffer "*helm epeco*")
   )
