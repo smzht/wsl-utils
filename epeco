@@ -72,6 +72,4 @@ if [ $# -eq 0 ]; then
     cat
 else
     cat "$1"
-fi | tee "$temp1" | emacsclient -e "$epeco" > /dev/null
-
-cat "$temp2"
+fi > "$temp1" | (emacsclient -e "$epeco" > /dev/null; cat "$temp2")
