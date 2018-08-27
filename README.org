@@ -373,3 +373,10 @@ tramp の接続先でも動作する同様の仕組みを構築するには、�
 helm の source の設定方法については、以下を参照してください。
 
 - https://github.com/emacs-helm/helm/wiki/Developing
+
+*** 関連情報
+
+外部端末で peco を動かすラッパーが以下で紹介されています。emacs の環境下で peco
+そのものを使いたい場合は、こちらの利用を検討ください。
+
+- http://emacs.rubikitch.com/peco-wrapper/
