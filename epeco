@@ -72,7 +72,7 @@ if [ $# -eq 0 ]; then
     cat
 else
     cat "$1"
-fi | cat > "$temp1" &
+fi | cat > "$temp1" & # この行の cat は必要
 
 emacsclient -e "$epeco" > /dev/null
 cat "$temp2"
