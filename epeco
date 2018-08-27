@@ -79,3 +79,4 @@ cat "$temp2"
 
 exec 2> /dev/null
 kill $!
+exit 0
