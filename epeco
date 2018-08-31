@@ -74,9 +74,13 @@ else
     cat "$1"
 fi | cat > "$temp1" & # この行の cat は必要
 
-emacsclient -e "$epeco" > /dev/null
-cat "$temp2"
+if [ $(emacsclient -e "$epeco") = "nil" ]; then
+    rc=1
+else
+    cat "$temp2"
+    rc=0
+fi
 
 exec 2> /dev/null
 kill $!
-exit 0
+exit $rc
