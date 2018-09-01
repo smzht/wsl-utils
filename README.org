@@ -344,11 +344,10 @@ epeco -h
 
 #+BEGIN_EXAMPLE
 ps -ef | epeco | awk '{print $2}'
-kill $(ps -ef | epeco | awk '{print $2}')
+ps -ef | epeco | awk '{print $2}' | xargs -I % kill %
 
 find * -type d -name '.*' -prune -o -type d -print | epeco
-cd "$(find * -type d -name '.*' -prune -o -type d -print | epeco)"
-emacsclient -n "$(find * -type d -name '.*' -prune -o -type d -print | epeco)"
+find * -type d -name '.*' -prune -o -type d -print | epeco | xargs -I % emacsclient -n %
 
 history | tac | epeco | cut -b8-
 eval "$(history | tac | epeco | cut -b8-)"
