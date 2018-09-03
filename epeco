@@ -51,7 +51,8 @@ epeco=$(cat << EOF
 (progn
   (helm :sources (helm-build-async-source "Epeco"
                    :candidates-process (lambda ()
-                                         (start-process-shell-command "epeco" nil "tail -n +1 -f $temp1"))
+                                         (start-process-shell-command "epeco" nil
+                                                                      "tail --pid=$$ -n +1 -f $temp1"))
                    :candidate-transformer (lambda (candidates)
                                             (cl-loop for c in candidates
                                                      when (helm-mm-match c) collect c))
