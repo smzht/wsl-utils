@@ -61,8 +61,8 @@ epeco=$(cat << EOF
                                                          (with-temp-buffer
                                                            (dolist (cand (helm-marked-candidates))
                                                              (insert (format "%s\n" cand)))
-                                                           (write-file "$temp2"))
-                                                         (message ""))))
+                                                           (write-region nil nil "$temp2" nil 'nomsg))
+                                                         t)))
         :input "$query_str"
         :buffer "*helm epeco*")
   )
@@ -75,11 +75,11 @@ else
     cat "$1"
 fi | cat > "$temp1" & # この行の cat は必要
 
-if [ $(emacsclient -e "$epeco") = "nil" ]; then
-    rc=1
-else
+if [ $(emacsclient -e "$epeco") = "t" ]; then
     cat "$temp2"
     rc=0
+else
+    rc=1
 fi
 
 exec 2> /dev/null
