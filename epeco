@@ -11,7 +11,7 @@ EOF
     exit $1
 }
 
-query_str=""
+query=""
 
 while getopts :hq: opt; do
     case $opt in
@@ -19,7 +19,7 @@ while getopts :hq: opt; do
             usage_exit 0
             ;;
         q)
-            query_str="$OPTARG"
+            query="$OPTARG"
             ;;
         \?)
             usage_exit 2
@@ -63,7 +63,7 @@ epeco=$(cat << EOF
                                                              (insert (format "%s\n" cand)))
                                                            (write-region nil nil "$temp2" nil 'nomsg))
                                                          t)))
-        :input "$query_str"
+        :input "$query"
         :buffer "*helm epeco*")
   )
 EOF
