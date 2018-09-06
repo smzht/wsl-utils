@@ -350,7 +350,13 @@ find * -type d -name '.*' -prune -o -type d -print | epeco
 find * -type d -name '.*' -prune -o -type d -print | epeco | xargs -I % emacsclient -n %
 
 history | tac | epeco | cut -b8-
-eval "$(history | tac | epeco | cut -b8-)"
+eval "$(history | tac | epeco | cut -b8-)" # xargs を使うと、cd などが上手く実行できない
+
+docker ps -a | epeco | awk '{print $1}'
+docker ps -a | epeco | awk '{print $1}' | xargs -I % docker rm %
+
+docker images | epeco | awk '{print $3}'
+docker images | epeco | awk '{print $3}' | xargs -I % docker rmi %
 #+END_EXAMPLE
 
 よく使うコマンドを alias 設定しておくのが良いと思います。
