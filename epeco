@@ -56,7 +56,7 @@ epeco=$(cat << EOF
                    :candidate-transformer (lambda (candidates)
                                             (cl-loop for c in candidates
                                                      when (helm-mm-match c) collect c))
-                   :candidate-number-limit 1000 ; helm-candidate-number-limit の値を置き換える
+                   :candidate-number-limit 1000
                    :action (helm-make-actions "Output" (lambda (candidate)
                                                          (with-temp-buffer
                                                            (dolist (cand (helm-marked-candidates))
@@ -73,7 +73,7 @@ if [ $# -eq 0 ]; then
     cat
 else
     cat "$1"
-fi | cat > "$temp1" & # この行の cat は必要
+fi | cat > "$temp1" & # この行の cat は必要！
 
 if [ $(emacsclient -e "$epeco") = "t" ]; then
     cat "$temp2"
