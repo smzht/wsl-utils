@@ -324,8 +324,8 @@ emacs 上の shell で peco もどきを実現するコマンドです。デー�
 WSL で peco を利用するには Windows 10 April 2018 Update 以降が必要なようですが、
 本コマンドにはこの制限はありません。
 
-emacs が emacsclient と通信できるようになっており、helm が設定されていれば、利用
-可能です。
+emacs が emacsclient と通信できるようになっており、helm が設定されていれば利用
+可能です。非同期の情報源を利用しており、migemo はサポートしていません。
 
 *** 使用方法
 
