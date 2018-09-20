@@ -5,7 +5,7 @@ if [ ! -v DRVFS ]; then
 fi
 eval "$DRVFS"
 
-function check_drvfs_key() {
+function check_drvfs_wslpath() {
     (
         shopt -u nocasematch
         for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
@@ -18,7 +18,7 @@ function check_drvfs_key() {
     )
 }
 
-function check_drvfs_value() {
+function check_drvfs_winpath() {
     (
         shopt -s nocasematch
         for ((i = 0; i < ${#drvfs[@]}; i++)); do

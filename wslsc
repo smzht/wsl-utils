@@ -68,7 +68,7 @@ shortcut_basename=$(basename -- "$2")
 shortcut_wsl_path=$(readlink -m -n -- "$shortcut_dirname"; echo "/$shortcut_basename")
 
 # ターゲットファイルが DrvFs ファイルシステム上にあるか？
-if check_drvfs_key "$target_wsl_path"; then
+if check_drvfs_wslpath "$target_wsl_path"; then
 
     temp_win_path=$(cmd echo %TEMP%)"\\$command_name"
     temp_wsl_path=$(wslpath "$temp_win_path")
@@ -127,7 +127,7 @@ EOF
     fi
 
     # DrvFs ファイルシステム上にショートカットを作成しようとしているか？
-    if check_drvfs_key "$shortcut_wsl_path"; then
+    if check_drvfs_wslpath "$shortcut_wsl_path"; then
         cmd cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$shortcut_win_path"
     else
         working_dir=$(mktemp -d -p "$temp_wsl_path")
