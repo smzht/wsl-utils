@@ -1,0 +1,101 @@
+# -*- mode: sh; coding: utf-8-unix -*-
+
+if [ ! -v DRVFS ]; then
+    source wslinit
+fi
+eval "$DRVFS"
+
+function drvfs_wslpath_p() {
+    (
+        shopt -u nocasematch
+        for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
+            IFS='|' read -r key value <<< "${drvfs[$i]}"
+            if [[ "$1" =~ ^"$key"($|/) ]]; then
+                return 0
+            fi
+        done
+        return 1
+    )
+}
+
+function drvfs_winpath_p() {
+    (
+        shopt -s nocasematch
+        for ((i = 0; i < ${#drvfs[@]}; i++)); do
+            IFS='|' read -r key value <<< "${drvfs[$i]}"
+            if [[ "$1" =~ ^"$value"($|\\) ]]; then
+                return 0
+            fi
+        done
+        return 1
+    )
+}
+
+function winpath() {
+    (
+        shopt -u nocasematch
+        winpath=$1
+        for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
+            IFS='|' read -r key value <<< "${drvfs[$i]}"
+            if [[ "$winpath" =~ ^"$key"($|/) ]]; then
+                value=$(echo "$value" | sed 's/\\/&&/g')
+                winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value\1!")
+                if [[ "$winpath" =~ :$ ]]; then
+                    winpath+=/
+                fi
+                break
+            fi
+        done
+        winpath=$(echo "$winpath" | sed 's!/!\\!g')
+        echo "$winpath"
+    )
+}
+
+function wslpath() {
+    (
+        shopt -s nocasematch
+        wslpath=$1
+        for ((i = 0; i < ${#drvfs[@]}; i++)); do
+            IFS='|' read -r key value <<< "${drvfs[$i]}"
+            if [[ "$wslpath" =~ ^"$value"($|\\) ]]; then
+                value=$(echo "$value" | sed 's/\\/&&/g')
+                wslpath=$(echo "$wslpath" | sed -r "s!^$value($|\\\\)!$key\1!i")
+                break
+            fi
+        done
+        wslpath=$(echo "$wslpath" | sed 's!\\!/!g')
+        echo "$wslpath"
+    )
+}
+
+function cmd0() {
+    cmd.exe /c "$@" | sed 's/\r$//'
+    return ${PIPESTATUS[0]}
+}
+
+documents_win_path=$(cmd0 echo %USERPROFILE% 2> /dev/null)'\Documents'
+documents_wsl_path=$(wslpath "$documents_win_path")
+
+function cmd() {
+    (
+        cd "$documents_wsl_path"
+        cmd0 "$@"
+    )
+}
+
+function start() {
+    # 本コマンドから起動したアプリにフォーカスが移らないことがある場合の対策を実施。
+    # （コンソールから本コマンドを起動した場合には「対策前の設定」でも問題ないが、
+    #   X サーバ上に起動した emacs から本コマンドを起動すると現象が発生するため。）
+    # cmd start "" "$@" # ← 対策前の設定
+
+    # パスに半角スペースを含まず、全角スペースを含んでいる場合、start コマンドが正常に
+    # 動作しない。パスの後ろに半角スペースを入れることで正常に動作するのでその対策を
+    # 追加した。
+    command=$1
+    if [[ "$command" =~ '　' ]]; then
+        command+=' '
+    fi
+    shift
+    cmd start /b cmd /c start "" "$command" "$@"
+}

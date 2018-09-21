@@ -4,12 +4,18 @@
 
 Windows Subsystem for Linux で動作するユティリティコマンド群です。
 
-Windows 10 April 2018 Update 以降で利用可能です。Windows 10 Creators Update での利用が
-必要な場合には、for_Creators_Update ディレクトリ配下のコマンド群をマージしてご利用ください。
+wslcommon と wslinit は、コマンドと同じ場所（コマンドパスが通ったディレクトリ）に格納して
+ご利用ください。
 
-wslcommon は、コマンドと同じ場所（コマンドパスが通ったディレクトリ）に格納してご利用ください。
-UNC パスへのアクセスが必要な場合には、以下のような .bash_profile を作成するのが良いと思います。
-mount 行を追加した場合は、WSL のコンソールを再起動してください。
+また、DrvFs を多くマウントしている場合は、.bash_profile の .bashrc を実行している行の後に、
+以下の設定を追加してください。 wsl コマンドの高速化 が図られます。 
+
+#+BEGIN_EXAMPLE
+source wslinit
+#+END_EXAMPLE
+
+実際には、以下のような .bash_profile を作成するのが良いと思います。mount 行を追加した場合は、
+WSL のコンソールを再起動してください。
 
 #+BEGIN_EXAMPLE
 sudo sh << 'EOF'
@@ -19,6 +25,7 @@ mount -t drvfs '\\<コンピュータ名3>\<共有名>' /mnt/share3
 EOF
 
 [ -r ~/.bashrc ] && source ~/.bashrc
+source wslinit
 #+END_EXAMPLE
 
 mount は /etc/fstab を設定して利用する方法もあります。Windows 10 April 2018 Update では、
@@ -76,6 +83,41 @@ sglstart -h
 詳しくは以下を参照してください。
 
 - [[https://www49.atwiki.jp/ntemacs/pages/63.html][singleton な動きをする cygstart 的コマンドを使うための設定 （WSL版）]]
+
+** ■ wslpath
+
+cygpath 的コマンドです。
+
+常に絶対パスに対して機能する以外は、概ね cygpath コマンドと同様に動作します。
+
+Windows 10 April 2018 Update で wslpath コマンドがサポートされましたので、いずれ不要な
+コマンドになると思いますが、Update するまでの繋ぎとして利用いただければと思います。
+
+- https://kledgeb.blogspot.jp/2018/03/wsl-142-windows-101803wsl.html
+
+今後、本リポジトリで公開しているコマンドも Windows 10 April 2018 Update の wslpath を
+使うように見直す予定です。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+wslpath [-u|-w|-m] path
+wslpath -h
+#+END_EXAMPLE
+
+*** コマンドオプション
+
+**** ● -u オプション
+
+パス名を UNIX 形式で表示します。（デフォルトの動作）
+
+**** ● -w オプション
+
+パス名を Windows 形式で表示します。
+
+**** ● -m オプション
+
+「¥」の代わりに「/」を使用する以外、-w オプションと同様に機能します。
 
 ** ■ wslln
 

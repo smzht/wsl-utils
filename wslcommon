@@ -1,71 +1,27 @@
 # -*- mode: sh; coding: utf-8-unix -*-
 
-if [ ! -v DRVFS ]; then
-    source wslinit
-fi
-eval "$DRVFS"
-
 function drvfs_wslpath_p() {
-    (
-        shopt -u nocasematch
-        for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
-            IFS='|' read -r key value <<< "${drvfs[$i]}"
-            if [[ "$1" =~ ^"$key"($|/) ]]; then
-                return 0
-            fi
-        done
+    if /bin/wslpath -w "$1" > /dev/null 2>&1; then
+        return 0
+    else
         return 1
-    )
+    fi
 }
 
 function drvfs_winpath_p() {
-    (
-        shopt -s nocasematch
-        for ((i = 0; i < ${#drvfs[@]}; i++)); do
-            IFS='|' read -r key value <<< "${drvfs[$i]}"
-            if [[ "$1" =~ ^"$value"($|\\) ]]; then
-                return 0
-            fi
-        done
+    if /bin/wslpath -u "$1" > /dev/null 2>&1; then
+        return 0
+    else
         return 1
-    )
+    fi
 }
 
 function winpath() {
-    (
-        shopt -u nocasematch
-        winpath=$1
-        for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
-            IFS='|' read -r key value <<< "${drvfs[$i]}"
-            if [[ "$winpath" =~ ^"$key"($|/) ]]; then
-                value=$(echo "$value" | sed 's/\\/&&/g')
-                winpath=$(echo "$winpath" | sed -r "s!^$key($|/)!$value\1!")
-                if [[ "$winpath" =~ :$ ]]; then
-                    winpath+=/
-                fi
-                break
-            fi
-        done
-        winpath=$(echo "$winpath" | sed 's!/!\\!g')
-        echo "$winpath"
-    )
+    /bin/wslpath -aw "$1" 2> /dev/null
 }
 
 function wslpath() {
-    (
-        shopt -s nocasematch
-        wslpath=$1
-        for ((i = 0; i < ${#drvfs[@]}; i++)); do
-            IFS='|' read -r key value <<< "${drvfs[$i]}"
-            if [[ "$wslpath" =~ ^"$value"($|\\) ]]; then
-                value=$(echo "$value" | sed 's/\\/&&/g')
-                wslpath=$(echo "$wslpath" | sed -r "s!^$value($|\\\\)!$key\1!i")
-                break
-            fi
-        done
-        wslpath=$(echo "$wslpath" | sed 's!\\!/!g')
-        echo "$wslpath"
-    )
+    /bin/wslpath -au "$1" 2> /dev/null
 }
 
 function cmd0() {
