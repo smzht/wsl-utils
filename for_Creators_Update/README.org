@@ -4,11 +4,10 @@
 
 Windows Subsystem for Linux で動作するユティリティコマンド群です。
 
-wslcommon と wslinit は、コマンドと同じ場所（コマンドパスが通ったディレクトリ）に格納して
-ご利用ください。
+上位ディレクトリのコマンド群にマージ（上書き）してご利用ください。
 
-また、DrvFs を多くマウントしている場合は、.bash_profile の .bashrc を実行している行の後に、
-以下の設定を追加してください。 wsl コマンドの高速化 が図られます。 
+また、DrvFs を多くマウントしている場合は、.bash_profile の .bashrc を実行している行の後に
+以下の設定を追加してください。 wsl コマンドの高速化 が図られます。
 
 #+BEGIN_EXAMPLE
 source wslinit

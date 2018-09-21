@@ -5,7 +5,8 @@
 Windows Subsystem for Linux で動作するユティリティコマンド群です。
 
 Windows 10 April 2018 Update 以降で利用可能です。Windows 10 Creators Update での利用が
-必要な場合には、for_Creators_Update ディレクトリ配下のコマンド群をマージしてご利用ください。
+必要な場合には、for_Creators_Update ディレクトリ配下のコマンド群をマージ（上書き）して
+ご利用ください。
 
 wslcommon は、コマンドと同じ場所（コマンドパスが通ったディレクトリ）に格納してご利用ください。
 UNC パスへのアクセスが必要な場合には、以下のような .bash_profile を作成するのが良いと思います。
