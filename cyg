@@ -42,7 +42,7 @@ current_wsl_path=$(readlink -m -- "$PWD")
 current_win_path=$(winpath "$current_wsl_path")
 
 # カレントディレクトリが DrvFs ファイルシステム上か？
-if check_drvfs_wslpath "$current_wsl_path"; then
+if drvfs_wslpath_p "$current_wsl_path"; then
 
     temp_win_path=$(cmd echo %TEMP%)
     temp_wsl_path=$(wslpath "$temp_win_path")
