@@ -28,10 +28,12 @@ source wslinit
 #+END_EXAMPLE
 
 mount は /etc/fstab を設定して利用する方法もあります。Windows 10 April 2018 Update では、
-wsl.conf を設定することにより自動マウントも可能となっています。
-（Fall Creators Update までは、sudo mount -a が必要。）
+/etc/fstab があれば自動マウントするデフォルト設定となっています。
+（自動マウントは、wsl.conf でコントロール可能です。Fall Creators Update までは、sudo mount -a
+が必要となります。）
 
 - http://ascii.jp/elem/000/001/634/1634120/
+- http://www.atmarkit.co.jp/ait/articles/1807/12/news036.html
 
 /etc/fstab の設定で、IPアドレスを含む UNC パスに対してのマウントポイントを指定する場合、
 「\\172」で始まる箇所などが８進数認識されてしまいます。この場合、２つ目の「\」を敢えて
