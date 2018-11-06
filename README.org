@@ -9,22 +9,15 @@ Windows 10 April 2018 Update 以降で利用可能です。Windows 10 Fall Creat
 ご利用ください。
 
 wslcommon は、コマンドと同じ場所（コマンドパスが通ったディレクトリ）に格納してご利用ください。
-UNC パスへのアクセスが必要な場合には、以下のような .bash_profile を作成するのが良いと思います。
-mount 行を追加した場合は、WSL のコンソールを再起動してください。
+UNC パスへのアクセスが必要な場合には、以下のような /etc/fstab を設定し、マウントしてご利用
+ください。
 
 #+BEGIN_EXAMPLE
-sudo sh << 'EOF'
-mount -t drvfs '\\<コンピュータ名1>\<共有名>' /mnt/share1
-mount -t drvfs '\\<コンピュータ名2>\<共有名>' /mnt/share2
-mount -t drvfs '\\<コンピュータ名3>\<共有名>' /mnt/share3
-EOF
-
-[ -r ~/.bashrc ] && source ~/.bashrc
+\\<ホスト名称>\<共有名>	/mnt/share1	drvfs	defaults,noatime,uid=1000,gid=1000	0 0
 #+END_EXAMPLE
 
-mount は /etc/fstab を設定して利用する方法もあります。Windows 10 April 2018 Update では、
-/etc/fstab があれば自動マウントするデフォルト設定となっています。
-（自動マウントは、wsl.conf でコントロール可能です。Fall Creators Update までは、sudo mount -a
+Windows 10 April 2018 Update では、/etc/fstab があれば自動マウントするデフォルト設定となっています。
+（Fall Creators Update までは、sudo mount -a
 が必要となります。）
 
 - http://ascii.jp/elem/000/001/634/1634120/
@@ -35,7 +28,7 @@ mount は /etc/fstab を設定して利用する方法もあります。Windows 
 ８進数の「\134」と記載することで対策可能です。
 
 #+BEGIN_EXAMPLE
-\\134172.16.0.1\<共有名>	/mnt/share1	drvfs	defaults	0 0
+\\134172.16.0.1\<共有名>	/mnt/share1	drvfs	defaults,noatime,uid=1000,gid=1000	0 0
 #+END_EXAMPLE
 
 認証を必要とするネットワークボリュームを利用する場合は、予め以下の設定により認証情報を
@@ -286,4 +279,4 @@ bash.exe: warning: could not find /tmp, please create!
 #+END_EXAMPLE
 
 cygwin のコンソールを立ち上げるとエラーは出なくなるのですが、その他の解決
-方法が分かっていません。
+方法は分かっていません。
