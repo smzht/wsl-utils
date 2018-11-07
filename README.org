@@ -12,13 +12,18 @@ wslcommon は、コマンドと同じ場所（コマンドパスが通ったデ�
 UNC パスへのアクセスが必要な場合には、以下のような /etc/fstab を設定し、マウントしてご利用
 ください。
 
+ <for Windows 10 Fall Creators Update>
+#+BEGIN_EXAMPLE
+\\<ホスト名称>\<共有名>	/mnt/share1	drvfs	defaults	0 0
+#+END_EXAMPLE
+
+<for Windows 10 April 2018 Update or later>
 #+BEGIN_EXAMPLE
 \\<ホスト名称>\<共有名>	/mnt/share1	drvfs	defaults,noatime,uid=1000,gid=1000	0 0
 #+END_EXAMPLE
 
 Windows 10 April 2018 Update では、/etc/fstab があれば自動マウントするデフォルト設定となっています。
-（Fall Creators Update までは、sudo mount -a
-が必要となります。）
+Fall Creators Update までは、sudo mount -a が必要となります。
 
 - http://ascii.jp/elem/000/001/634/1634120/
 - http://www.atmarkit.co.jp/ait/articles/1807/12/news036.html
@@ -28,7 +33,7 @@ Windows 10 April 2018 Update では、/etc/fstab があれば自動マウント�
 ８進数の「\134」と記載することで対策可能です。
 
 #+BEGIN_EXAMPLE
-\\134172.16.0.1\<共有名>	/mnt/share1	drvfs	defaults,noatime,uid=1000,gid=1000	0 0
+\\134172.16.0.1\<共有名>	/mnt/share1	drvfs	<オプション>	0 0
 #+END_EXAMPLE
 
 認証を必要とするネットワークボリュームを利用する場合は、予め以下の設定により認証情報を
