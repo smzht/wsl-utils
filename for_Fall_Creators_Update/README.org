@@ -1,55 +1,26 @@
 #+STARTUP: showall indent
 
-* WSL Utilities
+* WSL Utilities ( for Windows 10 Fall Creators Update )
 
-Windows Subsystem for Linux で動作するユティリティコマンド群です。
+Windows 10 Fall Creators Update の Windows Subsystem for Linux で動作するユティリティ
+コマンドです。
 
 上位ディレクトリのコマンド群にマージ（上書き）してご利用ください。
 
-また、DrvFs を多くマウントしている場合は、.bash_profile の .bashrc を実行している行の後に
-以下の設定を追加してください。 wsl コマンドの高速化 が図られます。
+また、DrvFs を多くマウントしている場合は、.bash_profile を以下のように設定して、wslinit
+を実行してご利用ください。wsl コマンドの高速化 が図られます。
 
 #+BEGIN_EXAMPLE
-source wslinit
-#+END_EXAMPLE
-
-実際には、以下のような .bash_profile を作成するのが良いと思います。mount 行を追加した場合は、
-WSL のコンソールを再起動してください。
-
-#+BEGIN_EXAMPLE
-sudo sh << 'EOF'
-mount -t drvfs '\\<コンピュータ名1>\<共有名>' /mnt/share1
-mount -t drvfs '\\<コンピュータ名2>\<共有名>' /mnt/share2
-mount -t drvfs '\\<コンピュータ名3>\<共有名>' /mnt/share3
-EOF
-
 [ -r ~/.bashrc ] && source ~/.bashrc
 source wslinit
 #+END_EXAMPLE
 
-mount は /etc/fstab を設定して利用する方法もあります。Windows 10 April 2018 Update では、
-/etc/fstab があれば自動マウントするデフォルト設定となっています。
-（自動マウントは、wsl.conf でコントロール可能です。Fall Creators Update までは、sudo mount -a
-が必要となります。）
-
-- http://ascii.jp/elem/000/001/634/1634120/
-- http://www.atmarkit.co.jp/ait/articles/1807/12/news036.html
-
-/etc/fstab の設定で、IPアドレスを含む UNC パスに対してのマウントポイントを指定する場合、
-「\\172」で始まる箇所などが８進数認識されてしまいます。この場合、２つ目の「\」を敢えて
-８進数の「\134」と記載することで対策可能です。
+UNC パスへのアクセスが必要な場合には、上位ディレクトリで紹介している /etc/fstab の設定
+を以下のとおりに変更し、sudo mount -a の実行によりマウントしてからご利用ください。
 
 #+BEGIN_EXAMPLE
-\\134172.16.0.1\<共有名>	/mnt/share1	drvfs	defaults	0 0
+\\<ホスト名称>\<共有名>	/mnt/share1	drvfs	defaults	0 0
 #+END_EXAMPLE
-
-認証を必要とするネットワークボリュームを利用する場合は、予め以下の設定により認証情報を
-記憶させる必要があります。
-
-- https://www.ipentec.com/document/windows-delete-stored-authentication-information
-
-ネットワークボリュームにアクセスした際に開く認証画面で、「資格情報を記憶する」にチェック
-を入れることでも登録できます。
 
 ** ■ wslpath
 
@@ -57,13 +28,10 @@ cygpath 的コマンドです。
 
 常に絶対パスに対して機能する以外は、概ね cygpath コマンドと同様に動作します。
 
-Windows 10 April 2018 Update で wslpath コマンドがサポートされましたので、いずれ不要な
-コマンドになると思いますが、Update するまでの繋ぎとして利用いただければと思います。
+Windows 10 April 2018 Update では wslpath コマンドがサポートされましたが、Windows 10
+Fall Creators Update ではサポートされていませんので、代替えのコマンドとしてご利用ください。
 
 - https://kledgeb.blogspot.jp/2018/03/wsl-142-windows-101803wsl.html
-
-今後、本リポジトリで公開しているコマンドも Windows 10 April 2018 Update の wslpath を
-使うように見直す予定です。
 
 *** 使用方法
 
