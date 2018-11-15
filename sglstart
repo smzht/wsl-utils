@@ -2,7 +2,9 @@
 # -*- mode: sh; coding: utf-8-unix -*-
 
 function usage_exit() {
-    local command_name=$(basename "$0")
+    local command_name
+    command_name=$(basename "$0")
+
     cat << EOF >&2
 Usage: $command_name target
        $command_name -c
@@ -30,7 +32,7 @@ while getopts :ch opt; do
     esac
 done
 
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 if [ $# -ne 1 ]; then
     usage_exit 2

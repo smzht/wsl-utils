@@ -37,9 +37,9 @@ while getopts :sfah opt; do
     esac
 done
 
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
-if [ $# -ne 1 -a $# -ne 2 ]; then
+if [ $# -ne 1 ] && [ $# -ne 2 ]; then
     usage_exit 2
 fi
 

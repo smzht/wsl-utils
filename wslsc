@@ -29,9 +29,9 @@ while getopts :fh opt; do
     esac
 done
 
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
-if [ $# -ne 1 -a $# -ne 2 ]; then
+if [ $# -ne 1 ] && [ $# -ne 2 ]; then
     usage_exit 2
 fi
 
@@ -54,7 +54,7 @@ fi
 
 target_basename=$(basename -- "$1")
 
-if [ "$target_basename" = "." -o "$target_basename" = ".." ]; then
+if [ "$target_basename" = "." ] || [ "$target_basename" = ".." ]; then
     target_wsl_path=$(readlink -m -- "$1")
     target_basename=$(basename -- "$target_wsl_path")
 else
