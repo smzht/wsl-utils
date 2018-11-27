@@ -36,7 +36,7 @@ Fall Creators Update ではサポートされていませんので、代替え�
 *** 使用方法
 
 #+BEGIN_EXAMPLE
-wslpath [-u|-w|-m] path
+wslpath [-u|-w|-m] [-a] path
 wslpath -h
 #+END_EXAMPLE
 
@@ -53,3 +53,9 @@ wslpath -h
 **** ● -m オプション
 
 「¥」の代わりに「/」を使用する以外、-w オプションと同様に機能します。
+
+**** ● -a オプション
+
+Windows 10 April 2018 Update でサポートされた wslpath コマンドとの互換性のために
+利用可能としています。ただし、本コマンドでは、このオプションを付けても付けなくても
+常に絶対パスを返す仕様としています。
