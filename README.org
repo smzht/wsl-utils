@@ -276,5 +276,9 @@ cyg コマンド実行時に以下のエラーメッセージが表示される�
 bash.exe: warning: could not find /tmp, please create!
 #+END_EXAMPLE
 
-cygwin のコンソールを立ち上げるとエラーは出なくなるのですが、その他の解決
-方法は分かっていません。
+このエラーメッセージが表示される場合は、以下を実行してください。次回の cyg
+コマンド利用時からエラーメッセージが表示されなくなります。
+
+#+BEGIN_EXAMPLE
+cyg mkdir /tmp
+#+END_EXAMPLE
