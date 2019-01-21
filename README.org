@@ -236,7 +236,6 @@ cyg では Cygwin の bash.exe コマンドを -l オプション付きで実行
 Cygwin のホームディレクトリに以下の内容の .bash_profile ファイルを作成する
 ことで対策してください。
 
-＜~/.bash_profile＞
 #+BEGIN_EXAMPLE
 [ -r ~/.bashrc ] && source .bashrc
 #+END_EXAMPLE
@@ -248,7 +247,6 @@ cyg では tty を必要とするコマンドは動作しません。gnupack-13 
 stty 文を以下のとおりに if 文で囲むことでエラーを回避できますので、必要であれば
 対策をしてください。
 
-＜設定例＞
 #+BEGIN_EXAMPLE
 if [ -t 1 ]; then
     stty -ixon
@@ -276,8 +274,8 @@ cyg コマンド実行時に以下のエラーメッセージが表示される�
 bash.exe: warning: could not find /tmp, please create!
 #+END_EXAMPLE
 
-このエラーメッセージが表示される場合は、以下を実行してください。次回の cyg
-コマンド利用時からエラーメッセージが表示されなくなります。
+このエラーメッセージが表示される場合は、以下のコマンドを実行してください。
+次回の cyg コマンド利用時からエラーメッセージが表示されなくなります。
 
 #+BEGIN_EXAMPLE
 cyg mkdir /tmp
