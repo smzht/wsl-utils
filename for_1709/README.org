@@ -1,9 +1,8 @@
 #+STARTUP: showall indent
 
-* WSL Utilities ( for Windows 10 Fall Creators Update )
+* WSL Utilities ( for Windows 10 1709 )
 
-Windows 10 Fall Creators Update の Windows Subsystem for Linux で動作するユティリティ
-コマンドです。
+Windows 10 1709 の Windows Subsystem for Linux で動作するユティリティコマンドです。
 
 上位ディレクトリのコマンド群にマージ（上書き）してご利用ください。
 
@@ -28,8 +27,8 @@ cygpath 的コマンドです。
 
 常に絶対パスに対して機能する以外は、概ね cygpath コマンドと同様に動作します。
 
-Windows 10 April 2018 Update では wslpath コマンドがサポートされましたが、Windows 10
-Fall Creators Update ではサポートされていませんので、代替えのコマンドとしてご利用ください。
+Windows 10 1803 では wslpath コマンドがサポートされましたが、Windows 10 1709 では
+サポートされていませんので、代替えのコマンドとしてご利用ください。
 
 - https://kledgeb.blogspot.jp/2018/03/wsl-142-windows-101803wsl.html
 
@@ -56,6 +55,5 @@ wslpath -h
 
 **** ● -a オプション
 
-Windows 10 April 2018 Update でサポートされた wslpath コマンドとの互換性のために
-利用可能としています。ただし、本コマンドでは、このオプションを付けても付けなくても
-常に絶対パスを返す仕様としています。
+Windows 10 1803 でサポートされた wslpath コマンドとの互換性のために利用可能としています。
+ただし、本コマンドでは、このオプションを付けても付けなくても常に絶対パスを返す仕様としています。
