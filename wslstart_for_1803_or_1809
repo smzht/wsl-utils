@@ -69,18 +69,12 @@ function message() {
 # ターゲットファイルが存在するか？
 if [ -e "$1" ]; then
     wsl_path=$(readlink -m -- "$1")
+    win_path=$(winpath "$wsl_path")
 
-    # https://opcdiary.net/?p=32284
-
-    # ターゲットファイルが DrvFs ファイルシステム上にあるか？
-    if drvfs_wslpath_p "$wsl_path"; then
-
-        # そのまま開く。
-        win_path=$(winpath "$wsl_path")
+    # WSL path を Windows path に変換できたか？
+    if [ $? -eq 0 ]; then
         start "$win_path"
     else
-        # ターゲットファイルが VolFs 等 DrvFs 以外のファイルシステム上にある場合の処理
-
         # 通常ファイルか？
         if [ -f "$wsl_path" ]; then
 

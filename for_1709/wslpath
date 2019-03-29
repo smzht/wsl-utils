@@ -60,24 +60,27 @@ function message() {
 
 if [ $win_path_flg -eq 1 ]; then
     wsl_path=$(readlink -m -- "$1")
-    if drvfs_wslpath_p "$wsl_path"; then
-        winpath "$wsl_path"
+    win_path=$(winpath "$wsl_path")
+    if [ $? -eq 0 ]; then
+        echo "$win_path"
     else
         message "変換できませんでした"
     fi
 
 elif [ $mix_path_flg -eq 1 ]; then
     wsl_path=$(readlink -m -- "$1")
-    if drvfs_wslpath_p "$wsl_path"; then
-        winpath "$wsl_path" | sed 's!\\!/!g'
+    win_path=$(winpath "$wsl_path")
+    if [ $? -eq 0 ]; then
+        echo "$win_path" | sed 's!\\!/!g'
     else
         message "変換できませんでした"
     fi
 
 elif [ $wsl_path_flg -eq 1 ]; then
     win_path=$(echo "$1" | sed 's!/!\\!g')
-    if drvfs_winpath_p "$win_path"; then
-        wslpath "$win_path"
+    wsl_path=$(wslpath "$win_path")
+    if [ $? -eq 0 ]; then
+        echo "$wsl_path"
     else
         message "変換できませんでした"
     fi

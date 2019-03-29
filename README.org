@@ -4,9 +4,8 @@
 
 Windows Subsystem for Linux で動作するユティリティコマンド群です。
 
-Windows 10 April 2018 Update 以降で利用可能です。Windows 10 Fall Creators Update での利用が
-必要な場合には、for_Fall_Creators_Update ディレクトリ配下のコマンド群をマージ（上書き）して
-ご利用ください。
+Windows 10 1803 以降で利用可能です。Windows 10 1709 での利用が必要な場合には、
+for_1709 ディレクトリ配下のコマンド群をマージ（上書き）してご利用ください。
 
 wslcommon は、コマンドと同じ場所（コマンドパスが通ったディレクトリ）に格納してご利用ください。
 UNC パスへのアクセスが必要な場合には、以下のような /etc/fstab を設定し、マウントしてご利用
@@ -16,7 +15,7 @@ UNC パスへのアクセスが必要な場合には、以下のような /etc/f
 \\<ホスト名称>\<共有名>	/mnt/share1	drvfs	defaults,noatime,uid=1000,gid=1000	0 0
 #+END_EXAMPLE
 
-Windows 10 April 2018 Update では、/etc/fstab があれば自動マウントするデフォルト設定となっています。
+Windows 10 1803 以降では、/etc/fstab があれば自動マウントするデフォルト設定となっています。
 
 - http://ascii.jp/elem/000/001/634/1634120/
 - http://www.atmarkit.co.jp/ait/articles/1807/12/news036.html
@@ -41,11 +40,15 @@ Windows 10 April 2018 Update では、/etc/fstab があれば自動マウント�
 
 cygstart 的コマンドです。
 
+Windows 10 1803 と 1809 には wslstart_for_1803_or_1809 を、Windows 10 1903 以降には
+wslstart_for_1903_or_later を利用してください。wslstart へのシンボリックリンクを張って
+使うのが良いと思います。
+
 *** 使用方法
 
 #+BEGIN_EXAMPLE
 wslstart target
-wslstart -c
+wslstart -c # for 1803 or 1809
 wslstart -h
 #+END_EXAMPLE
 
@@ -59,11 +62,15 @@ wslstart -h
 
 singleton な動きをする cygstart 的コマンドです。
 
+Windows 10 1803 と 1809 には sglstart_for_1803_or_1809 を、Windows 10 1903 以降には
+sglstart_for_1903_or_later を利用してください。slgstart へシンボリックリンクを張って
+使うのが良いと思います。
+
 *** 使用方法
 
 #+BEGIN_EXAMPLE
 sglstart target
-sglstart -c
+sglstart -c # for 1803 or 1809
 sglstart -h
 #+END_EXAMPLE
 
@@ -75,16 +82,15 @@ sglstart -h
 
 NTFS シンボリックリンクの作成に対応した ln 的コマンドです。
 
-Windows 10 Fall Creators Update の Windows Subsystem for Linux では、DrvFS ファイルシステム上
+Windows 10 1709 の Windows Subsystem for Linux では、DrvFS ファイルシステム上
 にある NTFS シンボリックリンクを表示できるようになりました。ただし、ln コマンドで
 NTFS シンボリックリンクを作成することはできません。
 本コマンドは、DrvFs ファイルシステム上にシンボリックリンクを作成する場合は NTFS シンボリックリンク
 を、DrvFs ファイルシステム以外にシンボリックリンクを作成する場合は WSL 本来のシンボリックリンク
 を作成するように動作する ln と mklink の機能をラッパーしたコマンドです。
 
-Windows 10 Fall Creators Update リリース以降の Build 17046 では、DrvFs 上での NTFS 
-シンボリックリンクの作成がサポートされた様ですが、リンクターゲットが相対パスである必要がある
-など、幾つかの制約が有るようです。
+Windows 10 1709 以降の Build 17046 では、DrvFs 上での NTFS シンボリックリンクの作成がサポートされた
+様ですが、リンクターゲットが相対パスである必要があるなど、幾つかの制約が有るようです。
 
 - https://msdn.microsoft.com/en-us/commandline/wsl/release-notes#build-17046
 - https://kledgeb.blogspot.jp/2017/11/wsl-120-build-17046wsl.html

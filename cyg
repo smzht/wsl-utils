@@ -41,9 +41,8 @@ function message() {
 current_wsl_path=$(readlink -m -- "$PWD")
 current_win_path=$(winpath "$current_wsl_path")
 
-# カレントディレクトリが DrvFs ファイルシステム上か？
-if drvfs_wslpath_p "$current_wsl_path"; then
-
+# WSL path を Windows path に変換できたか？
+if [ $? -eq 0 ]; then
     temp_win_path=$(cmd echo %TEMP%)
     temp_wsl_path=$(wslpath "$temp_win_path")
 
@@ -74,5 +73,5 @@ EOF
 
     "$cygsh_path" -l "$shell_command_win_path"
 else
-    message "カレントディレクトリが DrvFs ファイルシステム上ではありません"
+    message 'このディレクトリではコマンドを実行できません'
 fi

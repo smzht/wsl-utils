@@ -1,27 +1,21 @@
 # -*- mode: sh; coding: utf-8-unix -*-
 
-function drvfs_wslpath_p() {
-    if /bin/wslpath -w "$1" > /dev/null 2>&1; then
-        return 0
-    else
-        return 1
-    fi
-}
-
-function drvfs_winpath_p() {
-    if /bin/wslpath -u "$1" > /dev/null 2>&1; then
-        return 0
-    else
-        return 1
-    fi
-}
-
 function winpath() {
     /bin/wslpath -aw "$1" 2> /dev/null
 }
 
 function wslpath() {
     /bin/wslpath -au "$1" 2> /dev/null
+}
+
+function drvfs_p() {
+    win_path=$(winpath "$1")
+
+    if [ $? -eq 0 ] && [[ ! "$win_path" =~ '\\wsl$\' ]]; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 function cmd0() {

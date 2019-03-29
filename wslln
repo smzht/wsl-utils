@@ -63,14 +63,14 @@ link_wsl_path=$(readlink -m -- "$link_dirname")
 link_wsl_path+=/$link_basename
 
 # DrvFs ファイルシステム上にシンボリックリンクを作成しようとしているか？
-if [ $symlink_flg -eq 1 ] && drvfs_wslpath_p "$link_wsl_path"; then
+if [ $symlink_flg -eq 1 ] && drvfs_p "$link_wsl_path"; then
 
     # ターゲットファイルが DrvFs ファイルシステム上にあるか？
-    if drvfs_wslpath_p "$target_wsl_path"; then
+    if drvfs_p "$target_wsl_path"; then
 
         # -a オプションが指定されたか、ターゲットファイルが絶対パスでないか、
         # 絶対パスの場合は DrvFs ファイルシステムを示すパスとなっているか？
-        if [ $absolute_flg -eq 1 ] || [[ ! "$1" =~ ^/ ]] || drvfs_wslpath_p "$1"; then
+        if [ $absolute_flg -eq 1 ] || [[ ! "$1" =~ ^/ ]] || drvfs_p "$1"; then
 
             if [ $absolute_flg -eq 1 ]; then
                 target_win_path=$(winpath "$target_wsl_path")

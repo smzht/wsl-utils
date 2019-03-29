@@ -1,0 +1,43 @@
+#!/bin/bash
+# -*- mode: sh; coding: utf-8-unix -*-
+
+function usage_exit() {
+    local command_name
+    command_name=$(basename "$0")
+
+    cat << EOF >&2
+Usage: $command_name target
+       $command_name -c
+       $command_name -h
+EOF
+    exit $1
+}
+
+while getopts :ch opt; do
+    case $opt in
+        h)
+            usage_exit 0
+            ;;
+        \?)
+            usage_exit 2
+            ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+if [ $# -ne 1 ]; then
+    usage_exit 2
+fi
+
+if [ -f "$1" ]; then
+
+    file_name=$(basename -- "$1")
+
+    # ウィンドウのタイトルにファイル名の文字列を含むものがあればポップアップする
+    if winactivate.exe "$file_name" 2> /dev/null; then
+        exit 0
+    fi
+fi
+
+wslstart -- "$1"
