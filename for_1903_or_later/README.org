@@ -7,3 +7,34 @@ Windows 10 1903 以降の Windows Subsystem for Linux で動作するユティ�
 上位ディレクトリにあるコマンドでも Windows 10 1903 以降で動作するように作成していますので、
 本ディレクトリのコマンドは将来的に置き換えるコマンド（スクリプトがシンプルになる）として
 ご利用ください。
+
+** ■ wslstart
+
+cygstart 的コマンドです。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+wslstart target
+wslstart -h
+#+END_EXAMPLE
+
+詳しくは以下を参照してください。
+
+- [[https://www49.atwiki.jp/ntemacs/pages/62.html][WSL で cygstart 的コマンドを使うための設定]]
+
+** ■ sglstart
+
+singleton な動きをする cygstart 的コマンドです。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+sglstart target
+sglstart -h
+#+END_EXAMPLE
+
+詳しくは以下を参照してください。
+
+- [[https://www49.atwiki.jp/ntemacs/pages/63.html][singleton な動きをする cygstart 的コマンドを使うための設定 （WSL版）]]
+
