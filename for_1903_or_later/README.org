@@ -1,0 +1,9 @@
+#+STARTUP: showall indent
+
+* WSL Utilities ( for Windows 10 1903 or later )
+
+Windows 10 1903 以降の Windows Subsystem for Linux で動作するユティリティコマンドです。
+
+上位ディレクトリにあるコマンドでも Windows 10 1903 以降で動作するように作成していますので、
+本ディレクトリのコマンドは将来的に置き換えるコマンド（スクリプトがシンプルになる）として
+ご利用ください。
