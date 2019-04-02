@@ -40,15 +40,15 @@ Windows 10 1803 以降では、/etc/fstab があれば自動マウントする�
 
 cygstart 的コマンドです。
 
-Windows 10 1803 と 1809 には wslstart_for_1803_or_1809 を、Windows 10 1903 以降には
-wslstart_for_1903_or_later を利用してください。wslstart にシンボリックリンクを張って
-使うのが良いと思います。
+for_1903_or_later フォルダ配下のコマンドは、Windows 10 1903 以降で利用可能なコマンドです。
+サブフォルダ配下のものでなくても Windows 10 1903 以降で動作するように作成していますので、
+将来的に置き換えるコマンドとしてご利用ください。
 
 *** 使用方法
 
 #+BEGIN_EXAMPLE
 wslstart target
-wslstart -c # for 1803 or 1809
+wslstart -c
 wslstart -h
 #+END_EXAMPLE
 
@@ -62,15 +62,15 @@ wslstart -h
 
 singleton な動きをする cygstart 的コマンドです。
 
-Windows 10 1803 と 1809 には sglstart_for_1803_or_1809 を、Windows 10 1903 以降には
-sglstart_for_1903_or_later を利用してください。slgstart にシンボリックリンクを張って
-使うのが良いと思います。
+for_1903_or_later フォルダ配下のコマンドは、Windows 10 1903 以降で利用可能なコマンドです。
+サブフォルダ配下のものでなくても Windows 10 1903 以降で動作するように作成していますので、
+将来的に置き換えるコマンドとしてご利用ください。
 
 *** 使用方法
 
 #+BEGIN_EXAMPLE
 sglstart target
-sglstart -c # for 1803 or 1809
+sglstart -c
 sglstart -h
 #+END_EXAMPLE
 
