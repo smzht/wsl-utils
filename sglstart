@@ -38,13 +38,18 @@ if [ $# -ne 1 ]; then
     usage_exit 2
 fi
 
-if [ -f "$1" ]; then
+# ターゲットファイルが存在するか？
+if [ -e "$1" ]; then
+    target_path=$(readlink -m -- "$1")
 
-    file_name=$(basename -- "$1")
+    # ターゲットファイルはファイルか？
+    if [ -f "$target_path" ]; then
+        file_name=$(basename -- "$target_path")
 
-    # ウィンドウのタイトルにファイル名の文字列を含むものがあればポップアップする
-    if winactivate.exe "$file_name" 2> /dev/null; then
-        exit 0
+        # ウィンドウのタイトルにファイル名の文字列を含むものがあればポップアップする
+        if winactivate.exe "$file_name" 2> /dev/null; then
+            exit 0
+        fi
     fi
 fi
 
