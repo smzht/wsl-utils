@@ -286,3 +286,69 @@ bash.exe: warning: could not find /tmp, please create!
 #+BEGIN_EXAMPLE
 cyg mkdir /tmp
 #+END_EXAMPLE
+
+** ■ win
+
+wsl で exe コマンドを実行するためのコマンドです。
+
+Windows 10 1809 では、emacs の shell-mode で exe コマンドを実行できません。
+「exec > /dev/tty」というコマンドを入力することで回避はできるのですが、以降で紹介
+する winsudo が動かないことが分かりましたので、本コマンドを作成しました。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+win exe-command
+#+END_EXAMPLE
+
+*** 使用例
+
+#+BEGIN_EXAMPLE
+win cmd.exe
+win ipconfig.exe
+#+END_EXAMPLE
+
+** ■ winsudo
+
+Windows のための sudo 的コマンドです。
+
+WSL で Windows のコマンドを管理者権限で実行するために作成しました。chocolatey
+コマンドのように、実行時に管理者権限を必要とするコマンドを WSL の shell 上から実行
+できるようになります。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+winsudo exe-command
+#+END_EXAMPLE
+
+*** 使用例
+
+#+BEGIN_EXAMPLE
+winsudo cmd.exe
+winsudo choco.exe search ChocolateyGUI
+winsudo choco.exe install ChocolateyGUI
+#+END_EXAMPLE
+
+上記の使用例の後者のコマンドをよく利用する場合は、以下の alias を .bashrc 等に
+設定してご利用ください。
+
+#+BEGIN_EXAMPLE
+alias choco='winsudo choco.exe'
+#+END_EXAMPLE
+
+*** 注意事項
+
+**** ● 「exec > /dev/tty」を実行している場合は解除してください 
+
+Windows 10 1809 では、emacs の shell-mode で exe コマンドを実行できません。
+この問題を回避するために「exec > /dev/tty」というコマンドを入力する方法がある
+のですが、このコマンドを入力していると本コマンドは正常に動作しないことが分かり
+ました。このため、もしこの回避コマンドを実行している場合には設定を解除し、先に
+紹介している win コマンドを利用するようしてください。
+
+**** ● "tcgetpgrp failed: Not a tty" というメッセージが表示される場合があります
+
+tty を必要とするコマンドの場合に出力されるようです。良い対策が見つからないため
+未対策となっていますが、メッセージが表示されてもコマンドは正常に動作している
+ようです。もし何か良い対策があれば、実施してみてください。

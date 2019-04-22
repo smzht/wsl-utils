@@ -1,0 +1,56 @@
+#!/bin/bash
+# -*- mode: sh; coding: utf-8-unix -*-
+
+function usage_exit() {
+    local command_name
+    command_name=$(basename "$0")
+
+    cat << EOF >&2
+Usage: $command_name command
+       $command_name -h
+EOF
+    exit $1
+}
+
+while getopts :h opt; do
+    case $opt in
+        h)
+            usage_exit 0
+            ;;
+        \?)
+            usage_exit 2
+            ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+if [ $# -eq 0 ]; then
+    usage_exit 2
+fi
+
+process_id=$(mktemp -t "$command_name.XXXXXXXXXX")
+shell_command=$(mktemp -t "$command_name.XXXXXXXXXX")
+
+trap 'rm -f "$process_id" "$shell_command"' 0
+
+quote_pwd=$(printf '%q' "$PWD")
+quote_cmd=''
+
+for arg in "$@"; do
+    quote_arg=$(printf '%q' "$arg")
+    quote_cmd+=" $quote_arg"
+done
+
+cat << EOF > "$shell_command"
+echo \$$ > '$process_id'
+exec < /proc/$$/fd/0 > /proc/$$/fd/1 2> /proc/$$/fd/2
+LANG=$LANG
+cd $quote_pwd
+$quote_cmd
+EOF
+
+trap 'trap "" 1 2 3 15; "$0" kill -- -$(cat "$process_id")' 1 2 3 15
+
+powershell.exe Start-Process -FilePath wsl.exe -ArgumentList "'bash $shell_command'" -WindowStyle Hidden -Wait -Verb runas &
+wait $!
