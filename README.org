@@ -289,7 +289,7 @@ cyg mkdir /tmp
 
 ** ■ win
 
-wsl で exe コマンドを実行するためのコマンドです。
+WSL で exe コマンドを実行するためのコマンドです。
 
 Windows 10 1809 では、emacs の shell-mode で exe コマンドを実行できません。
 「exec > /dev/tty」というコマンドを入力することで回避はできるのですが、以降で紹介
@@ -310,7 +310,7 @@ win ipconfig.exe
 
 ** ■ winsudo
 
-Windows のための sudo 的コマンドです。
+WSL で動作する Windows のための sudo 的コマンドです。
 
 WSL で Windows のコマンドを管理者権限で実行するために作成しました。chocolatey
 コマンドのように、実行時に管理者権限を必要とするコマンドを WSL の shell 上から実行
