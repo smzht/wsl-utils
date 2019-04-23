@@ -54,5 +54,5 @@ EOF
 
 trap 'trap "" 1 2 3 15; "$0" kill -- -$(cat "$process_id")' 1 2 3 15
 
-powershell.exe Start-Process -FilePath bash.exe -ArgumentList "'$shell_command'" -WindowStyle Hidden -Wait -Verb runas &
+powershell.exe -Command Start-Process bash.exe "'$shell_command'" -WindowStyle Hidden -Wait -Verb runas &
 wait $!
