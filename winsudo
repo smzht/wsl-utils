@@ -42,12 +42,14 @@ for arg in "$@"; do
     quote_cmd+=" $quote_arg"
 done
 
+# 最後のコマンド実行で cat をフィルターしているのは、"tcgetpgrp failed: Not a tty"
+# というメッセージを消すため（メッセージが消える理由は分からない）
 cat << EOF > "$shell_command"
 echo \$$ > '$process_id'
 exec < /proc/$$/fd/0 > /proc/$$/fd/1 2> /proc/$$/fd/2
 LANG=$LANG
 cd $quote_pwd
-$quote_cmd
+$quote_cmd | cat
 EOF
 
 trap 'trap "" 1 2 3 15; "$0" kill -- -$(cat "$process_id")' 1 2 3 15
