@@ -333,6 +333,13 @@ winsudo cmd.exe
 choco コマンドは、winsudo cmd.exe を実行した後であれば、管理者権限のまま何度も
 実行することができます。
 
+また、上記の使用例の前者のコマンドをよく利用する場合は、以下の alias を .bashrc 等
+に設定しておくのが良いと思います。
+
+#+BEGIN_EXAMPLE
+alias choco='winsudo choco.exe'
+#+END_EXAMPLE
+
 *** 注意事項
 
 **** ● 「exec > /dev/tty」を実行している場合は解除してください 
