@@ -42,13 +42,16 @@ for arg in "$@"; do
     quote_cmd+=" $quote_arg"
 done
 
-# 最後のコマンド実行で cat をフィルターしているのは、"tcgetpgrp failed: Not a tty"
-# というメッセージを消すため（メッセージが消える理由は分からない）
+# 最後のコマンド実行で cat のフィルターを通しているのは、"tcgetpgrp failed: Not a tty"
+# というメッセージを消すためです。メッセージが消える理由は分わかりません。ただし、
+# この方法ではインターラクティブに動作するコマンドの挙動がおかしくなる場合があるため、
+# メッセージが気にならないのであれば「| cat」を外した方が良いかもしれません。
 cat << EOF > "$shell_command"
 echo \$$ > '$process_id'
 exec < /proc/$$/fd/0 > /proc/$$/fd/1 2> /proc/$$/fd/2
 LANG=$LANG
 cd $quote_pwd
+# $quote_cmd
 $quote_cmd | cat
 EOF
 
