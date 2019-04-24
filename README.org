@@ -325,8 +325,8 @@ winsudo exe-command
 *** 使用例
 
 #+BEGIN_EXAMPLE
-winsudo choco.exe search ChocolateyGUI
-winsudo choco.exe install ChocolateyGUI
+winsudo choco.exe search chocolateygui
+winsudo choco.exe install chocolateygui
 winsudo cmd.exe
 #+END_EXAMPLE
 
