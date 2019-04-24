@@ -330,15 +330,15 @@ winsudo choco.exe install ChocolateyGUI
 winsudo cmd.exe
 #+END_EXAMPLE
 
-choco コマンドは、winsudo cmd.exe を実行した後であれば、管理者権限のまま何度も
-実行することができます。
-
-また、上記の使用例の前者のコマンドをよく利用する場合は、以下の alias を .bashrc 等
-に設定しておくのが良いと思います。
+上記の使用例の前者のコマンドをよく利用する場合は、以下の alias を .bashrc 等に
+設定しておくのが良いと思います。
 
 #+BEGIN_EXAMPLE
 alias choco='winsudo choco.exe'
 #+END_EXAMPLE
+
+また、winsudo cmd.exe を実行した後であれば、choco.exe コマンドを管理者権限のまま
+何度も実行することができます。
 
 *** 注意事項
 
