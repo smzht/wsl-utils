@@ -337,8 +337,8 @@ winsudo cmd.exe
 alias choco='winsudo choco.exe'
 #+END_EXAMPLE
 
-また、winsudo cmd.exe を実行した後であれば、choco.exe コマンドを管理者権限のまま
-何度も実行することができます。
+また、winsudo cmd.exe を実行した後であれば、exe コマンドを管理者権限のまま何度も
+実行することができます。
 
 *** 注意事項
 
