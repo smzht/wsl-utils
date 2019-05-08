@@ -65,7 +65,8 @@ fi
 
 shortcut_dirname=$(dirname -- "$2")
 shortcut_basename=$(basename -- "$2")
-shortcut_wsl_path=$(readlink -m -n -- "$shortcut_dirname"; echo "/$shortcut_basename")
+shortcut_wsl_path=$(readlink -m -- "$shortcut_dirname")
+shortcut_wsl_path+=/$shortcut_basename
 
 # ターゲットファイルが DrvFs ファイルシステム上にあるか？
 if drvfs_p "$target_wsl_path"; then

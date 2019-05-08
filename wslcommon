@@ -1,15 +1,15 @@
 # -*- mode: sh; coding: utf-8-unix -*-
 
 function winpath() {
-    /bin/wslpath -aw "$1" 2> /dev/null
+    /bin/wslpath -w "$@" 2> /dev/null
 }
 
 function wslpath() {
-    /bin/wslpath -au "$1" 2> /dev/null
+    /bin/wslpath -u "$@" 2> /dev/null
 }
 
 function drvfs_p() {
-    win_path=$(winpath "$1")
+    win_path=$(winpath -a "$1")
 
     if [ $? -eq 0 ] && [[ ! "$win_path" =~ ^'\\wsl$\' ]]; then
         return 0

@@ -47,7 +47,7 @@ case $((win_path_flg + wsl_path_flg + mix_path_flg)) in
         ;;
 esac
 
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 if [ $# -ne 1 ]; then
     usage_exit 2
