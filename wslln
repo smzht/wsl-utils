@@ -52,10 +52,16 @@ if [ $# -eq 1 ]; then
     set -- "$1" .
 fi
 
-target_dirname=$(dirname -- "$1")
 target_basename=$(basename -- "$1")
-target_wsl_path=$(readlink -m -- "$target_dirname")
-target_wsl_path+=/$target_basename
+
+if [ "$target_basename" = "." ] || [ "$target_basename" = ".." ]; then
+    target_wsl_path=$(readlink -m -- "$1")
+    target_basename=$(basename -- "$target_wsl_path")
+else
+    target_dirname=$(dirname -- "$1")
+    target_wsl_path=$(readlink -m -- "$target_dirname")
+    target_wsl_path+=/$target_basename
+fi
 
 link_dirname=$(dirname -- "$2")
 link_basename=$(basename -- "$2")
