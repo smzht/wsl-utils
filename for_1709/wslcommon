@@ -57,7 +57,8 @@ function wslpath() {
 }
 
 function drvfs_p() {
-    if winpath "$1" > /dev/null; then
+    local wsl_path=$(readlink -m -- "$1")
+    if winpath "$wsl_path" > /dev/null; then
         return 0
     else
         return 1
@@ -83,7 +84,7 @@ function start() {
     # パスに半角スペースを含まず、全角スペースを含んでいる場合、start コマンドが正常に
     # 動作しない。パスの後ろに半角スペースを入れることで正常に動作するのでその対策を
     # 追加した。
-    command=$1
+    local command=$1
     if [[ "$command" =~ '　' ]]; then
         command+=' '
     fi
