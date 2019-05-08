@@ -34,7 +34,7 @@ function winpath() {
 
 function wslpath() {
     (
-        if [[ "$1" =~ ^'\\'|^.: ]]; then
+        if [[ "$1" =~ ^'\'|^.: ]]; then
             shopt -s nocasematch
             wslpath=$1
             for ((i = 0; i < ${#drvfs[@]}; i++)); do
