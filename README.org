@@ -246,9 +246,9 @@ Cygwin のホームディレクトリに以下の内容の .bash_profile ファ�
 [ -r ~/.bashrc ] && source .bashrc
 #+END_EXAMPLE
 
-**** ● cyg は tty を必要とするコマンドは動作しません
+**** ● cyg では、tty を必要とするコマンドは動作しません
 
-cyg では tty を必要とするコマンドは動作しません。gnupack-13 系で提供される
+cyg では、tty を必要とするコマンドは動作しません。gnupack-13 系で提供される
 .bashrc には stty の設定が含まれており、これが cyg 実行時にエラーを出力します。
 stty 文を以下のとおりに if 文で囲むことでエラーを回避できますので、必要であれば
 対策をしてください。
@@ -265,9 +265,9 @@ gnupack では startup_config.ini で環境変数の設定が可能となって�
 cyg ではその設定が有効になりません。startup_config.ini で PATH などの環境設定
 を設定している場合は、.bashrc に設定を移すなどの対策が必要となります。
 
-**** ● Cygwin のコマンドは WSL の LANG 環境変数の値で実行します
+**** ● Cygwin のコマンドは、WSL の LANG 環境変数の値で実行します
 
-cyg では Cygwin のコマンドを WSL の LANG 環境変数の値で実行します。これは、
+cyg では、Cygwin のコマンドを WSL の LANG 環境変数の値で実行します。これは、
 コマンド出力の文字化けを回避するために行っているものです。もし、Cygwin を
 cp932 で使っている場合には、スクリプトの文字コードを変更するなど調整が必要
 となる可能性があります。
@@ -286,6 +286,15 @@ bash.exe: warning: could not find /tmp, please create!
 #+BEGIN_EXAMPLE
 cyg mkdir /tmp
 #+END_EXAMPLE
+
+**** ● Windows 10 1809 では、emacs の shell-mode で cyg コマンドを実行できません
+
+以下の win コマンドで説明している問題が cyg コマンドでも発生します
+（内部で exe コマンドを実行しているため）。このため、cyg コマンドを実行する
+場合は、win コマンドを使って実行するか、cyg コマンドの最後の方にある "$cygsh_path"
+で始まる行に win コマンドを先行指定することで対策してください。
+今後、この問題は Windows 10 のバージョンアップ時に解決されるものと思われますので、
+cyg コマンドの修正による対策は行いません。
 
 ** ■ win
 
