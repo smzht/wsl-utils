@@ -65,6 +65,7 @@ function message() {
 if [ $wsl_path_flg -eq 1 ]; then
     win_path=$(echo "$1" | sed 's!/!\\!g')
     wsl_path=$(wslpath "$win_path")
+
     if [ $? -eq 0 ]; then
         if [ $absolute_flg -eq 1 ]; then
             wsl_path=$(readlink -m -- "$wsl_path")
@@ -80,6 +81,7 @@ else
         wsl_path=$1
     fi
     win_path=$(winpath "$wsl_path")
+
     if [ $? -eq 0 ]; then
         if [ $mix_path_flg -eq 1 ]; then
             win_path=$(echo "$win_path" | sed 's!\\!/!g')
