@@ -21,7 +21,7 @@ UNC パスへのアクセスが必要な場合には、上位ディレクトリ�
 \\<ホスト名称>\<共有名>	/mnt/share1	drvfs	defaults	0 0
 #+END_EXAMPLE
 
-** ■ wslpath
+** ■ wslpath2
 
 cygpath 的コマンドです。
 
@@ -35,8 +35,8 @@ Windows 10 1803 では wslpath コマンドがサポートされましたが、W
 *** 使用方法
 
 #+BEGIN_EXAMPLE
-wslpath [-u|-w|-m] [-a] path
-wslpath -h
+wslpath2 [-u|-w|-m] [-a] path
+wslpath2 -h
 #+END_EXAMPLE
 
 *** コマンドオプション
