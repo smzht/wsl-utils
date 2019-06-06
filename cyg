@@ -5,7 +5,6 @@
 cygsh_path='/mnt/c/gnupack/app/cygwin/cygwin/bin/bash.exe'
 
 source wslcommon
-
 command_name=$(basename "$0")
 
 function usage_exit() {
