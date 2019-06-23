@@ -63,13 +63,10 @@ else
     target_wsl_path+=/$target_basename
 fi
 
-shortcut_dirname=$(dirname -- "$2")
-shortcut_basename=$(basename -- "$2")
-shortcut_wsl_path=$(readlink -m -- "$shortcut_dirname")
-shortcut_wsl_path+=/$shortcut_basename
+target_win_path=$(winpath "$target_wsl_path")
 
-# ターゲットファイルが DrvFs ファイルシステム上にあるか？
-if drvfs_p "$target_wsl_path"; then
+# WSL path を Windows path に変換できたか？
+if [ $? -eq 0 ]; then
 
     temp_win_path=$(cmd echo %TEMP%)"\\$command_name"
     temp_wsl_path=$(wslpath "$temp_win_path")
@@ -108,6 +105,11 @@ link.Save();
 EOF
     fi
 
+    shortcut_dirname=$(dirname -- "$2")
+    shortcut_basename=$(basename -- "$2")
+    shortcut_wsl_path=$(readlink -m -- "$shortcut_dirname")
+    shortcut_wsl_path+=/$shortcut_basename
+
     if [ -d "$shortcut_wsl_path" ]; then
         shortcut_wsl_path+=/$target_basename
     fi
@@ -115,9 +117,6 @@ EOF
     if [[ ! "$shortcut_wsl_path" =~ \.lnk$ ]]; then
         shortcut_wsl_path+='.lnk'
     fi
-
-    target_win_path=$(winpath "$target_wsl_path")
-    shortcut_win_path=$(winpath "$shortcut_wsl_path")
 
     if [ $force_flg -eq 0 ]; then
         if [ -e "$shortcut_wsl_path" ]; then
@@ -127,8 +126,10 @@ EOF
         rm -f "$shortcut_wsl_path" 2> /dev/null
     fi
 
-    # DrvFs ファイルシステム上にショートカットを作成しようとしているか？
-    if drvfs_p "$shortcut_wsl_path"; then
+    shortcut_win_path=$(winpath "$shortcut_wsl_path")
+
+    # WSL path を Windows path に変換できたか？
+    if [ $? -eq 0 ]; then
         cmd cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$shortcut_win_path"
     else
         working_dir=$(mktemp -d -p "$temp_wsl_path")
@@ -142,5 +143,5 @@ EOF
         mv "$working_wsl_path" "$shortcut_wsl_path"
     fi
 else
-    message 'ターゲットファイルは DrvFs ファイルシステム上のファイルを指定してください'
+    message 'ターゲットファイルのショートカットファイルは作成することができません'
 fi
