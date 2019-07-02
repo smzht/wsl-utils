@@ -17,7 +17,18 @@ function drvfs_p() {
     fi
 }
 
+function escape() {
+    echo "$1" | sed 's/[&|<>^]/^&/g'
+}
+
 function cmd0() {
+    # 引数をescapeする
+    local args=()
+    for arg in "$@"; do
+        args+=("$(escape "$arg")")
+    done
+    set -- "${args[@]}"
+
     cmd.exe /c "$@" | sed 's/\r$//'
     return ${PIPESTATUS[0]}
 }
@@ -33,6 +44,13 @@ function cmd() {
 }
 
 function start() {
+    # cmd内から呼んでいるcmd.exeのために引数をescapeする
+    local args=()
+    for arg in "$@"; do
+        args+=("$(escape "$arg")")
+    done
+    set -- "${args[@]}"
+
     # パスに半角スペースを含まず、全角スペースを含んでいる場合、start コマンドが正常に
     # 動作しない。パスの後ろに半角スペースを入れることで正常に動作するのでその対策を
     # 追加した。
@@ -46,5 +64,5 @@ function start() {
     # （コンソールから本コマンドを起動した場合には「対策前の設定」でも問題ないが、
     #   X サーバ上に起動した emacs から本コマンドを起動すると現象が発生するため。）
     # cmd start "" "$command" "$@" # ← 対策前の設定
-    cmd start /b cmd /c start "" "$command" "$@"
+    cmd start /b cmd.exe /c start "" "$command" "$@"
 }
