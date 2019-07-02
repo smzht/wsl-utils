@@ -18,17 +18,11 @@ function drvfs_p() {
 }
 
 function escape() {
-    echo "$1" | sed 's/[&|<>^]/^&/g'
+    # https://thinca.hatenablog.com/entry/20100210/1265813598
+    echo "$1" | sed 's/[&|<>()^"%]/^&/g'
 }
 
 function cmd0() {
-    # 引数をescapeする
-    local args=()
-    for arg in "$@"; do
-        args+=("$(escape "$arg")")
-    done
-    set -- "${args[@]}"
-
     cmd.exe /c "$@" | sed 's/\r$//'
     return ${PIPESTATUS[0]}
 }
@@ -36,15 +30,26 @@ function cmd0() {
 documents_win_path=$(cmd0 echo %USERPROFILE% 2> /dev/null)'\Documents'
 documents_wsl_path=$(wslpath "$documents_win_path")
 
-function cmd() {
+function cmd1() {
     (
         cd "$documents_wsl_path"
         cmd0 "$@"
     )
 }
 
+function cmd() {
+    # 引数をescapeする
+    local args=()
+    for arg in "$@"; do
+        args+=("$(escape "$arg")")
+    done
+    set -- "${args[@]}"
+
+    cmd1 "$@"
+}
+
 function start() {
-    # cmd内から呼んでいるcmd.exeのために引数をescapeする
+    # cmd内から呼んでいるcmd.exeのために引数を一回escapeする
     local args=()
     for arg in "$@"; do
         args+=("$(escape "$arg")")

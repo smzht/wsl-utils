@@ -28,7 +28,7 @@ EOF
     exit $1
 }
 
-temp_win_path=$(cmd echo %TEMP%)"\\$command_name"
+temp_win_path=$(cmd1 echo %TEMP%)"\\$command_name"
 temp_wsl_path=$(wslpath "$temp_win_path")
 
 function clean_all() {
