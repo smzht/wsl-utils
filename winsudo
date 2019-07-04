@@ -35,11 +35,10 @@ shell_command=$(mktemp -t "$command_name.XXXXXXXXXX")
 trap 'rm -f "$process_id" "$shell_command"' 0
 
 quote_pwd=$(printf '%q' "$PWD")
-quote_cmd=''
 
+quote_cmd=''
 for arg; do
-    quote_arg=$(printf '%q' "$arg")
-    quote_cmd+=" $quote_arg"
+    quote_cmd+=" $(printf '%q' "$arg")"
 done
 
 # 本コマンドで exe コマンドを実行すると、"tcgetpgrp failed: Not a tty"という
