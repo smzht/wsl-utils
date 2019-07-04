@@ -37,7 +37,7 @@ trap 'rm -f "$process_id" "$shell_command"' 0
 quote_pwd=$(printf '%q' "$PWD")
 quote_cmd=''
 
-for arg in "$@"; do
+for arg; do
     quote_arg=$(printf '%q' "$arg")
     quote_cmd+=" $quote_arg"
 done

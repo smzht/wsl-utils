@@ -40,7 +40,7 @@ function cmd1() {
 function cmd() {
     # 引数をescapeする
     local args=()
-    for arg in "$@"; do
+    for arg; do
         args+=("$(escape "$arg")")
     done
     set -- "${args[@]}"
@@ -51,7 +51,7 @@ function cmd() {
 function start() {
     # cmd内から呼んでいるcmd.exeのために引数を一回escapeする
     local args=()
-    for arg in "$@"; do
+    for arg; do
         args+=("$(escape "$arg")")
     done
     set -- "${args[@]}"

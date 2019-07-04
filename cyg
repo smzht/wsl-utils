@@ -56,7 +56,7 @@ if [ $? -eq 0 ]; then
     quote_pwd=$(printf '%q' "$current_win_path")
     quote_cmd=''
 
-    for arg in "$@"; do
+    for arg; do
         quote_arg=$(printf '%q' "$arg")
         quote_cmd+=" $quote_arg"
     done
