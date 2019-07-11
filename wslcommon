@@ -19,7 +19,7 @@ function drvfs_p() {
 
 function escape() {
     # https://thinca.hatenablog.com/entry/20100210/1265813598
-    echo "$1" | sed 's/[&|<>()^"%]/^&/g'
+    echo "$1" | sed 's/[&|<>^"%]/^&/g'
 }
 
 function cmd0() {
