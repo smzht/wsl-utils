@@ -12,9 +12,6 @@ EOF
     exit $1
 }
 
-temp_win_path=$(cmd1 echo %TEMP%)"\\$command_name"
-temp_wsl_path=$(wslpath "$temp_win_path")
-
 while getopts :h opt; do
     case $opt in
         h)
