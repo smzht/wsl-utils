@@ -75,7 +75,7 @@ function cmd0() {
     return ${PIPESTATUS[0]}
 }
 
-documents_win_path=$(cd /; cmd0 echo %USERPROFILE% 2> /dev/null)'\Documents'
+documents_win_path=$(cd /mnt/c; cmd0 echo %USERPROFILE%)'\Documents'
 documents_wsl_path=$(wslpath "$documents_win_path")
 
 function cmd1() {
