@@ -7,22 +7,13 @@ function usage_exit() {
 
     cat << EOF >&2
 Usage: $command_name target
-       $command_name -c
        $command_name -h
 EOF
     exit $1
 }
 
-function clean_all() {
-    wslstart -c
-    exit $?
-}
-
-while getopts :ch opt; do
+while getopts :h opt; do
     case $opt in
-        c)
-            clean_all
-            ;;
         h)
             usage_exit 0
             ;;

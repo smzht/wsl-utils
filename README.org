@@ -4,8 +4,8 @@
 
 Windows Subsystem for Linux で動作するユティリティコマンド群です。
 
-Windows 10 1803 以降で利用可能です。Windows 10 1709 での利用が必要な場合には、
-for_1709 ディレクトリ配下のコマンド群をマージ（上書き）してご利用ください。
+Windows 10 1903 以降で利用可能です。それより前の Windows で利用する場合は、
+該当するバージョンのサブフォルダ配下のファイルを本フォルダにマージしてご利用ください。
 
 wslcommon は、コマンドと同じ場所（コマンドパスが通ったディレクトリ）に格納してご利用ください。
 UNC パスへのアクセスが必要な場合には、以下のような /etc/fstab を設定し、マウントしてご利用
@@ -49,15 +49,10 @@ Windows 10 1803 以降では、/etc/fstab があれば自動マウントする�
 
 cygstart 的コマンドです。
 
-for_1903_or_later フォルダ配下のコマンドは、Windows 10 1903 以降で利用可能なコマンドです。
-このフォルダ配下のものでなくても Windows 10 1903 以降で動作するように作成していますので、
-将来的に置き換えるコマンドとしてご利用ください。
-
 *** 使用方法
 
 #+BEGIN_EXAMPLE
 wslstart target
-wslstart -c
 wslstart -h
 #+END_EXAMPLE
 
@@ -71,15 +66,10 @@ wslstart -h
 
 singleton な動きをする cygstart 的コマンドです。
 
-for_1903_or_later フォルダ配下のコマンドは、Windows 10 1903 以降で利用可能なコマンドです。
-このフォルダ配下のものでなくても Windows 10 1903 以降で動作するように作成していますので、
-将来的に置き換えるコマンドとしてご利用ください。
-
 *** 使用方法
 
 #+BEGIN_EXAMPLE
 sglstart target
-sglstart -c
 sglstart -h
 #+END_EXAMPLE
 
@@ -299,7 +289,7 @@ bash.exe: warning: could not find /tmp, please create!
 cyg mkdir /tmp
 #+END_EXAMPLE
 
-**** ● Windows 10 1809 では、emacs の shell-mode で cyg コマンドを実行できません
+**** ● Windows 10 1809 以降では、emacs の shell-mode で cyg コマンドを実行できません
 
 以下の win コマンドで説明している問題が cyg コマンドでも発生します
 （内部で exe コマンドを実行しているため）。このため、cyg コマンドを実行する
@@ -312,7 +302,7 @@ cyg コマンドの修正による対策は行いません。
 
 WSL で exe コマンドを実行するためのコマンドです。
 
-Windows 10 1809 では、emacs の shell-mode で exe コマンドを実行できません。
+Windows 10 1809 以降では、emacs の shell-mode で exe コマンドを実行できません。
 「exec > /dev/tty」というコマンドを入力することで回避はできるのですが、以降で紹介
 する winsudo が動かないことが分かりましたので、本コマンドを作成しました。
 
@@ -365,7 +355,7 @@ alias choco='winsudo choco.exe'
 
 **** ● 「exec > /dev/tty」を実行している場合は解除してください 
 
-Windows 10 1809 では、emacs の shell-mode で exe コマンドを実行できません。
+Windows 10 1809 以降では、emacs の shell-mode で exe コマンドを実行できません。
 この問題を回避するために「exec > /dev/tty」というコマンドを入力する方法がある
 のですが、このコマンドを入力していると本コマンドは正常に動作しないことが分かり
 ました。このため、もしこの回避コマンドを実行している場合には設定を解除し、先に
