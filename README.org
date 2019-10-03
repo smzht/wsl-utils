@@ -125,7 +125,7 @@ wslln -s target link 実行時のシンボリックリンク作成ルールは�
 **** ● -a オプション
 
 ターゲットファイルのパスを絶対パスに変換（readlink -m）してからリンクを作成します。
-ln コマンドには無いオプションとなります。以下で紹介している emacs との連携の設定の
+ln コマンドには無いオプションとなります。以下で紹介している Emacs との連携の設定の
 中で利用されています。
 
 *** 必要な環境設定
@@ -146,7 +146,7 @@ NTFS シンボリックリンクを管理者権限なしで作成できるよう
 
 - https://qiita.com/azechi/items/f9a97393cb41be4be437
 
-*** emacs との連携
+*** Emacs との連携
 
 以下の説明を参照してください。
 
@@ -184,7 +184,7 @@ Windows 10 1903 以降では、VolFs にも \\wsl$\ で始まるパスで Window
 
 ショートカットファイルが存在する場合、削除してからショートカットファイルを作成します。
 
-*** emacs との連携
+*** Emacs との連携
 
 以下の説明を参照してください。
 
@@ -289,7 +289,7 @@ bash.exe: warning: could not find /tmp, please create!
 cyg mkdir /tmp
 #+END_EXAMPLE
 
-**** ● Windows 10 1809 以降では、emacs の shell-mode で cyg コマンドを実行できません
+**** ● Windows 10 1809 以降では、Emacs の shell-mode で cyg コマンドを実行できません
 
 以下の win コマンドで説明している問題が cyg コマンドでも発生します
 （内部で exe コマンドを実行しているため）。このため、cyg コマンドを実行する
@@ -302,7 +302,7 @@ cyg コマンドの修正による対策は行いません。
 
 WSL で exe コマンドを実行するためのコマンドです。
 
-Windows 10 1809 以降では、emacs の shell-mode で exe コマンドを実行できません。
+Windows 10 1809 以降では、Emacs の shell-mode で exe コマンドを実行できません。
 「exec > /dev/tty」というコマンドを入力することで回避はできるのですが、以降で紹介
 する winsudo が動かないことが分かりましたので、本コマンドを作成しました。
 
@@ -355,7 +355,7 @@ alias choco='winsudo choco.exe'
 
 **** ● 「exec > /dev/tty」を実行している場合は解除してください 
 
-Windows 10 1809 以降では、emacs の shell-mode で exe コマンドを実行できません。
+Windows 10 1809 以降では、Emacs の shell-mode で exe コマンドを実行できません。
 この問題を回避するために「exec > /dev/tty」というコマンドを入力する方法がある
 のですが、このコマンドを入力していると本コマンドは正常に動作しないことが分かり
 ました。このため、もしこの回避コマンドを実行している場合には設定を解除し、先に
