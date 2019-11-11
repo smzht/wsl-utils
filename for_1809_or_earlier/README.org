@@ -1,12 +1,12 @@
 #+STARTUP: showall indent
 
-* WSL Utilities ( for Windows 10 1803 and 1809 )
+* WSL Utilities ( for Windows 10 1809 or earlier )
 
-Windows 10 1803 または 1809 の Windows Subsystem for Linux で動作するユティリティコマンド
+Windows 10 1809 または それ以前の Windows Subsystem for Linux で動作するユティリティコマンド
 です。
 
-Windows 10 1803 または 1809 で利用する場合は、本フォルダのファイルを上位フォルダにマージ
-してご利用ください。
+Windows 10 1809 または それ以前の WSL で利用する場合は、本フォルダのファイルを上位フォルダに
+マージしてご利用ください。
 
 ** ■ wslstart
 
