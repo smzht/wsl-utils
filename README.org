@@ -45,6 +45,16 @@ Windows 10 1803 以降では、/etc/fstab があれば自動マウントする�
 ネットワークボリュームにアクセスした際に開く認証画面で、「資格情報を記憶する」にチェック
 を入れることでも登録できます。
 
+注）Windows 10 1903 辺りからだと思いますが、/etc/fstab に上記の設定を追加すると \\wsl$
+から始まるパスにアクセスできなかったり、VolFs 上で exe コマンドが実行できなくなる問題が
+発生します。この問題は、/etc/fstab の LABEL 行の後に以下のとおり C:\ のマウント定義を
+明示することで解決できることが分かりました。バグだと思いますが、Windows 10 1909 でも
+直っていないようですので、回避策としてお試しください。
+#+BEGIN_EXAMPLE
+LABEL=cloudimg-rootfs	/	 ext4	defaults	0 0
+C:\	/mnt/c	drvfs	defaults,noatime,uid=1000,gid=1000	0 0
+#+END_EXAMPLE
+
 ** ■ wslstart
 
 cygstart 的コマンドです。
