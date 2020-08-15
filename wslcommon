@@ -9,7 +9,8 @@ function wslpath() {
 }
 
 function drvfs_p() {
-    local win_path=$(winpath -a "$1")
+    local win_path
+    win_path=$(winpath -a "$1")
     if [ $? -eq 0 ] && [[ ! "$win_path" =~ ^'\\wsl$\' ]]; then
         return 0
     else
