@@ -19,7 +19,7 @@ function drvfs_p() {
 }
 
 function escape() {
-    target="$1"
+    target=$1
 
     # ターゲットに半角スペースを含まず、全角スペースを含んでいる場合、半角スペースを
     # 追加する

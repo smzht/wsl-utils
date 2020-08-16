@@ -68,8 +68,14 @@ link_basename=$(basename -- "$2")
 link_wsl_path=$(readlink -m -- "$link_dirname")
 link_wsl_path+=/$link_basename
 
+if [ -d "$link_wsl_path" ]; then
+    link_wsl_dir=$link_wsl_path
+else
+    link_wsl_dir=$(dirname -- "$link_wsl_path")
+fi
+
 # DrvFs ファイルシステム上にシンボリックリンクを作成しようとしているか？
-if [ $symlink_flg -eq 1 ] && drvfs_p "$link_wsl_path"; then
+if [ $symlink_flg -eq 1 ] && drvfs_p "$link_wsl_dir"; then
 
     # ターゲットファイルが DrvFs ファイルシステム上にあるか？
     if drvfs_p "$target_wsl_path"; then
@@ -85,9 +91,12 @@ if [ $symlink_flg -eq 1 ] && drvfs_p "$link_wsl_path"; then
             fi
 
             if [ -d "$link_wsl_path" ]; then
-                link_wsl_path+=/$target_basename
+                link_win_path=$(winpath "$link_wsl_path")
+                link_win_path+='\'$target_basename
+            else
+                link_win_path=$(winpath "$link_wsl_dir")
+                link_win_path+='\'$link_basename
             fi
-            link_win_path=$(winpath "$link_wsl_path")
 
             option=''
 
