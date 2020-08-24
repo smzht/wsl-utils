@@ -6,14 +6,6 @@ Windows 10 1709 の Windows Subsystem for Linux で動作するユティリテ�
 
 上位ディレクトリにマージ（上書き）してご利用ください。
 
-また、DrvFs を多くマウントしている場合は、.bash_profile を以下のように設定して、wslinit
-を実行してご利用ください。wsl コマンドの高速化 が図られます。
-
-#+BEGIN_EXAMPLE
-[ -r ~/.bashrc ] && source ~/.bashrc
-source wslinit
-#+END_EXAMPLE
-
 UNC パスへのアクセスが必要な場合には、上位ディレクトリで紹介している /etc/fstab の設定
 を以下のとおりに変更し、sudo mount -a の実行によりマウントしてからご利用ください。
 

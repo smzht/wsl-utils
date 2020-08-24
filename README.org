@@ -7,6 +7,14 @@ Windows Subsystem for Linux で動作するユティリティコマンド群で�
 Windows 10 1903 以降で利用可能です。それより前の Windows で利用する場合は、
 該当するバージョンのサブディレクトリ配下のファイルを本ディレクトリにマージしてご利用ください。
 
+DrvFs を多くマウントしている場合は、.bash_profile を以下のように設定して、wslinit を実行して
+ご利用ください。wsl コマンドの高速化 が図られます。
+
+#+BEGIN_EXAMPLE
+[ -r ~/.bashrc ] && source ~/.bashrc
+source wslinit
+#+END_EXAMPLE
+
 wslcommon は、コマンドと同じ場所（コマンドパスが通ったディレクトリ）に格納してご利用ください。
 UNC パスへのアクセスが必要な場合には、以下のような /etc/fstab を設定し、マウントしてご利用
 ください。

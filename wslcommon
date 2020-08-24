@@ -1,16 +1,68 @@
 # -*- mode: sh; coding: utf-8-unix -*-
 
+if [ ! -v DRVFS ]; then
+    source wslinit
+fi
+eval "$DRVFS"
+
 function winpath() {
-    /bin/wslpath -w "$@" 2> /dev/null
+    (
+        if [[ "$1" =~ ^/ ]]; then
+            shopt -u nocasematch
+            wslpath=$1
+            for ((i = ${#drvfs[@]} - 1; i >= 0; i--)); do
+                IFS='|' read -r key value <<< "${drvfs[$i]}"
+                if [[ "$key" == '/' ]]; then
+                    key=''
+                fi
+                if [[ "$wslpath" =~ ^"$key"($|/) ]]; then
+                    value=$(echo "$value" | sed 's/\\/&&/g')
+                    winpath=$(echo "$wslpath" | sed "s!^$key!$value!")
+                    if [[ "$winpath" =~ :$ ]]; then
+                        winpath+=/
+                    fi
+                    winpath=$(echo "$winpath" | sed 's!/!\\!g')
+                    echo "$winpath"
+                    return 0
+                fi
+            done
+            return 1
+        else
+            winpath=$(echo "$1" | sed 's!/!\\!g')
+            echo "$winpath"
+            return 0
+        fi
+    )
 }
 
 function wslpath() {
-    /bin/wslpath -u "$@" 2> /dev/null
+    (
+        if [[ "$1" =~ ^'\'|^.: ]]; then
+            shopt -s nocasematch
+            winpath=$1
+            for ((i = 0; i < ${#drvfs[@]}; i++)); do
+                IFS='|' read -r key value <<< "${drvfs[$i]}"
+                if [[ "$winpath" =~ ^"$value"($|\\) ]]; then
+                    value=$(echo "$value" | sed 's/\\/&&/g')
+                    wslpath=$(echo "$winpath" | sed -r "s!^$value!$key!i")
+                    wslpath=$(echo "$wslpath" | sed 's!\\!/!g')
+                    echo "$wslpath"
+                    return 0
+                fi
+            done
+            return 1
+        else
+            wslpath=$(echo "$1" | sed 's!\\!/!g')
+            echo "$wslpath"
+            return 0
+        fi
+    )
 }
 
 function drvfs_p() {
-    local win_path
-    win_path=$(winpath -a "$1")
+    local wslpath, win_path
+    wsl_path=$(readlink -m -- "$1")
+    win_path=$(winpath "$wsl_path")
     if [ $? -eq 0 ] && [[ ! "$win_path" =~ ^'\\wsl$\' ]]; then
         return 0
     else
