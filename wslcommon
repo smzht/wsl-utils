@@ -17,6 +17,7 @@ function winpath() {
                 fi
                 if [[ "$wslpath" =~ ^"$key"($|/) ]]; then
                     value=$(echo "$value" | sed 's/\\/&&/g')
+                    # sed に -r を付けると変数の値も正規表現として認識するので注意すること
                     winpath=$(echo "$wslpath" | sed "s!^$key!$value!")
                     if [[ "$winpath" =~ :$ ]]; then
                         winpath+=/
@@ -44,8 +45,10 @@ function wslpath() {
                 IFS='|' read -r key value <<< "${drvfs[$i]}"
                 if [[ "$winpath" =~ ^"$value"($|\\) ]]; then
                     value=$(echo "$value" | sed 's/\\/&&/g')
-                    wslpath=$(echo "$winpath" | sed -r "s!^$value!$key!i")
+                    # sed に -r を付けると変数の値も正規表現として認識するので注意すること
+                    wslpath=$(echo "$winpath" | sed "s!^$value!$key!i")
                     wslpath=$(echo "$wslpath" | sed 's!\\!/!g')
+                    wslpath=$(echo "$wslpath" | sed 's!^//!/!g')
                     echo "$wslpath"
                     return 0
                 fi
