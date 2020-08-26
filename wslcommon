@@ -63,7 +63,7 @@ function wslpath() {
 }
 
 function drvfs_p() {
-    local wslpath, win_path
+    local wslpath win_path
     wsl_path=$(readlink -m -- "$1")
     win_path=$(winpath "$wsl_path")
     if [ $? -eq 0 ] && [[ ! "$win_path" =~ ^'\\wsl$\' ]]; then
