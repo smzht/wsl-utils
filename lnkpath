@@ -1,0 +1,78 @@
+#!/bin/bash
+# -*- mode: sh; coding: utf-8-unix -*-
+
+# 本コマンドを利用するためには、予め liblnk-utils package をインストールしてください
+# sudo apt install liblnk-utils
+
+# Cygwin では、CYGWIN 環境変数の設定により ln -s コマンドで Windows ショートカット
+# ファイル（lnk ファイル）を作成できますが、このコマンドで作成された Windows ショート
+# カットファイルは、lnkinfo コマンドでは解析できないようです。
+
+command_name=$(basename "$0")
+
+function usage_exit() {
+    cat << EOF >&2
+Usage: $command_name [-u|-w|-m] lnkfile
+       $command_name -h
+EOF
+    exit $1
+}
+
+win_path_flg=0
+wsl_path_flg=0
+mix_path_flg=0
+
+while getopts :wumh opt; do
+    case $opt in
+        w)
+            win_path_flg=1
+            ;;
+        u)
+            wsl_path_flg=1
+            ;;
+        m)
+            mix_path_flg=1
+            ;;
+        h)
+            usage_exit 0
+            ;;
+        \?)
+            usage_exit 2
+            ;;
+    esac
+done
+
+case $((win_path_flg + wsl_path_flg + mix_path_flg)) in
+    0)
+        win_path_flg=1
+        ;;
+    1)
+        ;;
+    *)
+        usage_exit 2
+        ;;
+esac
+
+shift $((OPTIND - 1))
+
+if [ $# -ne 1 ]; then
+    usage_exit 2
+fi
+
+function message() {
+    echo "$command_name: $1" >&2
+    exit 1
+}
+
+lnk_path=$(lnkinfo -c windows-932 "$1" 2> /dev/null | grep -oP '((?<=Network path\s\s\s: )|(?<=Local path\s\s\s: )).*')
+
+if [ $? -eq 0 ]; then
+    if [ $wsl_path_flg -eq 1 ]; then
+        lnk_path=$(wslpath2 -u "$lnk_path")
+    elif [ $mix_path_flg -eq 1 ]; then
+        lnk_path=$(echo "$lnk_path" | sed 's!\\!/!g')
+    fi
+    echo "$lnk_path"
+else
+    message 'パスを抽出できませんでした'
+fi
