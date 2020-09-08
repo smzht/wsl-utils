@@ -386,7 +386,7 @@ Windows 10 1809 以降では、Emacs の shell-mode で exe コマンドを実�
 
 ** ■ wslpath2
 
-wslpath の代替コマンドです。WSL2 で UNC パスの変換も正常に行うコマンドとなっています。
+wslpath の代替コマンドです。WSL2 で UNC パスの変換も正常に行えるコマンドとなっています。
 
 *** 使用方法
 
