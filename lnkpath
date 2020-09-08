@@ -5,7 +5,7 @@ command_name=$(basename "$0")
 
 function usage_exit() {
     cat << EOF >&2
-Usage: $command_name [-u|-w|-m] lnkfile
+Usage: $command_name [-w|-m|-u] lnkfile
        $command_name -h
 EOF
     exit $1
