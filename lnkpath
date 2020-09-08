@@ -1,13 +1,6 @@
 #!/bin/bash
 # -*- mode: sh; coding: utf-8-unix -*-
 
-# 本コマンドを利用するためには、予め liblnk-utils package をインストールしてください
-# sudo apt install liblnk-utils
-
-# Cygwin では、CYGWIN 環境変数の設定により ln -s コマンドで Windows ショートカット
-# ファイル（lnk ファイル）を作成できますが、このコマンドで作成された Windows ショート
-# カットファイルは、lnkinfo コマンドでは解析できないようです。
-
 command_name=$(basename "$0")
 
 function usage_exit() {
