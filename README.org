@@ -422,7 +422,7 @@ Windows ショートカットファイル（lnk ファイル）のリンク先�
 *** 使用方法
 
 #+BEGIN_EXAMPLE
-lnkpath [-u|-w|-m] [-a] lnkfile
+lnkpath [-w|-m|-u] [-a] lnkfile
 lnkpath -h
 #+END_EXAMPLE
 
