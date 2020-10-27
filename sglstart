@@ -38,7 +38,9 @@ if [ -e "$1" ]; then
         file_name=$(basename -- "$target_path")
 
         # ウィンドウのタイトルにファイル名の文字列を含むものがあればポップアップする
-        if winactivate.exe "$file_name" 2> /dev/null; then
+        # （WSL2 では、UNC パスをマウントしているマウントポイント配下がカレントディレクトリの状態で
+        #   Windows の exe コマンドを実行するとエラー終了する。この対策のため、事前に cd を行う。）
+        if (cd; winactivate.exe "$file_name" 2> /dev/null); then
             exit 0
         fi
     fi
