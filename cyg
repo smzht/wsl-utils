@@ -2,7 +2,7 @@
 # -*- mode: sh; coding: utf-8-unix -*-
 
 # Cygwin の bash.exe の在り処を絶対パスで指定してください
-cygsh_path='/mnt/c/gnupack_devel-13.06-2015.11.08/app/cygwin/cygwin/bin/bash.exe'
+cygsh_path='/mnt/c/gnupack/app/cygwin/cygwin/bin/bash.exe'
 
 source wslcommon
 command_name=$(basename "$0")
@@ -67,12 +67,12 @@ cd $quote_pwd
 $quote_cmd
 EOF
 
-    trap 'trap "" 1 2 3 15; win "$cygsh_path" -l -c "kill -- -"$(cat "$process_id_wsl_path")' 1 2 3 15
+    trap 'trap "" 1 2 3 15; "$cygsh_path" -l -c "kill -- -"$(cat "$process_id_wsl_path")' 1 2 3 15
 
     # WSL2 では、UNC パスをマウントしているマウントポイント配下がカレントディレクトリの状態で
     # Windows の exe コマンドを実行するとエラー終了する。この対策のため、事前に cd を行う。
     cd
-    win "$cygsh_path" -l "$shell_command_win_path"
+    "$cygsh_path" -l "$shell_command_win_path"
 else
     message 'このディレクトリではコマンドを実行できません'
 fi
