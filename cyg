@@ -67,12 +67,16 @@ cd $quote_pwd
 $quote_cmd
 EOF
 
-    trap 'trap "" 1 2 3 15; "$cygsh_path" -l -c "kill -- -"$(cat "$process_id_wsl_path")' 1 2 3 15
-
     # WSL2 では、UNC パスをマウントしているマウントポイント配下がカレントディレクトリの状態で
     # Windows の exe コマンドを実行するとエラー終了する。この対策のため、事前に cd を行う。
     cd
-    "$cygsh_path" -l "$shell_command_win_path"
+
+    # Windows 10 1809 以降では、Emacs の shell-mode で exe コマンドを実行できない。 このため、
+    # exe コマンド実行時に win コマンドを利用している。
+
+    trap 'trap "" 1 2 3 15; win "$cygsh_path" -l -c "kill -- -"$(cat "$process_id_wsl_path")' 1 2 3 15
+
+    win "$cygsh_path" -l "$shell_command_win_path"
 else
     message 'このディレクトリではコマンドを実行できません'
 fi

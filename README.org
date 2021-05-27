@@ -312,15 +312,6 @@ bash.exe: warning: could not find /tmp, please create!
 cyg mkdir /tmp
 #+END_EXAMPLE
 
-**** ● Windows 10 1809 以降では、Emacs の shell-mode で cyg コマンドを実行できません
-
-以下の win コマンドで説明している問題が cyg コマンドでも発生します
-（内部で exe コマンドを実行しているため）。このため、cyg コマンドを実行する
-場合は、win コマンドを使って実行するか、cyg コマンドの最後の方にある "$cygsh_path"
-で始まる行に win コマンドを先行指定することで対策してください。
-今後、この問題は Windows 10 のバージョンアップ時に解決されるものと思われますので、
-cyg コマンドの修正による対策は行いません。
-
 ** ■ win
 
 WSL で exe コマンドを実行するためのコマンドです。

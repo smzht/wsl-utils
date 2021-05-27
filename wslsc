@@ -128,9 +128,17 @@ EOF
 
     shortcut_win_path=$(winpath "$shortcut_wsl_path")
 
+    # WSL2 では、UNC パスをマウントしているマウントポイント配下がカレントディレクトリの状態で
+    # Windows の exe コマンドを実行するとエラー終了する。この対策のため、事前に cd を行う。
+    cd
+
+    # w32-symlinks-ln-s.js を実行し、ショートカットファイルを作成する
+    # （Windows 10 1809 以降では、Emacs の shell-mode で exe コマンドを実行できない。 このため、
+    #   exe コマンド実行時に win コマンドを利用している。）
+
     # WSL path を Windows path に変換できたか？
     if [ $? -eq 0 ]; then
-        cmd cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$shortcut_win_path"
+        win cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$shortcut_win_path"
     else
         working_dir=$(mktemp -d -p "$temp_wsl_path")
 
@@ -139,7 +147,7 @@ EOF
 
         trap 'clean' 0
 
-        cmd cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$working_win_path"
+        win cscript.exe //Nologo "$temp_win_path\\w32-symlinks-ln-s.js" "$target_win_path" "$working_win_path"
         mv "$working_wsl_path" "$shortcut_wsl_path"
     fi
 else
