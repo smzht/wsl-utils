@@ -16,7 +16,6 @@ function winpath() {
                     key=''
                 fi
                 if [[ "$wslpath" =~ ^"$key"($|/) ]]; then
-                    value=$(echo "$value" | sed 's/\\/&&/g')
                     # sed に -r を付けると変数の値も正規表現として認識するので注意すること
                     winpath=$(echo "$wslpath" | sed "s!^$key!$value!")
                     if [[ "$winpath" =~ :$ ]]; then
@@ -40,14 +39,13 @@ function wslpath() {
     (
         if [[ "$1" =~ ^'\'|^.: ]]; then
             shopt -s nocasematch
-            winpath=$1
+            winpath=$(echo "$1" | sed 's!\\!/!g')
             for ((i = 0; i < ${#drvfs[@]}; i++)); do
                 IFS='|' read -r key value <<< "${drvfs[$i]}"
-                if [[ "$winpath" =~ ^"$value"($|\\) ]]; then
-                    value=$(echo "$value" | sed 's/\\/&&/g')
+                if [[ "$winpath" =~ ^"$value"($|/) ]]; then
                     # sed に -r を付けると変数の値も正規表現として認識するので注意すること
                     wslpath=$(echo "$winpath" | sed "s!^$value!$key!i")
-                    wslpath=$(echo "$wslpath" | sed 's!\\!/!g')
+                    # \\wsl$\Ubuntu-20.04\ を変換する際に必要
                     wslpath=$(echo "$wslpath" | sed 's!^//!/!g')
                     echo "$wslpath"
                     return 0

@@ -3,13 +3,13 @@
 export DRVFS=$(
     declare -a drvfs
     while read -r line; do
-        line=$(echo "$line" | sed 's!\\$!!')
+        line=$(echo "$line" | sed 's!/$!!')
         drvfs=("${drvfs[@]}" "$line")
     done < <(
         if uname -v | grep -v -q Microsoft || [ $(uname -r | cut -d'-' -f 2) -ge 18362 ]; then
-            echo "/|$(wslpath -w /)"
+            echo "/|$(wslpath -m /)"
         fi
-        mount | grep -E 'type (9p|drvfs|cifs)' | grep -v '^tools on /init type 9p' | sed -r 's/(.*) on (.*) type (9p|drvfs|cifs) .*/\2\|\1/'
+        mount | grep -E 'type (9p|drvfs|cifs)' | grep -v '^tools on /init type 9p' | sed -r 's/(.*) on (.*) type (9p|drvfs|cifs) .*/\2\|\1/' | sed 's!\\!/!g'
     )
     declare -p drvfs
 )
