@@ -45,7 +45,7 @@ function wslpath() {
                 if [[ "$winpath" =~ ^"$value"($|/) ]]; then
                     # sed に -r を付けると変数の値も正規表現として認識するので注意すること
                     wslpath=$(echo "$winpath" | sed "s!^$value!$key!i")
-                    # \\wsl$\Ubuntu-20.04\ を変換する際に必要
+                    # \\wsl$ で始まるパスを変換する際に必要
                     wslpath=$(echo "$wslpath" | sed 's!^//!/!g')
                     echo "$wslpath"
                     return 0
