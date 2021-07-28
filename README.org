@@ -65,7 +65,7 @@ C:\	/mnt/c	drvfs	defaults,noatime,uid=1000,gid=1000	0 0
 /etc/fstab を変更した際は、コマンドプロンプトから次のコマンドを入力後、WSLコンソール
 を再起動してください。
 #+BEGIN_EXAMPLE
-> wslconfig /t <ディストリビューション名>
+> wsl -t <ディストリビューション名>
 #+END_EXAMPLE
 
 ** ■ wslstart
