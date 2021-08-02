@@ -2,3 +2,5 @@
 # -*- mode: sh; coding: utf-8-unix -*-
 
 "$@" | cat
+
+exit ${PIPESTATUS[0]}
