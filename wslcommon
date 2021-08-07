@@ -45,7 +45,7 @@ function wslpath() {
                 if [[ "$winpath" =~ ^"$value"($|/) ]]; then
                     # sed に -r を付けると変数の値も正規表現として認識するので注意すること
                     wslpath=$(echo "$winpath" | sed "s!^$value!$key!i")
-                    # \\wsl$ で始まるパスを変換する際に必要
+                    # \\wsl で始まるパスを変換する際に必要
                     wslpath=$(echo "$wslpath" | sed 's!^//!/!g')
                     echo "$wslpath"
                     return 0
@@ -64,7 +64,7 @@ function drvfs_p() {
     local wslpath win_path
     wsl_path=$(readlink -m -- "$1")
     win_path=$(winpath "$wsl_path")
-    if [ $? -eq 0 ] && [[ ! "$win_path" =~ ^'\\wsl$\' ]]; then
+    if [ $? -eq 0 ] && [[ ! "$win_path" =~ ^'\\wsl$\'|^'\\wsl.localhost\' ]]; then
         return 0
     else
         return 1

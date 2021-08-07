@@ -9,7 +9,15 @@ export DRVFS=$(
         if uname -v | grep -v -q Microsoft || [ $(uname -r | cut -d'-' -f 2) -ge 18362 ]; then
             echo "/|$(wslpath -m /)"
         fi
-        mount | grep -E 'type (9p|drvfs|cifs)' | grep -v '^tools on /init type 9p' | sed -r 's/(.*) on (.*) type (9p|drvfs|cifs) .*/\2\|\1/' | sed 's!\\!/!g'
+        (
+            mount | grep -E 'type (drvfs|cifs)' | sed -r 's/(.*) on (.*) type (drvfs|cifs) .*/\2\|\1/'
+
+            if mount | grep -q '^drvfs '; then
+                mount | grep '^drvfs ' | sed -r 's/.* on (.*) type 9p .*;path=([^;]*);.*/\1|\2/' | sed 's/UNC\\/\\\\/'
+            else
+                mount | grep ' type 9p ' | grep -v '^tools ' | sed -r 's/(.*) on (.*) type 9p .*/\2\|\1/'
+            fi
+        )  | sed 's!\\!/!g'
     )
     declare -p drvfs
 )
