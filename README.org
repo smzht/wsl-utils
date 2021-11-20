@@ -2,6 +2,11 @@
 
 * WSL Utilities
 
+-----
+※ 本ページの内容は WSL2 でも動作します。DrvFs や VolFs の記載がある場合には、Windows 側の
+ファイルシステム、WSL2 側のファイルシステムと読み替えてください。
+-----
+
 Windows Subsystem for Linux で動作するユティリティコマンド群です。
 
 Windows 10 1903 以降で利用可能です。それより前の Windows で利用する場合は、
