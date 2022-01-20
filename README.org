@@ -443,3 +443,34 @@ lnkpath -h
 Cygwin では、CYGWIN 環境変数の設定により ln -s コマンドで Windows ショートカットファイル
 （lnk ファイル）を作成できますが、このコマンドで作成された Windows ショートカットファイル
 に対しては正常に動作しません。（内部で利用している lnkinfo コマンドで解析できないようです。）
+
+
+** ■ wsvn
+
+WSL 上で Windows の svn.exe を利用するためのコマンドです。
+
+WSL2 の svn コマンドは、Windows ファイルシステム上にある subversion のリポジトリを操作すると、
+リポジトリ管理データベースを破壊することがあります。この問題を解決するため、Windows の svn.exe
+を利用する WSL 用のコマンドを作成しました。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+wsvn <subcommand> [options] [args]
+#+END_EXAMPLE
+
+Windows 版 subversion は次の場所からダウンロードしてください。
+
+- https://subversion.apache.org/packages.html#windows
+
+wsvn コマンドを svn というコマンド名で利用したい場合は、alias を設定するのが良いと思います。
+
+*** コマンドオプション
+
+svn.exe --help で表示されるコマンドオプションをご利用ください。
+
+*** 注意事項
+
+スクリプト内部で呼ばれている svn.exe の配置ディレクトリには、 PATH が通っている必要が
+あります。PATH を通さないで利用する場合には、スクリプト内部の svn.exe 起動箇所を絶対パス
+で指定してください。
