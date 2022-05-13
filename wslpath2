@@ -6,7 +6,7 @@ command_name=$(basename "$0")
 
 function usage_exit() {
     cat << EOF >&2
-Usage: $command_name [-u|-w|-m] path
+Usage: $command_name [-u|-w|-m] [-a] path
        $command_name -h
 EOF
     exit $1
