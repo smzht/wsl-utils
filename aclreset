@@ -1,0 +1,42 @@
+#!/bin/bash
+
+source wslcommon
+command_name=$(basename "$0")
+
+function usage_exit() {
+    cat << EOF >&2
+Usage: $command_name file or directory
+EOF
+    exit $1
+}
+
+while getopts :h opt; do
+    case $opt in
+        h)
+            usage_exit 0
+            ;;
+        \?)
+            usage_exit 2
+            ;;
+    esac
+done
+
+function message() {
+    echo "$command_name: $1" >&2
+    exit 1
+}
+
+if [ $# -ne 1 ]; then
+    usage_exit 2
+fi
+
+if drvfs_p "$1"; then
+    winpath=$(wslpath2 -aw -- "$1")
+
+    if [ $? -eq 0 ]; then
+        cd
+        icacls.exe "$winpath" /reset /t /c | nkf -uwLu
+    fi
+else
+    message "Windows のファイルシステム上のファイルもしくはフォルダではありません"
+fi
