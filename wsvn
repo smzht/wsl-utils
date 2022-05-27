@@ -7,4 +7,4 @@ cmd.exe /c chcp 932 > /dev/null 2>&1
 
 # svn.exe 配置ディレクトリに PATH が通っていない場合には、svn.exe を
 # 絶対パスで指定する必要があります
-svn.exe "$@" | nkf -uwLu
+svn.exe "$@" 2>&1 | nkf -uwLu
