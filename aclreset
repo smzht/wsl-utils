@@ -35,7 +35,7 @@ if drvfs_p "$1"; then
 
     if [ $? -eq 0 ]; then
         cd
-        icacls.exe "$winpath" /reset /t /c 2>&1 | nkf -uwLu
+        icacls.exe "$winpath" /reset /t /c /l 2>&1 | nkf -uwLu
     fi
 else
     message "Windows のファイルシステム上のファイルもしくはフォルダではありません"
