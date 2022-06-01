@@ -490,8 +490,8 @@ WSL2 では、Windows ファイルシステム上のファイルもしくはフ�
 *** 使用方法
 
 #+BEGIN_EXAMPLE
-aclreset file
-aclreset directory
+aclreset file or directory
+aclreset -h
 #+END_EXAMPLE
 
 スクリプト内部で利用している icacls.exe の説明は、次のページを参照ください。
