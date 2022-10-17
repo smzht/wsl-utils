@@ -88,8 +88,6 @@ wslstart -h
 
 - [[https://www49.atwiki.jp/ntemacs/pages/62.html][WSL で cygstart 的コマンドを使うための設定]]
 
-また、スクリプトの初めにあるコメントも参照ください。
-
 ** ■ sglstart
 
 singleton な動きをする cygstart 的コマンドです。
