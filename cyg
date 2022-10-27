@@ -42,7 +42,7 @@ current_win_path=$(winpath "$current_wsl_path")
 
 # WSL path を Windows path に変換できたか？
 if [ $? -eq 0 ]; then
-    temp_win_path=$(cmd1 echo %TEMP%)
+    temp_win_path=$(cmd1 /c echo %TEMP%)
     temp_wsl_path=$(wslpath "$temp_win_path")
 
     process_id_wsl_path=$(mktemp -p "$temp_wsl_path" -t "$command_name.XXXXXXXXXX")

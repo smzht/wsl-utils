@@ -90,11 +90,11 @@ function escape() {
 }
 
 function cmd0() {
-    cmd.exe /c "$@" | sed 's/\r$//'
+    cmd.exe "$@" | sed 's/\r$//'
     return ${PIPESTATUS[0]}
 }
 
-documents_win_path=$(cd /mnt/c; cmd0 echo %USERPROFILE%)'\Documents'
+documents_win_path=$(cd /mnt/c; cmd0 /c echo %USERPROFILE%)'\Documents'
 documents_wsl_path=$(wslpath "$documents_win_path")
 
 function cmd1() {
@@ -120,7 +120,7 @@ function start() {
     # （コンソールから本コマンドを起動した場合には「対策前の設定」でも問題ないが、
     #   X サーバ上に起動した emacs から本コマンドを起動すると現象が発生することが
     #   あるため）
-    # cmd start "" "$@" # ← 対策前の設定
+    # cmd /c start "" "$@" # ← 対策前の設定
 
     # cmd内から呼んでいる cmd.exe のために引数を一回 escape する
     local args=()
@@ -129,5 +129,6 @@ function start() {
     done
     set -- "${args[@]}"
 
+    # 最初の cmd には、敢えて /c オプションを付けていない
     cmd start /b cmd.exe /c start "" "$@"
 }

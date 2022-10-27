@@ -68,7 +68,7 @@ target_win_path=$(winpath "$target_wsl_path")
 # WSL path を Windows path に変換できたか？
 if [ $? -eq 0 ]; then
 
-    temp_win_path=$(cmd1 echo %TEMP%)"\\$command_name"
+    temp_win_path=$(cmd1 /c echo %TEMP%)"\\$command_name"
     temp_wsl_path=$(wslpath "$temp_win_path")
 
     if ! mkdir -p "$temp_wsl_path" 2> /dev/null; then

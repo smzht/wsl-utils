@@ -108,7 +108,7 @@ if [ $symlink_flg -eq 1 ] && drvfs_p "$link_wsl_dir"; then
                 rm -f "$link_wsl_path" 2> /dev/null
             fi
 
-            cmd mklink $option "$link_win_path" "$target_win_path" 2>&1 > /dev/null | sed "s/^/$command_name: /" >&2
+            cmd /c mklink $option "$link_win_path" "$target_win_path" 2>&1 > /dev/null | sed "s/^/$command_name: /" >&2
             exit ${PIPESTATUS[0]}
         else
             message '-a オプションを付けることにより、リンクを作成することができます'
