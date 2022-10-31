@@ -129,6 +129,5 @@ function start() {
     done
     set -- "${args[@]}"
 
-    # 最初の cmd には、敢えて /c オプションを付けていない
-    cmd start /b cmd.exe /c start "" "$@"
+    cmd /c start /b cmd.exe /c start "" "$@"
 }
