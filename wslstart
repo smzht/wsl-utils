@@ -47,6 +47,6 @@ if [ -e "$1" ]; then
     fi
 else
     # ターゲットファイルが存在しない場合（コマンドや URL が指定された場合）は、そのまま開く。
-    winpath=$(echo "$1" | sed 's!/!\\!g')
-    start "$winpath"
+    win_path=$(echo "$1" | sed 's!/!\\!g')
+    start "$win_path"
 fi
