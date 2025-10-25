@@ -486,3 +486,17 @@ aclreset -h
 スクリプト内部で利用している icacls.exe の説明は、次のページを参照ください。
 
 - https://atmarkit.itmedia.co.jp/ait/articles/1007/09/news104.html
+
+** ■ settitle
+
+ターミナルソフトのタイトルを起動するコマンド名で書き換えるコマンドです。
+
+Fakeymacs にターミナルソフトで起動したコマンドを知らせ、キーバインドを切り替えれるように
+するために作成しました。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+settitle command [args]
+settitle -h
+#+END_EXAMPLE

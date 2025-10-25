@@ -1,0 +1,47 @@
+#!/bin/bash
+# -*- mode: sh; coding: utf-8-unix -*-
+
+command_name=$(basename "$0")
+
+function usage_exit() {
+    cat << EOF >&2
+Usage: $command_name command [args]
+       $command_name -h
+EOF
+    exit $1
+}
+
+while getopts :h opt; do
+    case $opt in
+        h)
+            usage_exit 0
+            ;;
+        \?)
+            usage_exit 2
+            ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+if [ $# -eq 0 ]; then
+    usage_exit 2
+fi
+
+cmd="$1"
+
+shift
+
+if [ $# -eq 0 ]; then
+    file_name=Untitled
+else
+    file_name="$1"
+fi
+
+# 新しいタイトルを設定
+echo -ne "\033]0;$file_name - $cmd\007"
+
+"$cmd" "$@"
+
+# 終了後に元のタイトルへ戻す
+trap 'echo -ne "\033]0;\007"' 0
