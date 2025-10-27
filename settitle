@@ -28,14 +28,14 @@ if [ $# -eq 0 ]; then
     usage_exit 2
 fi
 
-cmd="$1"
+cmd=$(basename "$1")
 
 shift
 
 if [ $# -eq 0 ]; then
     file_name=Untitled
 else
-    file_name="$1"
+    file_name=$(basename "$1")
 fi
 
 # 新しいタイトルを設定
