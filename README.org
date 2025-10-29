@@ -411,6 +411,16 @@ lnkpath [-w|-m|-u] [-a] lnkfile
 lnkpath -h
 #+END_EXAMPLE
 
+*** 使用例
+
+フォルダのショートカットファイルを利用して cd をするには、次の設定が利用できます。
+
+#+BEGIN_EXAMPLE
+function lcd() {
+    cd $(lnkpath -u "$1")
+}
+#+END_EXAMPLE
+
 *** コマンドオプション
 
 **** ● -w オプション
