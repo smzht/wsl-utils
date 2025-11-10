@@ -32,7 +32,7 @@ if [ $# -ne 1 ]; then
 fi
 
 if drvfs_p "$1"; then
-    winpath=$(wslpath2 -aw -- "$1")
+    winpath=$(command wslpath -aw -- "$1")
 
     if [ $? -eq 0 ]; then
         cd

@@ -1,6 +1,7 @@
 #!/bin/bash
 # -*- mode: sh; coding: utf-8-unix -*-
 
+source wslcommon
 command_name=$(basename "$0")
 
 function usage_exit() {
@@ -61,7 +62,7 @@ lnk_path=$(lnkinfo -c windows-932 "$1" 2> /dev/null | grep -oP '((?<=Network pat
 
 if [ $? -eq 0 ]; then
     if [ $wsl_path_flg -eq 1 ]; then
-        lnk_path=$(wslpath2 -u "$lnk_path")
+        lnk_path=$(wslpath "$lnk_path")
     elif [ $mix_path_flg -eq 1 ]; then
         lnk_path=$(echo "$lnk_path" | sed 's!\\!/!g')
     fi

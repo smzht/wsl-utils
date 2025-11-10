@@ -7,6 +7,14 @@ Windows 10 1809 または それ以前の Windows Subsystem for Linux で動作�
 
 上位ディレクトリにマージ（上書き）してご利用ください。
 
+DrvFs を多くマウントしている場合は、.bash_profile を以下のように設定して、wslinit を実行して
+ご利用ください。wsl コマンドの高速化 が図られます。
+
+#+BEGIN_EXAMPLE
+[ -r ~/.bashrc ] && source ~/.bashrc
+source wslinit
+#+END_EXAMPLE
+
 ** ■ wslstart
 
 cygstart 的コマンドです。
@@ -39,3 +47,31 @@ sglstart -h
 
 - [[https://www49.atwiki.jp/ntemacs/pages/63.html][singleton な動きをする cygstart 的コマンドを使うための設定 （WSL版）]]
 
+** ■ wslpath2
+
+wslpath の代替コマンドです。WSL2 で UNC パスの変換も正常に行えるコマンドとなっています。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+wslpath2 [-u|-w|-m] [-a] path
+wslpath2 -h
+#+END_EXAMPLE
+
+*** コマンドオプション
+
+**** ● -u オプション
+
+パス名を UNIX 形式で表示します。（デフォルトの動作）
+
+**** ● -w オプション
+
+パス名を Windows 形式で表示します。
+
+**** ● -m オプション
+
+「¥」の代わりに「/」を使用する以外、-w オプションと同様に機能します。
+
+**** ● -a オプション
+
+パス名を絶対パス形式で表示します。
