@@ -34,7 +34,7 @@ function message() {
     exit 1
 }
 
-# ターゲットファイルが存在するか？
+# ターゲットが存在するか？
 if [ -e "$1" ]; then
     wsl_path=$(readlink -m -- "$1")
     win_path=$(winpath "$wsl_path")
@@ -46,6 +46,6 @@ if [ -e "$1" ]; then
         message '指定したファイルは開くことができません'
     fi
 else
-    # ターゲットファイルが存在しない場合（コマンドや URL が指定された場合）は、そのまま開く。
+    # ターゲットが存在しない場合（コマンドや URL が指定された場合）は、そのまま開く
     start "$1"
 fi
