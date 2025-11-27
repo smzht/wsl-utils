@@ -29,26 +29,29 @@ if [ $# -ne 1 ]; then
 fi
 
 function winactivate() {
-    target_path=$(readlink -m -- "$1")
-    base_name=$(basename -- "$target_path")
-
-    # ウィンドウのタイトルにターゲットのベースネームの文字列を含むものがあればアクティベートする
+    # ウィンドウのタイトルに引数の文字列を含むものがあればアクティベートする
     # （WSL2 では、UNC パスをマウントしているマウントポイント配下がカレントディレクトリの状態で
     #   Windows の exe コマンドを実行するとエラー終了する。この対策のため、事前に cd を行う。）
-    if (cd; winactivate.exe "$base_name" 2> /dev/null); then
-        exit 0
-    fi
+    (cd; winactivate.exe "$1" 2> /dev/null)
 }
 
 # ターゲットが存在するか？
 if [ -e "$1" ]; then
-    winactivate "$1"
-fi
+    target_path=$(readlink -m -- "$1")
+    base_name=$(basename -- "$target_path")
 
-wslstart -- "$1"
+    winactivate "$base_name"
+    if [ $? -eq 0 ]; then
+        exit 0
+    fi
 
-# フォルダを開いた場合、フォーカスが写らない場合があるのでアクティベートする
-if [ -d "$1" ]; then
-    sleep 0.5
-    winactivate "$1"
+    wslstart -- "$1"
+
+    # フォルダを新たに開いた場合、ウィンドウにフォーカスが写らない場合があるのでアクティベートする
+    if [ -d "$target_path" ]; then
+        sleep 0.5
+        winactivate "$base_name"
+    fi
+else
+    wslstart -- "$1"
 fi
