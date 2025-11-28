@@ -38,6 +38,7 @@ function escape() {
 }
 
 function cmd0() {
+    # 漢字変換が正しく行われるように、一旦コマンド出力を変数に格納してから改行の変換を行う
     local output=$(cmd.exe "$@")
     local rtn=$?
     echo "$output" | sed 's/\r$//'
