@@ -38,8 +38,10 @@ function escape() {
 }
 
 function cmd0() {
-    cmd.exe "$@" | sed 's/\r$//'
-    return ${PIPESTATUS[0]}
+    local output=$(cmd.exe "$@")
+    local rtn=$?
+    echo $output | sed 's/\r$//'
+    return $rtn
 }
 
 documents_win_path=$(cd /mnt/c; cmd0 /c echo %USERPROFILE%)'\Documents'
