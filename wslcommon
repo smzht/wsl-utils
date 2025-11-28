@@ -9,9 +9,9 @@ function wslpath() {
 }
 
 function drvfs_p() {
-    local wslpath win_path
-    wsl_path=$(readlink -m -- "$1")
-    win_path=$(winpath "$wsl_path")
+    local wsl_path=$(readlink -m -- "$1")
+    local win_path=$(winpath "$wsl_path")
+
     if [ $? -eq 0 ] && [[ ! "$win_path" =~ ^'\\wsl$\'|^'\\wsl.localhost\' ]]; then
         return 0
     else
@@ -20,7 +20,7 @@ function drvfs_p() {
 }
 
 function escape() {
-    target=$1
+    local target=$1
 
     # ターゲットに半角スペースを含まず、全角スペースを含んでいる場合、半角スペースを
     # 追加する
