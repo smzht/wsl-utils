@@ -126,8 +126,6 @@ EOF
 
     shortcut_win_path=$(winpath "$shortcut_wsl_path")
 
-    # WSL2 では、UNC パスをマウントしているマウントポイント配下がカレントディレクトリの状態で
-    # Windows の exe コマンドを実行するとエラー終了する。この対策のため、事前に cd を行う。
     cd
 
     # w32-symlinks-ln-s.js を実行し、ショートカットファイルを作成する

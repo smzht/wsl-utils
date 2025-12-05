@@ -67,8 +67,6 @@ cd $quote_pwd
 $quote_cmd
 EOF
 
-    # WSL2 では、UNC パスをマウントしているマウントポイント配下がカレントディレクトリの状態で
-    # Windows の exe コマンドを実行するとエラー終了する。この対策のため、事前に cd を行う。
     cd
 
     # Windows 10 1809 以降では、Emacs の shell-mode で exe コマンドを実行できない。 このため、
