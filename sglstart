@@ -42,14 +42,6 @@ if [ -e "$1" ]; then
     if [ $? -eq 0 ]; then
         exit 0
     fi
-
-    wslstart -- "$1"
-
-    # フォルダを新たに開いた場合、ウィンドウにフォーカスが写らない場合があるのでアクティベートする
-    if [ -d "$target_path" ]; then
-        sleep 0.5
-        winactivate "$base_name"
-    fi
-else
-    wslstart -- "$1"
 fi
+
+wslstart -- "$1"
