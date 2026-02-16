@@ -30,12 +30,10 @@ fi
 
 cmd=$(basename "$1")
 
-shift
-
 if [ $# -eq 0 ]; then
     file_name=Untitled
 else
-    file_name=$(basename "$1")
+    file_name=$(basename "${!#}")
 fi
 
 # 新しいタイトルを設定
@@ -44,4 +42,4 @@ echo -ne "\033]0;$file_name - $cmd\007"
 # 終了時にタイトルを初期値に戻す
 trap 'echo -ne "\033]0;\007"' 0
 
-"$cmd" "$@"
+"$@"
