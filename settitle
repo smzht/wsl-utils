@@ -22,24 +22,31 @@ while getopts :h opt; do
     esac
 done
 
-shift $((OPTIND - 1))
-
 if [ $# -eq 0 ]; then
     usage_exit 2
 fi
 
-cmd=$(basename "$1")
+cmd="$1"
 
-if [ $# -eq 0 ]; then
+shift
+
+while getopts : opt; do
+    case $opt in
+        \?)
+            ;;
+    esac
+done
+
+if [ $# -eq $((OPTIND - 1)) ]; then
     file_name=Untitled
 else
     file_name=$(basename "${!#}")
 fi
 
 # 新しいタイトルを設定
-echo -ne "\033]0;$file_name - $cmd\007"
+echo -ne "\033]0;$file_name - $(basename -- "$cmd")\007"
 
 # 終了時にタイトルを初期値に戻す
 trap 'echo -ne "\033]0;\007"' 0
 
-"$@"
+"$cmd" "$@"
