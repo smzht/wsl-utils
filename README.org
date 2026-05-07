@@ -340,9 +340,14 @@ lnkpath -h
 function lcd() {
     cd "$(lnkpath -u "$1")"
 }
+
+function lpd() {
+    pushd "$(lnkpath -u "$1")"
+}
 #+END_EXAMPLE
 
-lcd でフォルダ移動後に元のフォルダに戻るには、cd - が利用できます。
+lcd でフォルダ移動後に元のフォルダに戻るには cd - が、lpd でフォルダ移動後に
+元のフォルダに戻るには popd 利用できます。
 
 *** コマンドオプション
 
