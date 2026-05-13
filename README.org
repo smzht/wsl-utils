@@ -448,3 +448,8 @@ Windows アプリである elecxzy を WSL2 から利用できるようにする
 #+BEGIN_EXAMPLE
 elecxzy filename...
 #+END_EXAMPLE
+
+*** 注意事項
+
+elecxzy は、Microsoft Store 版のものではなく、上記の GitHub からダウンロードしたものを
+インストールしてください。Microsoft Store 版のアプリは、WSL2 から起動できないようです。
