@@ -446,7 +446,7 @@ Windows アプリである elecxzy を WSL2 から利用できるようにする
 *** 使用方法
 
 #+BEGIN_EXAMPLE
-elecxzy filename...
+elecxzy file...
 #+END_EXAMPLE
 
 *** 注意事項
