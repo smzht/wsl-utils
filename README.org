@@ -438,3 +438,13 @@ Fakeymacs にターミナルソフトで起動したコマンドを知らせ、�
 settitle command [args]
 settitle -h
 #+END_EXAMPLE
+
+** ■ elecxzy
+
+Windows アプリである elecxzy を WSL2 から利用できるようにするコマンドです。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+elecxzy filename...
+#+END_EXAMPLE
