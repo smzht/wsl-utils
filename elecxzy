@@ -1,0 +1,11 @@
+#!/bin/bash
+# -*- mode: sh; coding: utf-8-unix -*-
+
+args=()
+for arg; do
+    args+=("$(wslpath -wa "$arg")")
+done
+set -- "${args[@]}"
+
+# <user> の箇所はユーザの ID に置き換える必要があります
+/mnt/c/Users/<user>/AppData/Local/Programs/elecxzy/elecxzy.exe "$@" &
