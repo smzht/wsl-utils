@@ -451,5 +451,9 @@ elecxzy file...
 
 *** 注意事項
 
-elecxzy は、Microsoft Store 版のものではなく、上記の GitHub からダウンロードしたものを
+● elecxzy は、Microsoft Store 版のものではなく、上記の GitHub からダウンロードしたものを
 インストールしてください。Microsoft Store 版のアプリは、WSL2 から起動できないようです。
+
+● elecxzy は、存在しないファイルをコマンドラインの引数として指定することはできないようです。
+ファイルを作成してから elecxzy で指定するか、elecxzy を起動してからファイル（バッファ）を
+作成するようにしてください。
