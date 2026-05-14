@@ -29,4 +29,4 @@ done
 set -- "${args[@]}"
 
 # <user> の箇所は利用者の ログインID に置き換える必要があります
-/mnt/c/Users/<user>/AppData/Local/Programs/elecxzy/elecxzy.exe -- "$@" &
+/mnt/c/Users/<user>/AppData/Local/Programs/elecxzy/elecxzy.exe "$@" > /dev/null &
