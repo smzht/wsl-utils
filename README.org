@@ -459,3 +459,13 @@ elecxzy [file]
 ● elecxzy は、存在しないファイルをコマンドラインの引数として指定することはできないようです。
 ファイルを作成してから elecxzy で指定するか、elecxzy を起動してからファイル（バッファ）を
 作成するようにしてください。
+
+** ■ zed
+
+Windows アプリである Zed を WSL2 から利用できるようにするコマンドです。
+
+*** 使用方法
+
+#+BEGIN_EXAMPLE
+zed [file...]
+#+END_EXAMPLE
