@@ -1,7 +1,6 @@
 #!/bin/bash
 # -*- mode: sh; coding: utf-8-unix -*-
 
-source wslcommon
 command_name=$(basename "$0")
 
 function usage_exit() {
