@@ -21,8 +21,17 @@ while getopts :h opt; do
     esac
 done
 
+function message() {
+    echo "$command_name: $1" >&2
+    exit 1
+}
+
 args=()
 for arg; do
+    if [ ! -f "$arg" ]; then
+       message "存在するファイルを指定してください"
+    fi
+
     args+=("$(wslpath -wa "$arg")")
 done
 set -- "${args[@]}"
