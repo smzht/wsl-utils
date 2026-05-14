@@ -24,14 +24,14 @@ done
 
 shift $((OPTIND - 1))
 
+if [ $# -ne 1 ]; then
+    usage_exit 2
+fi
+
 function message() {
     echo "$command_name: $1" >&2
     exit 1
 }
-
-if [ $# -ne 1 ]; then
-    usage_exit 2
-fi
 
 if drvfs_p "$1"; then
     winpath=$(command wslpath -aw -- "$1")
