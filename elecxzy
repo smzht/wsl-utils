@@ -1,6 +1,27 @@
 #!/bin/bash
 # -*- mode: sh; coding: utf-8-unix -*-
 
+source wslcommon
+command_name=$(basename "$0")
+
+function usage_exit() {
+    cat << EOF >&2
+Usage: $command_name file...
+EOF
+    exit $1
+}
+
+while getopts :h opt; do
+    case $opt in
+        h)
+            usage_exit 0
+            ;;
+        \?)
+            usage_exit 2
+            ;;
+    esac
+done
+
 args=()
 for arg; do
     args+=("$(wslpath -wa "$arg")")
