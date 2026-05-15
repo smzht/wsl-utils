@@ -21,4 +21,4 @@ done
 set -- "${args[@]}"
 
 # <user> の箇所は利用者の ログインID に置き換えてください
-win /mnt/c/Users/<user>/AppData/Local/Programs/Zed/Zed.exe "$@"
+win /mnt/c/Users/<user>/AppData/Local/Programs/Zed/Zed.exe "$@" &
