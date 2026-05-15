@@ -1,24 +1,5 @@
 #!/bin/bash
 # -*- mode: sh; coding: utf-8-unix -*-
 
-stop_flg=0
-args=()
-for arg; do
-    if [ $stop_flg -eq 0 ]; then
-        if [[ $arg == -- ]]; then
-            args+=("$arg")
-            stop_flg=1
-
-        elif [[ $arg == --* ]]; then
-            args+=("$arg")
-        else
-            args+=("$(wslpath -wa -- "$arg")")
-        fi
-    else
-        args+=("$(wslpath -wa -- "$arg")")
-    fi
-done
-set -- "${args[@]}"
-
 # <user> の箇所は利用者の ログインID に置き換えてください
-win /mnt/c/Users/<user>/AppData/Local/Programs/Zed/Zed.exe "$@" &
+/mnt/c/Users/<user>/AppData/Local/Programs/Zed/bin/zed "$@" &
