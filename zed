@@ -12,10 +12,10 @@ for arg; do
         elif [[ $arg == --* ]]; then
             args+=("$arg")
         else
-            args+=("$(wslpath -wa "$arg")")
+            args+=("$(wslpath -wa -- "$arg")")
         fi
     else
-        args+=("$(wslpath -wa "$arg")")
+        args+=("$(wslpath -wa -- "$arg")")
     fi
 done
 set -- "${args[@]}"
