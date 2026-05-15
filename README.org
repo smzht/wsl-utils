@@ -467,5 +467,5 @@ Windows アプリである Zed を WSL2 から利用できるようにするコ�
 *** 使用方法
 
 #+BEGIN_EXAMPLE
-zed [file...]
+zed [options] [file]...
 #+END_EXAMPLE
