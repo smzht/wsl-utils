@@ -462,7 +462,7 @@ elecxzy [file]
 
 ** ■ zed
 
-Windows アプリである Zed を WSL2 経由で接続して利用するためのコマンドです。
+Windows アプリである Zed を --wsl オプションを利用し、WSL2 に接続して起動するためのコマンドです。
 
 *** 使用方法
 
@@ -472,7 +472,8 @@ zed [options] [file]...
 
 ** ■ wzed
 
-Windows アプリである Zed を WSL2 から起動するためのコマンドです。
+Windows アプリである Zed を --wsl オプションを利用せず、引数を wslpath で変換して起動するための
+コマンドです。
 
 *** 使用方法
 
