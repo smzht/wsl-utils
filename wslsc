@@ -112,7 +112,7 @@ EOF
         shortcut_wsl_path+=/$target_basename
     fi
 
-    if [[ ! $shortcut_wsl_path =~ \.lnk$ ]]; then
+    if [[ ! "$shortcut_wsl_path" =~ \.lnk$ ]]; then
         shortcut_wsl_path+='.lnk'
     fi
 

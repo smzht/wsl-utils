@@ -12,7 +12,7 @@ function drvfs_p() {
     local wsl_path=$(readlink -m -- "$1")
     local win_path=$(winpath "$wsl_path")
 
-    if [ $? -eq 0 ] && [[ ! $win_path =~ ^'\\wsl$\'|^'\\wsl.localhost\' ]]; then
+    if [ $? -eq 0 ] && [[ ! "$win_path" =~ ^'\\wsl$\'|^'\\wsl.localhost\' ]]; then
         return 0
     else
         return 1
@@ -24,13 +24,13 @@ function escape() {
 
     # ターゲットに半角スペースを含まず、全角スペースを含んでいる場合、半角スペースを
     # 追加する
-    if [[ ! $target =~ ' ' && $target =~ '　' ]]; then
+    if [[ ! "$target" =~ ' ' && "$target" =~ '　' ]]; then
         target+=' '
     fi
 
     # ターゲットに半角スペースを含んでいるときと含んでいないときとで、エスケープ
     # する文字を変更する
-    if [[ $target =~ ' ' ]]; then
+    if [[ "$target" =~ ' ' ]]; then
         echo "$target" | sed 's/[|<>"]/^&/g'
     else
         echo "$target" | sed 's/[&|<>^"%]/^&/g'
