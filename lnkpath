@@ -60,10 +60,9 @@ function message() {
 
 lnk_path=$(lnkinfo -c windows-932 "$1" 2> /dev/null | grep -oP '((?<=Network path\s\s\s: )|(?<=Local path\s\s\s: )).*')
 
-if [ ${PIPESTATUS[0]} -eq 0 ]; then
+if [ $? -eq 0 ]; then
     lnk_path=$(echo "$lnk_path" | head -n 1)
 
-if [ $? -eq 0 ]; then
     if [ $wsl_path_flg -eq 1 ]; then
         lnk_path=$(wslpath "$lnk_path")
     elif [ $mix_path_flg -eq 1 ]; then
