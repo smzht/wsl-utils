@@ -33,6 +33,8 @@ function winactivate() {
     (cd; winactivate.exe "$1" 2> /dev/null)
 }
 
+set -- "${1#file://}"
+
 # ターゲットが存在するか？
 if [ -e "$1" ]; then
     target_path=$(readlink -m -- "$1")

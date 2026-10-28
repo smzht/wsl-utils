@@ -34,6 +34,8 @@ function message() {
     exit 1
 }
 
+set -- "${1#file://}"
+
 # ターゲットが存在するか？
 if [ -e "$1" ]; then
     wsl_path=$(readlink -m -- "$1")
